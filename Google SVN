@@ -1,0 +1,4 @@
+# Project members authenticate over HTTPS to allow committing changes.
+svn checkout https://abalone-game.googlecode.com/svn/trunk/ abalone-game --username re.vandriel@student.maastrichtuniversity.nl
+
+kG9Ae2mV4dv6
