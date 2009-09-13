@@ -1,4 +1,4 @@
-package abalone;
+package abalone.model;
 
 import java.util.HashMap;
 import java.util.Map;
