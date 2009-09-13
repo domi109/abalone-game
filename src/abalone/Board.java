@@ -1,107 +1,90 @@
 package abalone;
 
-public class Board {
+import java.util.LinkedList;
+import java.util.List;
 
-    Node centralNode;
+public class Board
+{
 
-    public Board(int sideLength) {
-        centralNode = new Node(false);
-        createBoard(sideLength);
-        System.out.println("Board without dummy's created");
-        addDummys();
-        System.out.println("Board created");
-    }
+	private Node centralNode;
+	private List<Node> nodes;
+	
+	public Board(int sideLength)
+	{
+		centralNode = new Node();
+		nodes = new LinkedList<Node>();
+		nodes.add(centralNode);
+		
+		createBoard(sideLength);
+	}
 
-    private void createBoard(int sideLenght) {
-        Node node = centralNode;
-//        for (int i = 0; i < NUMBER_OF_NEIGHBOURS; i++) {
-//            node.addNeighbour(i);
-//            node.getNeighbour(i).setNeighbour(getOppositeNeighbour(i), node);
-//            System.out.println("node added");
-//        }
-    }
+	private void createBoard(int sideLength)
+	{
+		createNode(centralNode, sideLength-1);
 
-    private int getOppositeNeighbour(int aNeighbour) {
-        switch (aNeighbour) {
-            case 0:
-                return 3;
-            case 1:
-                return 4;
-            case 2:
-                return 5;
-            case 3:
-                return 0;
-            case 4:
-                return 1;
-            case 5:
-                return 2;
-            default:
-                System.out.println("wrong opposite neighbour input");
-                return 11111;
+	}
 
-        }
-    }
+	private void createNode(Node node, int level)
+	{
+		if (level <= 0)
+		{
+			return;
+		}
+		Direction startDirection = Direction.UPPER_LEFT;
+		for (Direction d : startDirection)
+		{
+			Direction od = d.getOpposite();
+			
+			Node neighbour = node.getNeighbour(d);
+			if (neighbour == null)
+			{
+				neighbour = node.addNeighbour(d);
+				nodes.add(neighbour);
+			}
 
-    private void addDummys() {
-        boolean finished = false;
-        Node node = mostUpperLeft();
-        int neighbourPos = 0;
+			neighbour.setNeighbour(od, node);
+			
+			Node prev = node.getNeighbour(d.getNextCCW());
+			Node next = node.getNeighbour(d.getNextCW());
+			if(prev != null)
+			{
+				neighbour.setNeighbour(od.getNextCW(), prev);
+				prev.setNeighbour(d.getNextCW(), neighbour);
+			}
+			if(next != null)
+			{
+				neighbour.setNeighbour(od.getNextCCW(), next);
+				next.setNeighbour(d.getNextCCW(), neighbour);
+			}
 
+			createNode(neighbour, level - 1);			
+		}
+	}
 
-        while (!finished) {
-            for (int i = 0; i < NUMBER_OF_NEIGHBOURS; i++) {
-                if (node.getNeighbour(i) == null) {
-                    node.addDummy(i);
-                    System.out.println("dummy added");
-                }
-            }
-            if (neighbourPos == 5) {
-                finished = true;
-            } else if (node.getNeighbour(neighbourPos).isDummy()) {
-                neighbourPos++;
-            } else {
-                node = node.getNeighbour(neighbourPos);
-            }
-        }
-    }
+	public void printBoard()
+	{
+		Node leftNode = furthestNode(Direction.UPPER_LEFT);
+		while (leftNode != null)
+		{
+			Node node = leftNode;
+			while (node != null)
+			{
+				System.out.print("0");
+				node=node.getNeighbour(Direction.RIGHT);
+			}
+			leftNode = (leftNode.getNeighbour(Direction.DOWN_LEFT)==null)?leftNode.getNeighbour(Direction.DOWN_RIGHT):leftNode.getNeighbour(Direction.DOWN_LEFT);
+			System.out.println();
+		}
+	}
 
-    public void printBoard() {
-        Node leftNode = mostUpperLeft().getNeighbour(0);
-        Node node = leftNode;
-        boolean finished = false;
-        while (!finished) {
-            if (node.isDummy()) {
-                System.out.println("#");
-            } else if (!node.isDummy()) {
-                System.out.println("O");
-            } else if (node == null) {
-                node = leftNode.getNeighbour(5);
-                if (node == null) {
-                    node = leftNode.getNeighbour(4);
-                }
-                if (node == null) {
-                    finished = true;
-                }
-                leftNode = node;
-            } else {
-                node = node.getNeighbour(3);
-            }
-        }
-    }
-
-    public Node mostUpperLeft() {
-        boolean finished = false;
-        Node node = centralNode;
-
-        while (!finished) {
-
-            if (node.getNeighbour(0) == null || node.getNeighbour(0).isDummy()) {
-                finished = true;
-            } else {
-                node = node.getNeighbour(0);
-            }
-        }
-        return node;
-    }
-    private static int NUMBER_OF_NEIGHBOURS = 6;
+	public Node furthestNode(Direction inDirection)
+	{
+		Node node = centralNode;
+		
+		while (node.getNeighbour(inDirection) != null)
+		{
+			node = node.getNeighbour(inDirection);
+		}
+		return node;
+	}
 }

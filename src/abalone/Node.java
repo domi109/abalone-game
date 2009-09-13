@@ -1,71 +1,40 @@
 package abalone;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Node {
 
-    private Node[] neighbourList;
-    private boolean dummy;
+    private Map<Direction,Node> neighbourList;
 
     
-    public Node(boolean aDummy){
-        neighbourList = new Node[6];
-        dummy = aDummy;
+    public Node(){
+        neighbourList = new HashMap<Direction,Node>();
     }
 
     /**
-     * 0 = upperLeft<br>
-     * 1 = upperRight<br>
-     * 2 = right<br>
-     * 3 = downRight<br>
-     * 4 = downLeft<br>
-     * 5 = left
-     * @param position int as in explained above
+     * @param position Direction
      * @param newNode the new node
      */
-    public void setNeighbour(int position, Node aNode) {
-        neighbourList[position] = aNode;
+    public void setNeighbour(Direction position, Node aNode) {
+        neighbourList.put(position, aNode);
     }
 
     /**
-     * 0 = upperLeft<br>
-     * 1 = upperRight<br>
-     * 2 = right<br>
-     * 3 = downRight<br>
-     * 4 = downLeft<br>
-     * 5 = left
-     * @param position int as in explained above
+     * @param position Direction
+     * @return Node, the newly created node
      */
-    public void addNeighbour(int position) {
-        neighbourList[position] = new Node(false);
-    }
-
-    /**
-     * 0 = upperLeft<br>
-     * 1 = upperRight<br>
-     * 2 = right<br>
-     * 3 = downRight<br>
-     * 4 = downLeft<br>
-     * 5 = left
-     * @param position int as in explained above
-     */
-    public void addDummy(int position){
-        neighbourList[position] = new Node(true);
+    public Node addNeighbour(Direction position) {
+    	Node n = new Node();
+        neighbourList.put(position, n);
+        return n;
     }
     
     /**
-     * 0 = upperLeft<br>
-     * 1 = upperRight<br>
-     * 2 = right<br>
-     * 3 = downRight<br>
-     * 4 = downLeft<br>
-     * 5 = left
-     * @param position int as in explained above
+     * @param position Direction
      */
-    public Node getNeighbour(int position){
-        return neighbourList[position];
-    }
-
-    public boolean isDummy(){
-        return dummy;
+    public Node getNeighbour(Direction position){
+        return neighbourList.get(position);
     }
 }
