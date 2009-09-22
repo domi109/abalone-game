@@ -38,9 +38,10 @@ public class AbaloneFront extends QMainWindow
 		setMenuBar(menuBar);
 		setWindowIcon(new QIcon("classpath:Icons/logo.png"));
 		setWindowTitle("Abalone-game");
+		setMinimumSize(300,220);
 		
-		//GameWidget = new GameWidget();
-		//setCentralWidget(GameWidget);
+		MainWidget game = new MainWidget();
+		setCentralWidget(game);
 		
 		try
 		{
@@ -105,11 +106,10 @@ public class AbaloneFront extends QMainWindow
 		saveAsAct.setShortcut(tr("Ctrl+A"));
 		saveAsAct.setStatusTip(tr("Saves a game under a new name"));
 		
-		networkgameAct = new QAction(new QIcon(),tr("&Network Game"), this);
-		networkgameAct.setShortcut(tr("Ctrl+N"));
+		networkgameAct = new QAction(new QIcon(),tr("Network Game"), this);
 		networkgameAct.setStatusTip(tr("Play a game over the network"));
 		
-		undoMoveAct = new QAction(new QIcon(),tr("&Undo move"), this);
+		undoMoveAct = new QAction(new QIcon(),tr("Undo move"), this);
 		undoMoveAct.setShortcut(tr("Ctrl+Z"));
 		undoMoveAct.setStatusTip(tr("1 step back"));
 		
@@ -182,14 +182,14 @@ public class AbaloneFront extends QMainWindow
 	 * added to make parts of the window dockable (statistics for 
 	 * instance) and some parts not (the ones in this widget)
 	 */
-	class GameWidget extends QWidget
+	class MainWidget extends QWidget
 	{
-		public GameWidget()
+		public MainWidget()
 		{
 			QHBoxLayout leftRight = new QHBoxLayout();
-			//leftRight.addWidget(GameWidget);
-			//leftRight.addSpacing(20);
-			//leftRight.addWidget(GameInfoWidget);
+			leftRight.addWidget(new GameWidget());
+			leftRight.addSpacing(20);
+			leftRight.addWidget(new GameInfoWidget());
 			
 			setLayout(leftRight);
 		}
