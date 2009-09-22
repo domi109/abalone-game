@@ -1,7 +1,10 @@
 package abalone.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import abalone.adt.KeyValuePair;
 
 /**
  * A class representing a board state in the game of abalone
@@ -15,7 +18,18 @@ public class Board
 	 */
 	private Node centralNode;
 	private List<Node> nodes;
+	private List<List<KeyValuePair<Direction, Node>>> equiPaths;
 	
+	public List<List<KeyValuePair<Direction,Node>>> getEquiPaths()
+	{
+		return equiPaths;
+	}
+	
+	public void addPath(List<KeyValuePair<Direction,Node>> path)
+	{
+		equiPaths.add(path);
+	}
+
 	public Node getCentralNode()
 	{
 		return centralNode;
@@ -28,6 +42,7 @@ public class Board
 
 	public Board()
 	{
+		equiPaths = new ArrayList<List<KeyValuePair<Direction,Node>>>();
 		centralNode = new Node();
 		nodes = new LinkedList<Node>();
 		nodes.add(centralNode);

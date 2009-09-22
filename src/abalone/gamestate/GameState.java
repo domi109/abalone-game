@@ -67,7 +67,7 @@ public class GameState implements SearchState{
 	@Override
 	public Collection<Action> getPossibleActions()
 	{
-		// TODO Auto-generated method stub
+		// TODO Generate all moves that can be done in this situation
 		return null;
 	}
 	@Override
