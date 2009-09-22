@@ -1,8 +1,9 @@
-package abalone.gui;
+//package abalone.gui;
 
 import com.trolltech.qt.QVariant;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
+import com.trolltech.qt.webkit.*;
 
 public class AbaloneFront extends QMainWindow
 {
@@ -35,13 +36,12 @@ public class AbaloneFront extends QMainWindow
 	{
 		QMenuBar menuBar = new QMenuBar();
 		setMenuBar(menuBar);
-		setWindowIcon(new QIcon("classpath:logo.png"));
+		setWindowIcon(new QIcon("classpath:Icons/logo.png"));
+		setWindowTitle("Abalone-game");
 		
-		// abaloneBoard = new <boardWidgetClass>();
-		// setCentralWidget(abaloneBoard); <-- Maybe need something to indicate that there
-		// are 2 screens in the picture
+		//GameWidget = new GameWidget();
+		//setCentralWidget(GameWidget);
 		
-		/* Now we set up the user interface */
 		try
 		{
 			createActions();
@@ -54,11 +54,28 @@ public class AbaloneFront extends QMainWindow
 		//createStatusBar();	
 	}
 	
+	public void aboutAbalone()
+	{
+		QWebView view = new QWebView();
+		view.setBaseSize(800, 600);
+		view.setWindowTitle("About Abalone");
+        view.load(new QUrl("http://en.wikipedia.org/wiki/Abalone_(board_game)"));
+        view.show();
+	}
+	
+	public void reportProblem()
+	{
+		QWebView view = new QWebView();
+		view.setBaseSize(800, 600);
+		view.setWindowTitle("IssueTracker");
+        view.load(new QUrl("http://code.google.com/p/abalone-game/issues/list"));
+        view.show();
+	}
 	public void about()
 	{
 		QMessageBox.about(this,
-						 tr("About Abalone-game"),
-						 tr("Game made by a group of students at DKE " +
+							tr("About Abalone-game"),
+							tr("Game made by a group of students at DKE " +
 							"@ university Maastricht"));
 	}
 	
@@ -103,6 +120,7 @@ public class AbaloneFront extends QMainWindow
 		quitAct = new QAction(new QIcon(),tr("&Quit"), this);
 		quitAct.setShortcut(tr("Ctrl+Q"));
 		quitAct.setStatusTip(tr("Quits the game"));
+		quitAct.triggered.connect(this, "close()");
 		
 		fullscreenAct = new QAction(new QIcon(),tr("Fullscreen"), this);
 		fullscreenAct.setStatusTip(tr("View the game fullscreen"));
@@ -118,12 +136,15 @@ public class AbaloneFront extends QMainWindow
 		
 		aboutAbaloneAct = new QAction(new QIcon(),tr("About Abalone"), this);
 		aboutAbaloneAct.setStatusTip(tr("Link to abalone wiki"));
+		aboutAbaloneAct.triggered.connect(this, "aboutAbalone()");
 		
 		reportProblemAct = new QAction(new QIcon(),tr("Report Problem"), this);
 		reportProblemAct.setStatusTip(tr("Link to our issuetracker"));
+		reportProblemAct.triggered.connect(this, "reportProblem()");
 		
 		aboutAct = new QAction(new QIcon(),tr("About"), this);
 		aboutAct.setStatusTip(tr("About this game"));
+		aboutAct.triggered.connect(this, "about()");
 	}
 	
 	private void createMenus()
@@ -155,6 +176,25 @@ public class AbaloneFront extends QMainWindow
 		help.addAction(reportProblemAct);
 		help.addAction(aboutAct);
 	}
+	
+	/**
+	 * This is a wrapper Widget for the main parts of the window, 
+	 * added to make parts of the window dockable (statistics for 
+	 * instance) and some parts not (the ones in this widget)
+	 */
+	class GameWidget extends QWidget
+	{
+		public GameWidget()
+		{
+			QHBoxLayout leftRight = new QHBoxLayout();
+			//leftRight.addWidget(GameWidget);
+			//leftRight.addSpacing(20);
+			//leftRight.addWidget(GameInfoWidget);
+			
+			setLayout(leftRight);
+		}
+	}
+	
 	public static void main(String[] args)
 	{
 		QApplication.initialize(args);
