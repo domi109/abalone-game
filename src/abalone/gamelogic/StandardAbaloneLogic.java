@@ -21,8 +21,7 @@ public class StandardAbaloneLogic implements GameLogic
 		// Create the graph recursively:
 		createNode(b, b.getCentralNode(), 4);
 
-		// add equi-paths:
-		for (Direction d : Direction.UPPER_LEFT)
+		for(Direction d : Direction.UPPER_LEFT)
 		{
 			b.addPath(createPath(b.getCentralNode(), d));
 		}
@@ -36,7 +35,7 @@ public class StandardAbaloneLogic implements GameLogic
 		path.add(new KeyValuePair<Direction, Node>(null, centralNode));
 		Direction currentDir = startDirection;
 		Node currentNode = centralNode;
-		for (int i = 1; i <= 5; i++)
+		for (int i = 1; i < 5; i++)
 		{
 			// Iterate through all the 5 rings of the board
 			currentNode.getNeighbour(currentDir);
@@ -49,16 +48,18 @@ public class StandardAbaloneLogic implements GameLogic
 				{
 					for (int j = 0; j < i - 1; j++)
 					{
-						currentNode.getNeighbour(currentDir);
-						path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
+						//System.out.println(i + " " +d);
+						currentNode.getNeighbour(d);
+						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
 				}
 				else
 				{
 					for (int j = 0; j < i; j++)
 					{
-						currentNode.getNeighbour(currentDir);
-						path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
+						//System.out.println(i + " " +d);
+						currentNode.getNeighbour(d);
+						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
 				}
 			}
