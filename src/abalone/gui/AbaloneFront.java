@@ -1,3 +1,5 @@
+package abalone.gui;
+
 import com.trolltech.qt.QVariant;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
@@ -49,7 +51,7 @@ public class AbaloneFront extends QMainWindow
 			e.printStackTrace();
 		}
 		createMenus();
-		createStatusBar();	
+		//createStatusBar();	
 	}
 	
 	public void about()
@@ -72,55 +74,55 @@ public class AbaloneFront extends QMainWindow
 		newAct.setStatusTip(tr("Create a new Game"));
 		//newAct.triggered.connect(this, "newFile()");
 		
-		loadAct = new QAction(new QIcon(tr("&Load"), this));
+		loadAct = new QAction(new QIcon(),tr("&Load"), this);
 		loadAct.setShortcut(tr("Ctrl+L"));
 		loadAct.setStatusTip(tr("Opens a saved game"));
 		//openAct.triggered.connect(this, "open()");
 		
-		saveAct = new QAction(new QIcon(tr("&Save"), this));
+		saveAct = new QAction(new QIcon(),tr("&Save"), this);
 		saveAct.setShortcut(tr("Ctrl+S"));
 		saveAct.setStatusTip(tr("Saves a game"));
 		//saveAct.triggered.connect(this, "open()");
 		
-		saveAsAct = new QAction(new QIcon(tr("Save &As"), this));
+		saveAsAct = new QAction(new QIcon(),tr("Save &As"), this);
 		saveAsAct.setShortcut(tr("Ctrl+A"));
 		saveAsAct.setStatusTip(tr("Saves a game under a new name"));
 		
-		networkgameAct = new QAction(new QIcon(tr("&Network Game"), this));
+		networkgameAct = new QAction(new QIcon(),tr("&Network Game"), this);
 		networkgameAct.setShortcut(tr("Ctrl+N"));
 		networkgameAct.setStatusTip(tr("Play a game over the network"));
 		
-		undoMoveAct = new QAction(new QIcon(tr("&Undo move"), this));
+		undoMoveAct = new QAction(new QIcon(),tr("&Undo move"), this);
 		undoMoveAct.setShortcut(tr("Ctrl+Z"));
 		undoMoveAct.setStatusTip(tr("1 step back"));
 		
-		resignAct = new QAction(new QIcon(tr("&Resign"), this));
+		resignAct = new QAction(new QIcon(),tr("&Resign"), this);
 		resignAct.setShortcut(tr("Ctrl+R"));
 		resignAct.setStatusTip(tr("Resign this game"));
 		
-		quitAct = new QAction(new QIcon(tr("&Quit"), this));
+		quitAct = new QAction(new QIcon(),tr("&Quit"), this);
 		quitAct.setShortcut(tr("Ctrl+Q"));
 		quitAct.setStatusTip(tr("Quits the game"));
 		
-		fullscreenAct = new QAction(new QIcon(tr("Fullscreen"), this));
+		fullscreenAct = new QAction(new QIcon(),tr("Fullscreen"), this);
 		fullscreenAct.setStatusTip(tr("View the game fullscreen"));
 		
-		showLogsAct = new QAction(new QIcon(tr("Show Logs"), this));
+		showLogsAct = new QAction(new QIcon(),tr("Show Logs"), this);
 		showLogsAct.setStatusTip(tr("Shows a log of the game"));
 		
-		showStatisticsAct = new QAction(new QIcon(tr("Show Statistics"), this));
+		showStatisticsAct = new QAction(new QIcon(),tr("Show Statistics"), this);
 		showStatisticsAct.setStatusTip(tr("Shows the statistics of the game"));
 		
-		preferencesAct = new QAction(new QIcon(tr("Preferences"), this));
+		preferencesAct = new QAction(new QIcon(),tr("Preferences"), this);
 		preferencesAct.setStatusTip(tr("Preferences menu"));
 		
-		aboutAbaloneAct = new QAction(new QIcon(tr("About Abalone"), this));
+		aboutAbaloneAct = new QAction(new QIcon(),tr("About Abalone"), this);
 		aboutAbaloneAct.setStatusTip(tr("Link to abalone wiki"));
 		
-		reportProblemAct = new QAction(new QIcon(tr("Report Problem"), this));
+		reportProblemAct = new QAction(new QIcon(),tr("Report Problem"), this);
 		reportProblemAct.setStatusTip(tr("Link to our issuetracker"));
 		
-		aboutAct = new QAction(new QIcon(tr("About"), this));
+		aboutAct = new QAction(new QIcon(),tr("About"), this);
 		aboutAct.setStatusTip(tr("About this game"));
 	}
 	
@@ -131,12 +133,12 @@ public class AbaloneFront extends QMainWindow
 		game.addAction(loadAct);
 		game.addAction(saveAct);
 		game.addAction(saveAsAct);
-		game.addSeperator();
+		game.addSeparator();
 		game.addAction(networkgameAct);
-		game.addSeperator();
+		game.addSeparator();
 		game.addAction(undoMoveAct);
 		game.addAction(resignAct);
-		game.addSeperator();
+		game.addSeparator();
 		game.addAction(quitAct);
 		
 		view = menuBar().addMenu(tr("View"));
