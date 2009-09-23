@@ -1,3 +1,5 @@
+package abalone.gui;
+
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 

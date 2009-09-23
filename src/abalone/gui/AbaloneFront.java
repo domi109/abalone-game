@@ -1,4 +1,7 @@
-//package abalone.gui;
+package abalone.gui;
+
+import abalone.gamelogic.GameLogic;
+import abalone.gamelogic.StandardAbaloneLogic;
 
 import com.trolltech.qt.QVariant;
 import com.trolltech.qt.core.*;
@@ -7,29 +10,33 @@ import com.trolltech.qt.webkit.*;
 
 public class AbaloneFront extends QMainWindow
 {
-	QMenu game;
-	QMenu view;
-	QMenu settings;
-	QMenu help;
+	//TODO it's not nice to have that here..
+	private static GameLogic logic;
 	
-	QAction newAct;
-	QAction loadAct;
-	QAction saveAct;
-	QAction saveAsAct;
-	QAction networkgameAct;
-	QAction undoMoveAct;
-	QAction resignAct;
-	QAction quitAct;
 	
-	QAction fullscreenAct;
-	QAction showLogsAct;
-	QAction showStatisticsAct;
-	QAction preferencesAct;
-	QAction playerSettingsAct;
+	private QMenu game;
+	private QMenu view;
+	private QMenu settings;
+	private QMenu help;
 	
-	QAction aboutAbaloneAct;
-	QAction reportProblemAct;
-	QAction aboutAct;
+	private QAction newAct;
+	private QAction loadAct;
+	private QAction saveAct;
+	private QAction saveAsAct;
+	private QAction networkgameAct;
+	private QAction undoMoveAct;
+	private QAction resignAct;
+	private QAction quitAct;
+	
+	private QAction fullscreenAct;
+	private QAction showLogsAct;
+	private QAction showStatisticsAct;
+	private QAction preferencesAct;
+	private QAction playerSettingsAct;
+	
+	private QAction aboutAbaloneAct;
+	private QAction reportProblemAct;
+	private QAction aboutAct;
 	//QAction aboutQtAct;
 	
 	public AbaloneFront()
@@ -189,14 +196,15 @@ public class AbaloneFront extends QMainWindow
 			QHBoxLayout leftRight = new QHBoxLayout();
 			leftRight.addWidget(new GameWidget());
 			leftRight.addSpacing(20);
-			leftRight.addWidget(new GameInfoWidget());
-			
+			//leftRight.addWidget(new GameInfoWidget());
+			leftRight.addWidget(new BoardWidget(logic.initBoard()));
 			setLayout(leftRight);
 		}
 	}
 	
 	public static void main(String[] args)
 	{
+		logic = new StandardAbaloneLogic();
 		QApplication.initialize(args);
 		
 		AbaloneFront front = new AbaloneFront();
