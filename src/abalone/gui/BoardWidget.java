@@ -10,20 +10,7 @@ import abalone.model.Node;
 import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QPointF;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QBrush;
-import com.trolltech.qt.gui.QColor;
-import com.trolltech.qt.gui.QFont;
-import com.trolltech.qt.gui.QGradient;
-import com.trolltech.qt.gui.QLCDNumber;
-import com.trolltech.qt.gui.QLinearGradient;
-import com.trolltech.qt.gui.QPaintEvent;
-import com.trolltech.qt.gui.QPainter;
-import com.trolltech.qt.gui.QPen;
-import com.trolltech.qt.gui.QPushButton;
-import com.trolltech.qt.gui.QRadialGradient;
-import com.trolltech.qt.gui.QSlider;
-import com.trolltech.qt.gui.QVBoxLayout;
-import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.*
 
 public class BoardWidget extends QWidget
 {

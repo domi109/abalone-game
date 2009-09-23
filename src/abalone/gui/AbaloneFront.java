@@ -194,10 +194,9 @@ public class AbaloneFront extends QMainWindow
 		public MainWidget()
 		{
 			QHBoxLayout leftRight = new QHBoxLayout();
-			leftRight.addWidget(new GameWidget());
+			leftRight.addWidget(new BoardWidget(logic.initBoard()));
 			leftRight.addSpacing(20);
 			//leftRight.addWidget(new GameInfoWidget());
-			leftRight.addWidget(new BoardWidget(logic.initBoard()));
 			setLayout(leftRight);
 		}
 	}
