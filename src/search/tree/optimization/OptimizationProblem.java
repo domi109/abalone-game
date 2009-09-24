@@ -1,4 +1,4 @@
-package search.optimization.tree;
+package search.tree.optimization;
 
 import search.tree.SearchNode;
 import search.tree.SearchProblem;

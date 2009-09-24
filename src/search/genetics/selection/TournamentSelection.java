@@ -1,35 +1,26 @@
-package search.optimization.genetics.selection;
+package search.genetics.selection;
 
-import search.optimization.genetics.GeneticIndividual;
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
 
-public class KeepBestTournamentSelection implements GeneticSelection
+public class TournamentSelection implements GeneticSelection
 {
 	private int groupSize = 10;
-	private int keep = 2;
 
-	public KeepBestTournamentSelection(int tournamentGroupSize,
-			int keepBestGroupSize)
+	public TournamentSelection(int tournamentGroupSize)
 	{
 		groupSize = tournamentGroupSize;
-		keep = keepBestGroupSize;
 	}
 
 	public GeneticPopulation select(GeneticPopulation pop, int size)
 	{
-		if (size-keep > groupSize)
+		if (size > groupSize)
 		{
 			throw new RuntimeException(
 					"The tournamentgroup is smaller than the selection size");
 		}
 		
 		GeneticPopulation selected = new GeneticPopulation();
-		for (int i = 0; i < keep; i++)
-		{
-			GeneticIndividual max = pop.getFittest();
-			selected.add(max);
-			pop.remove(max);
-		}
 
 		for (int i = 0; i < (pop.size()-groupSize); i++)
 		{
@@ -39,7 +30,7 @@ public class KeepBestTournamentSelection implements GeneticSelection
 			pop.remove(delInd);
 		}
 
-		for (int i = 0; i < (size - keep); i++)
+		for (int i = 0; i < size; i++)
 		{
 			GeneticIndividual max = pop.getFittest();
 			selected.add(max);

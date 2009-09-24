@@ -1,6 +1,6 @@
-package search.optimization.genetics.selection;
+package search.genetics.selection;
 
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticPopulation;
 
 public interface GeneticSelection
 {

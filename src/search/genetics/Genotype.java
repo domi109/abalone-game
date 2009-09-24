@@ -1,4 +1,4 @@
-package search.optimization.genetics;
+package search.genetics;
 
 import java.util.ArrayList;
 import java.util.Random;

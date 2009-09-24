@@ -1,7 +1,7 @@
-package search.optimization.genetics;
+package search.genetics;
 
-import search.optimization.genetics.reproduction.ReproductionMethod;
-import search.optimization.genetics.selection.GeneticSelection;
+import search.genetics.reproduction.ReproductionMethod;
+import search.genetics.selection.GeneticSelection;
 
 public class GeneticSearch
 {

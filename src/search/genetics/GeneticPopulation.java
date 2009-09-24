@@ -1,10 +1,10 @@
-package search.optimization.genetics;
+package search.genetics;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import search.optimization.genetics.reproduction.ReproductionMethod;
+import search.genetics.reproduction.ReproductionMethod;
 
 public class GeneticPopulation extends ArrayList<GeneticIndividual>
 {

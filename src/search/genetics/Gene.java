@@ -1,4 +1,4 @@
-package search.optimization.genetics;
+package search.genetics;
 
 public interface Gene
 {

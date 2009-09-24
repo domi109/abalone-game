@@ -1,23 +1,28 @@
-package search.optimization.genetics.reproduction;
+package search.genetics.reproduction;
 
-import search.optimization.genetics.GeneticIndividual;
-import search.optimization.genetics.GeneticPopulation;
+import java.util.Collections;
+import java.util.Random;
 
-public class KeepBestNoCrossoverReproduction implements ReproductionMethod
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
+
+public class LimitedKeepBestPairwiseReproduction implements ReproductionMethod
 {
-	private int keep;
-	private GeneticPopulation pop;
 
-	public KeepBestNoCrossoverReproduction(int keepBestGroupSize)
+	private GeneticPopulation pop;
+	private int keep;
+	private int limit;
+
+	public LimitedKeepBestPairwiseReproduction(int limit,int keepBestGroupSize)
 	{
 		keep = keepBestGroupSize;
+		this.limit = limit;
 	}
 
 	public GeneticPopulation getResult()
 	{
 
 		GeneticPopulation newGeneration = new GeneticPopulation();
-
 		for (int i = 0; i < keep; i++)
 		{
 			// Take the fittest into next generation without mutation
@@ -25,14 +30,17 @@ public class KeepBestNoCrossoverReproduction implements ReproductionMethod
 			pop.remove(max);
 			newGeneration.add(max);
 		}
-
-		for (int i = 0; i < pop.size(); i++)
+		Random r = new Random();
+		Collections.sort(pop);
+		int i = 0;
+		while (newGeneration.size() < limit)
 		{
-			GeneticIndividual newGI = pop.get(i);
+			GeneticIndividual newGI = pop.get(i%pop.size())
+					.reproduceWith(pop.get(r.nextInt(pop.size() - 1)));
 			newGI.getPhenotype().mutate();
 			newGeneration.add(newGI);
+			i++;
 		}
-
 		return newGeneration;
 	}
 

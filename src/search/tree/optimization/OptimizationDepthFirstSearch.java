@@ -1,4 +1,4 @@
-package search.optimization.tree;
+package search.tree.optimization;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import search.tree.exhaustive.DepthFirstSearch;
 
 public class OptimizationDepthFirstSearch extends DepthFirstSearch
 {
-	private OptimizationProblem problem;
+	protected OptimizationProblem problem;
 	
 	public OptimizationDepthFirstSearch(OptimizationProblem t)
 	{

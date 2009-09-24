@@ -1,10 +1,10 @@
-package search.optimization.genetics.reproduction;
+package search.genetics.reproduction;
 
 import java.util.Collections;
 import java.util.Random;
 
-import search.optimization.genetics.GeneticIndividual;
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
 
 public class LimitedPairwiseReproduction implements ReproductionMethod
 {

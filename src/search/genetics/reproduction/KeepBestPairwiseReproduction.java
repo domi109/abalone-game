@@ -1,19 +1,21 @@
-package search.optimization.genetics.reproduction;
+package search.genetics.reproduction;
 
 import java.util.Collections;
 
-import search.optimization.genetics.GeneticIndividual;
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
 
-public class PairwiseReproduction implements ReproductionMethod
+public class KeepBestPairwiseReproduction implements ReproductionMethod
 {
 
 	private GeneticPopulation pop;
 	private int multiplicator = 2;
+	private int keep;
 
-	public PairwiseReproduction(int multiplicator)
+	public KeepBestPairwiseReproduction(int multiplicator, int keepBestGroupSize)
 	{
 		this.multiplicator = multiplicator;
+		keep = keepBestGroupSize;
 	}
 
 	public GeneticPopulation getResult()
@@ -21,6 +23,13 @@ public class PairwiseReproduction implements ReproductionMethod
 
 		GeneticPopulation newGeneration = new GeneticPopulation();
 
+		for (int i = 0; i<keep;i++)
+		{
+			// Take the fittest into next generation without mutation
+			GeneticIndividual max = pop.getFittest();
+			pop.remove(max);
+			newGeneration.add(max);
+		}
 		if (pop.size() % 2 != 0)
 		{
 			// if there's an odd number of elements, take the fittest into next

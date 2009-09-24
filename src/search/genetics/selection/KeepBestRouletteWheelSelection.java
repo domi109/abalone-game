@@ -1,9 +1,9 @@
-package search.optimization.genetics.selection;
+package search.genetics.selection;
 
 import java.util.Collections;
 
-import search.optimization.genetics.GeneticIndividual;
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
 
 
 public class KeepBestRouletteWheelSelection implements GeneticSelection

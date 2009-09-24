@@ -1,6 +1,6 @@
-package search.optimization.genetics.reproduction;
+package search.genetics.reproduction;
 
-import search.optimization.genetics.GeneticPopulation;
+import search.genetics.GeneticPopulation;
 
 public interface ReproductionMethod
 {
