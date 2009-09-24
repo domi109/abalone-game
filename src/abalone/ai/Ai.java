@@ -1,14 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Interface class for the Artificial Intelligence (AI).
+ *
  */
 
 package abalone.ai;
 
-/**
- *
- * @author rutger
- */
 public interface Ai {
+
+    // TODO Add some generic methods for the algorithms.
 
 }
