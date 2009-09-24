@@ -10,7 +10,7 @@ import abalone.model.Node;
 import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QPointF;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.*
+import com.trolltech.qt.gui.*;
 
 public class BoardWidget extends QWidget
 {
