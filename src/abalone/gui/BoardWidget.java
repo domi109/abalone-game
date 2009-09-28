@@ -1,75 +1,92 @@
 package abalone.gui;
 
+import java.util.HashMap;
 import java.util.List;
 
 import abalone.adt.KeyValuePair;
+import abalone.gamestate.GameState;
 import abalone.model.Board;
 import abalone.model.Direction;
 import abalone.model.Node;
+import abalone.model.Player;
 
-import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QPointF;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QBrush;
+import com.trolltech.qt.gui.QColor;
+import com.trolltech.qt.gui.QGraphicsScene;
+import com.trolltech.qt.gui.QGraphicsView;
+import com.trolltech.qt.gui.QLinearGradient;
 
-public class BoardWidget extends QWidget
+public class BoardWidget extends QGraphicsView
 {
-	private Board board;
-	public BoardWidget(Board board)
+	private GameState state;
+
+	public BoardWidget(GameState state)
 	{
-		this.board = board;
+		this.state = state;
+		
+		GameNodeEllipse.playerColors = new HashMap<Player, QColor>();
+		GameNodeEllipse.playerColors.put(state.getPlayers().get(0), QColor.red);
+		GameNodeEllipse.playerColors.put(state.getPlayers().get(1), QColor.blue);
+		
+		QGraphicsScene scene = prepareScene();
+		QLinearGradient gradient = new QLinearGradient(0, 1000, 0, 0);
+		QBrush brush = new QBrush(gradient);
+		setBackgroundBrush(brush);
+
+		setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);
+		this.setScene(scene);
+		setBaseSize(sizeHint());
 	}
-	
-	@Override
-    protected void paintEvent(QPaintEvent event) {
 
-        QPainter painter = new QPainter(this);
-        drawBoard(painter);
-    }
+	protected QGraphicsScene prepareScene()
+	{
+		QGraphicsScene scene = new QGraphicsScene();
 
-    private void drawBoard(QPainter painter) {
+		Board board = state.getBoard();
 
-          painter.setPen(new QPen(QColor.black,1));
+		QPointF center = new QPointF(this.width() / 2, this.height() / 2);
+		double r = 15;
+		List<KeyValuePair<Direction, Node>> path = board.getEquiPaths().get(0);
+		for (KeyValuePair<Direction, Node> step : path)
+		{
+			if (Direction.RIGHT.equals(step.getKey()))
+			{
+				center.setX(center.x() + 2 * r);
+			}
+			else if (Direction.LEFT.equals(step.getKey()))
+			{
+				center.setX(center.x() - 2 * r);
+			}
+			else if (Direction.UPPER_LEFT.equals(step.getKey()))
+			{
+				center.setY(center.y() - Math.sqrt(3) * r);
+				center.setX(center.x() - r);
+			}
+			else if (Direction.UPPER_RIGHT.equals(step.getKey()))
+			{
+				center.setY(center.y() - Math.sqrt(3) * r);
+				center.setX(center.x() + r);
+			}
+			else if (Direction.DOWN_LEFT.equals(step.getKey()))
+			{
+				center.setY(center.y() + Math.sqrt(3) * r);
+				center.setX(center.x() - r);
+			}
+			else if (Direction.DOWN_RIGHT.equals(step.getKey()))
+			{
+				center.setY(center.y() + Math.sqrt(3) * r);
+				center.setX(center.x() + r);
+			}
 
-          QPointF center = new QPointF(this.width()/2,this.height()/2);
-          double r = 15;
+			GameNodeEllipse ellipse = new GameNodeEllipse(step.getValue(),center.x() - r, center.y() - r, 2 * r, 2 * r);
+			scene.addItem(ellipse);
 
+		}
 
+		return scene;
+	}
 
-          List<KeyValuePair<Direction, Node>> path = board.getEquiPaths().get(0);
-          for(KeyValuePair<Direction,Node> step : path)
-          {
-        	  if(Direction.RIGHT.equals(step.getKey())){
-        		  center.setX(center.x()+2*r);
-        	  }
-        	  else if(Direction.LEFT.equals(step.getKey())){
-        		  center.setX(center.x()-2*r);
-        	  }
-        	  else if(Direction.UPPER_LEFT.equals(step.getKey())){
-        		  center.setY(center.y()-Math.sqrt(3)*r);
-        		  center.setX(center.x()-r);
-        	  }
-        	  else if(Direction.UPPER_RIGHT.equals(step.getKey())){
-        		  center.setY(center.y()-Math.sqrt(3)*r);
-        		  center.setX(center.x()+r);
-        	  }
-        	  else if(Direction.DOWN_LEFT.equals(step.getKey())){
-        		  center.setY(center.y()+Math.sqrt(3)*r);
-        		  center.setX(center.x()-r);
-        	  }
-        	  else if(Direction.DOWN_RIGHT.equals(step.getKey())){
-        		  center.setY(center.y()+Math.sqrt(3)*r);
-        		  center.setX(center.x()+r);
-        	  }
-
-              QGradient gradient = new QRadialGradient(center,15);
-              gradient.setColorAt(0.3, QColor.yellow);
-              gradient.setColorAt(1.0, QColor.green);
-              painter.setBrush(new QBrush(gradient));
-              painter.drawEllipse(center, 15, 15);
-
-          }
-          
-          painter.end();
-    }
 }

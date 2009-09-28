@@ -21,7 +21,7 @@ public class StandardAbaloneLogic implements GameLogic
 		// Create the graph recursively:
 		createNode(b, b.getCentralNode(), 4);
 
-		for(Direction d : Direction.UPPER_LEFT)
+		for (Direction d : Direction.UPPER_LEFT)
 		{
 			b.addPath(createPath(b.getCentralNode(), d));
 		}
@@ -38,7 +38,7 @@ public class StandardAbaloneLogic implements GameLogic
 		for (int i = 1; i < 5; i++)
 		{
 			// Iterate through all the 5 rings of the board
-			currentNode.getNeighbour(currentDir);
+			currentNode = currentNode.getNeighbour(currentDir);
 			path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
 			currentDir = currentDir.getNextCW();
 
@@ -48,8 +48,8 @@ public class StandardAbaloneLogic implements GameLogic
 				{
 					for (int j = 0; j < i - 1; j++)
 					{
-						//System.out.println(i + " " +d);
-						currentNode.getNeighbour(d);
+						// System.out.println(i + " " +d);
+						currentNode = currentNode.getNeighbour(d);
 						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
 				}
@@ -57,8 +57,8 @@ public class StandardAbaloneLogic implements GameLogic
 				{
 					for (int j = 0; j < i; j++)
 					{
-						//System.out.println(i + " " +d);
-						currentNode.getNeighbour(d);
+						// System.out.println(i + " " +d);
+						currentNode = currentNode.getNeighbour(d);
 						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
 				}
@@ -74,8 +74,27 @@ public class StandardAbaloneLogic implements GameLogic
 	@Override
 	public GameState initState(Board board, List<Player> players)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		GameState state = new GameState();
+		state.setPlayers(players);
+		state.setCurrentPlayer(players.get(0));
+		state.setBoard(board);
+
+		List<KeyValuePair<Direction, Node>> path = board.getEquiPaths().get(0);
+		int i = 0;
+		for (KeyValuePair<Direction, Node> step : path)
+		{
+			if ((i >= 8 && i <= 10) || (i >= 21 && i <= 24) || (i >= 39 && i <= 45))
+			{
+				step.getValue().setMarbleOwner(players.get(0));
+			}
+			else if ((i >= 14 && i <= 16) || (i >= 30 && i <= 33) || (i >= 51 && i <= 57))
+			{
+				step.getValue().setMarbleOwner(players.get(1));
+			}
+			i++;
+		}
+
+		return state;
 	}
 
 	@Override

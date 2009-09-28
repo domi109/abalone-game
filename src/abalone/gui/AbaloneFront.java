@@ -1,7 +1,14 @@
 package abalone.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
+import abalone.gamestate.GameState;
+import abalone.model.Board;
+import abalone.model.HumanPlayer;
+import abalone.model.Player;
 
 import com.trolltech.qt.QVariant;
 import com.trolltech.qt.core.*;
@@ -11,7 +18,7 @@ import com.trolltech.qt.webkit.*;
 public class AbaloneFront extends QMainWindow
 {
 	//TODO it's not nice to have that here..
-	private static GameLogic logic;
+	private static GameState state;
 	
 	
 	private QMenu game;
@@ -194,16 +201,23 @@ public class AbaloneFront extends QMainWindow
 		public MainWidget()
 		{
 			QHBoxLayout leftRight = new QHBoxLayout();
-			leftRight.addWidget(new BoardWidget(logic.initBoard()));
+
 			leftRight.addSpacing(20);
 			//leftRight.addWidget(new GameInfoWidget());
+			leftRight.addWidget(new BoardWidget(state));
+
 			setLayout(leftRight);
 		}
 	}
 	
 	public static void main(String[] args)
 	{
-		logic = new StandardAbaloneLogic();
+		GameLogic logic = new StandardAbaloneLogic();
+		Board board = logic.initBoard();
+		List<Player> players = new ArrayList<Player>(2);
+		players.add(new HumanPlayer());
+		players.add(new HumanPlayer());
+		state = logic.initState(board, players);
 		QApplication.initialize(args);
 		
 		AbaloneFront front = new AbaloneFront();
