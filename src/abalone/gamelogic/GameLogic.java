@@ -12,10 +12,6 @@ import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
 
-/**
- *
- * @author rutger
- */
 public interface GameLogic {
 
     // create board, return board. Initialize the game, set marbles to initial positions, with board as argument.
