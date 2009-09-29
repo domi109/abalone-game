@@ -20,7 +20,6 @@ public class AbaloneFront extends QMainWindow
 	//TODO it's not nice to have that here..
 	private static GameState state;
 	
-	
 	private QMenu game;
 	private QMenu view;
 	private QMenu settings;
@@ -52,7 +51,7 @@ public class AbaloneFront extends QMainWindow
 		setMenuBar(menuBar);
 		setWindowIcon(new QIcon("classpath:Icons/logo.png"));
 		setWindowTitle("Abalone-game");
-		setMinimumSize(300,220);
+		setMinimumSize(300,300);
 		
 		MainWidget game = new MainWidget();
 		setCentralWidget(game);
@@ -208,6 +207,12 @@ public class AbaloneFront extends QMainWindow
 
 			setLayout(leftRight);
 		}
+	}
+	
+	//TODO Clean this up together with gamestate
+	public static Player getCurrentPlayer()
+	{
+		return state.getCurrentPlayer();
 	}
 	
 	public static void main(String[] args)

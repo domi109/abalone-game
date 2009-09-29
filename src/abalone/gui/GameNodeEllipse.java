@@ -1,4 +1,4 @@
- package abalone.gui;
+package abalone.gui;
 
 import java.util.Map;
 
@@ -24,6 +24,8 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 	private Node node;
 	private boolean selected =false;
 	
+	private static int marblesActivated = 0;
+	
 	public static Map<Player,QColor> playerColors;
 	
 	public GameNodeEllipse(Node node,double x,double y,double w, double h)
@@ -42,8 +44,11 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 	@Override
 	public void hoverEnterEvent(QGraphicsSceneHoverEvent event)
 	{
-		fillMarked();
-		super.hoverEnterEvent(event);
+		if(node.getMarbleOwner() == AbaloneFront.getCurrentPlayer());
+		{
+			fillMarked();
+			super.hoverEnterEvent(event);
+		}
 	}
 	
 	@Override
@@ -63,6 +68,30 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 	@Override
 	public void mousePressEvent(QGraphicsSceneMouseEvent event)
 	{
+		if(node.getMarbleOwner() == AbaloneFront.getCurrentPlayer());
+		{
+			if(!selected)
+			{ 
+				if(marblesActivated < 3) // you can always go from 2 to 3 but nothing more!
+				{
+					marblesActivated++;
+					PressOkey(event);
+				}
+			}
+			else
+			{
+				marblesActivated--;
+				PressOkey(event);
+			}
+		}
+	}
+	
+	/**
+	 * The actual code needed when a node is pressed, put into a 
+	 * seperate method for ease
+	 */
+	private void PressOkey(QGraphicsSceneMouseEvent event)
+	{
 		selected = !selected;
 		if(selected)
 		{
@@ -78,6 +107,11 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 			this.setZValue(0);
 		}		
 		super.mousePressEvent(event);
+	}
+	
+	public void resetMarblesActivated()
+	{
+		marblesActivated = 0;
 	}
 	
 	public void fillNormal()
