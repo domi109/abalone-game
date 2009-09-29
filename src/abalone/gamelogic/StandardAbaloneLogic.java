@@ -18,7 +18,7 @@ public class StandardAbaloneLogic implements GameLogic
 	public Board initBoard()
 	{
 		Board b = new Board();
-		// Create the graph recursively:
+		// TODO Create the graph recursively:
 		createNode(b, b.getCentralNode(), 4);
 
 		for (Direction d : Direction.UPPER_LEFT)
@@ -37,7 +37,7 @@ public class StandardAbaloneLogic implements GameLogic
 		Node currentNode = centralNode;
 		for (int i = 1; i < 5; i++)
 		{
-			// Iterate through all the 5 rings of the board
+			// TODO Iterate through all the 5 rings of the board
 			currentNode = currentNode.getNeighbour(currentDir);
 			path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
 			currentDir = currentDir.getNextCW();
