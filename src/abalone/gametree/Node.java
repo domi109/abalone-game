@@ -5,7 +5,7 @@ import abalone.gamestate.GameState;
 
 public class Node {
 
-	private Node parent;
+    private Node parent;
     private ArrayList<Node> children;
     private GameState data;
     
