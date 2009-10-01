@@ -19,4 +19,8 @@ public interface Ai {
     // initialize somethings, run AI, etc
     // etc, etc, etc
 
+    public void readGamestate(GameState state);
+    
+
+
 }
