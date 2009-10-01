@@ -21,12 +21,13 @@ import com.trolltech.qt.gui.QWidget;
 
 public class GameNodeEllipse extends QGraphicsEllipseItem
 {
-	private Node node;
-	private boolean selected =false;
-	
-	private static int marblesActivated = 0;
-	
 	public static Map<Player,QColor> playerColors;
+
+	// clicked event
+    public Signal1<GameNodeEllipse> clicked = new Signal1<GameNodeEllipse>();
+    
+	private Node node;
+	private boolean activated =false;	
 	
 	public GameNodeEllipse(Node node,double x,double y,double w, double h)
 	{
@@ -44,11 +45,8 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 	@Override
 	public void hoverEnterEvent(QGraphicsSceneHoverEvent event)
 	{
-		if(node.getMarbleOwner() == AbaloneFront.getCurrentPlayer());
-		{
-			fillMarked();
-			super.hoverEnterEvent(event);
-		}
+		fillMarked();
+		super.hoverEnterEvent(event);
 	}
 	
 	@Override
@@ -59,62 +57,33 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 	}
 	
 	@Override
-	public void mouseReleaseEvent(QGraphicsSceneMouseEvent event)
-	{
-
-		super.mouseReleaseEvent(event);
-	}
-	
-	@Override
 	public void mousePressEvent(QGraphicsSceneMouseEvent event)
 	{
-		if(node.getMarbleOwner() == AbaloneFront.getCurrentPlayer());
-		{
-			if(!selected)
-			{ 
-				if(marblesActivated < 3) // you can always go from 2 to 3 but nothing more!
-				{
-					marblesActivated++;
-					PressOkey(event);
-				}
-			}
-			else
-			{
-				marblesActivated--;
-				PressOkey(event);
-			}
-		}
+		clicked.emit(this);
 	}
 	
-	/**
-	 * The actual code needed when a node is pressed, put into a 
-	 * seperate method for ease
-	 */
-	private void PressOkey(QGraphicsSceneMouseEvent event)
+	public void activate()
 	{
-		selected = !selected;
-		if(selected)
-		{
-			//QColor col = (node.getMarbleOwner()==null)?QColor.black : playerColors.get(node.getMarbleOwner()).darker();
-			QColor col = QColor.yellow;
-			QPen pen = new QPen(col,4);
-			this.setPen(pen);
-			this.setZValue(1);
-		}
-		else
-		{
-			this.setPen(new QPen(QColor.black,1));
-			this.setZValue(0);
-		}		
-		super.mousePressEvent(event);
+		activated = true;
+		QColor col = QColor.yellow;
+		QPen pen = new QPen(col,4);
+		this.setPen(pen);
+		this.setZValue(1);
 	}
 	
-	public void resetMarblesActivated()
+	public void deactivate()
 	{
-		marblesActivated = 0;
+		activated = false;
+		this.setPen(new QPen(QColor.black,1));
+		this.setZValue(0);
 	}
 	
-	public void fillNormal()
+	public boolean isActivated()
+	{
+		return activated;
+	}
+	
+	private void fillNormal()
 	{
 		QGradient gradient;
 		if (node.getMarbleOwner() == null)
@@ -132,7 +101,7 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 		this.setBrush(new QBrush(gradient));
 	}
 	
-	public void fillMarked()
+	private void fillMarked()
 	{
 		QGradient gradient;
 		if (node.getMarbleOwner() == null)
@@ -149,5 +118,10 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 			gradient.setColorAt(0.3, QColor.gray.lighter());
 		}
 		this.setBrush(new QBrush(gradient));
+	}
+
+	public Node getNode()
+	{
+		return node;
 	}
 }

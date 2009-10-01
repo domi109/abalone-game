@@ -17,8 +17,7 @@ import com.trolltech.qt.webkit.*;
 
 public class AbaloneFront extends QMainWindow
 {
-	//TODO it's not nice to have that here..
-	private static GameState state;
+	private GameState state;
 	
 	private QMenu game;
 	private QMenu view;
@@ -45,8 +44,9 @@ public class AbaloneFront extends QMainWindow
 	private QAction aboutAct;
 	//QAction aboutQtAct;
 	
-	public AbaloneFront()
+	public AbaloneFront(GameState state)
 	{
+		this.state=state;
 		QMenuBar menuBar = new QMenuBar();
 		setMenuBar(menuBar);
 		setWindowIcon(new QIcon("classpath:Icons/logo.png"));
@@ -209,25 +209,5 @@ public class AbaloneFront extends QMainWindow
 		}
 	}
 	
-	//TODO Clean this up together with gamestate
-	public static Player getCurrentPlayer()
-	{
-		return state.getCurrentPlayer();
-	}
-	
-	public static void main(String[] args)
-	{
-		GameLogic logic = new StandardAbaloneLogic();
-		Board board = logic.initBoard();
-		List<Player> players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer());
-		players.add(new HumanPlayer());
-		state = logic.initState(board, players);
-		QApplication.initialize(args);
-		
-		AbaloneFront front = new AbaloneFront();
-		front.show();
-		
-		QApplication.exec();
-	}
+
 }
