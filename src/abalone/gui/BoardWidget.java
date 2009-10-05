@@ -122,15 +122,15 @@ public class BoardWidget extends QGraphicsView
 		}
 		
 		// We now want to draw some arrows
-		double angle = Math.PI/2.0;
+		double angle = 0;
 		
-		for(Direction d : Direction.UPPER_LEFT)
+		for(Direction d : Direction.LEFT)
 		{
 			// Iterate through all directions
-			QPointF p = new QPointF(this.width() / 2.0-Math.cos(angle)*10.0*r,this.height() / 2.0-Math.sin(angle)*10.0*r);
+			QPointF p = new QPointF(this.width() / 2.0-Math.cos(angle)*11.0*r,this.height() / 2.0-Math.sin(angle)*11.0*r);
 			
 			// the ellipses are just placeholders for the arrows
-			scene.addEllipse(new QRectF(p.x(),p.y(),10,10));
+			scene.addItem(new Arrow(p.x(),p.y(),angle,d));
 			
 			// continue further around the board
 			angle+=Math.PI/3.0;
