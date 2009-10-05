@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TreeSearch
 {
 	// A search problem
-	private SearchProblem problem;
+	protected SearchProblem problem;
 
 	/**
 	 * A method that is called to choose the next leaf node that shall be

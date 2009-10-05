@@ -2,6 +2,8 @@ package search.tree;
 
 import java.util.ArrayList;
 
+import abalone.model.Move;
+
 import search.Action;
 
 /**
@@ -151,5 +153,10 @@ public abstract class SearchNode
 			a.add(action);
 		}
 		return a;
+	}
+
+	public Action getAction()
+	{
+		return this.action;
 	}
 }

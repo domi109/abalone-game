@@ -1,4 +1,4 @@
-package search.tree.minimax;
+package search.tree.games.minimax;
 
 import search.tree.SearchProblem;
 import search.tree.SearchState;

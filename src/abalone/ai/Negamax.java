@@ -9,7 +9,7 @@ import abalone.gamestate.GameState;
 import abalone.gametree.Node;
 import abalone.gametree.Tree;
 
-public class Negamax implements Algorithms {    
+public class Negamax  {    
 
     public void readGamestate(GameState state) {
       // TODO read gamestate here.

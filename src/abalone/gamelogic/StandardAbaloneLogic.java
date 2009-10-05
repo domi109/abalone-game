@@ -2,6 +2,8 @@ package abalone.gamelogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
@@ -177,6 +179,23 @@ public class StandardAbaloneLogic implements GameLogic
 			// the neighbour node.
 			createNode(b, neighbour, level - 1);
 		}
+	}
+
+	/**
+	 * Return the player who has won and null if there currently is no winner at all.
+	 * @see abalone.gamelogic.GameLogic#getWinner(abalone.gamestate.GameState)
+	 */
+	@Override
+	public Player getWinner(GameState state)
+	{
+		for(Entry<Player,Integer> e : state.getMarblesRemoved().entrySet())
+		{
+			if(e.getValue() >= 6)
+			{
+				return e.getKey();
+			}
+		}
+		return null;
 	}
 
 }

@@ -2,8 +2,10 @@ package abalone.model;
 
 import java.util.List;
 
+import search.Action;
 
-public class Move
+
+public class Move extends Action
 {
 	List<Node> nodes;
 	Direction direction;

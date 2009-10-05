@@ -22,4 +22,6 @@ public interface GameLogic {
 	public GameState initState(Board board, List<Player> players);
 	
 	public void applyMove(GameState state, Move move);
+
+	public Object getWinner(GameState gs);
 }
