@@ -17,6 +17,8 @@ import com.trolltech.qt.webkit.*;
 
 public class AbaloneFront extends QMainWindow
 {
+	public Signal0 newGame = new Signal0();
+	
 	private GameState state;
 	
 	private QMenu game;
@@ -68,6 +70,11 @@ public class AbaloneFront extends QMainWindow
 		//createStatusBar();	
 	}
 	
+	public void newGame()
+	{
+		newGame.emit();
+	}
+	
 	public void aboutAbalone()
 	{
 		QWebView view = new QWebView();
@@ -103,7 +110,7 @@ public class AbaloneFront extends QMainWindow
 		newAct = new QAction(tr("&New Game"), this);
 		newAct.setShortcut(new QKeySequence(tr("Ctrl+N")));
 		newAct.setStatusTip(tr("Create a new Game"));
-		//newAct.triggered.connect(this, "newFile()");
+		newAct.triggered.connect(this, "newGame()");
 		
 		loadAct = new QAction(new QIcon(),tr("&Load"), this);
 		loadAct.setShortcut(tr("Ctrl+L"));
@@ -200,10 +207,9 @@ public class AbaloneFront extends QMainWindow
 		public MainWidget()
 		{
 			QHBoxLayout leftRight = new QHBoxLayout();
-
-			leftRight.addSpacing(20);
-			//leftRight.addWidget(new GameInfoWidget());
 			leftRight.addWidget(new BoardWidget(state));
+			leftRight.addSpacing(20);
+			leftRight.addWidget(new GameInfoWidget());
 
 			setLayout(leftRight);
 		}

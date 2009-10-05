@@ -42,6 +42,21 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 		fillNormal();
 	}
 	
+	/**
+	 * Special constructor for the non-ingame marbles
+	 * @param c The Color of the player that the marble indicates
+	 * @param lost Wether this marble needs to be drawn lost or not
+	 */
+	public GameNodeEllipse(QColor c, boolean lost, double x,double y,double w, double h)
+	{
+		super(x,y,w,h);
+		
+		QPen pen = new QPen(QColor.black, 1);
+		this.setZValue(0);
+		this.setPen(pen);
+		fillSpecial(lost, c);
+	}
+	
 	@Override
 	public void hoverEnterEvent(QGraphicsSceneHoverEvent event)
 	{
@@ -83,6 +98,17 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 		return activated;
 	}
 	
+	public void deactivateUse()
+	{
+		this.setAcceptHoverEvents(false);
+		//this.setAcceptedMouseButtons(0);
+		/*  ???
+		 * According to the QT Jambi doc this should be 
+		 * this.setAcceptedMouseButtons(0); but java won't accept integers here
+		 * and null will return nullpointer exceptions
+		 */
+	}
+	
 	private void fillNormal()
 	{
 		QGradient gradient;
@@ -115,6 +141,25 @@ public class GameNodeEllipse extends QGraphicsEllipseItem
 			gradient = new QRadialGradient(rect().x()+rect().width()/2.0 - 1, rect().y()+rect().height()/2.0 - 1,rect().width()/2.0);
 
 			gradient.setColorAt(1.0, playerColors.get(node.getMarbleOwner()).lighter());
+			gradient.setColorAt(0.3, QColor.gray.lighter());
+		}
+		this.setBrush(new QBrush(gradient));
+	}
+	
+	private void fillSpecial(boolean lost, QColor c)
+	{
+		QGradient gradient;
+		if (!lost)
+		{
+			gradient = new QRadialGradient(rect().x()+rect().width()/2.0 + 1, rect().y()+rect().height()/2.0 + 1,rect().width()/2.0);
+			gradient.setColorAt(1.0, QColor.darkGray.lighter());
+			gradient.setColorAt(0.3, QColor.black.lighter());
+		}
+		else
+		{
+			gradient = new QRadialGradient(rect().x()+rect().width()/2.0 - 1, rect().y()+rect().height()/2.0 - 1,rect().width()/2.0);
+
+			gradient.setColorAt(1.0, c);
 			gradient.setColorAt(0.3, QColor.gray.lighter());
 		}
 		this.setBrush(new QBrush(gradient));
