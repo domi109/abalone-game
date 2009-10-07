@@ -15,11 +15,16 @@ import abalone.model.Player;
 
 public class BasicMinimaxAI implements Ai
 {
+
 	private class AbaloneNode extends MiniMaxNode
 	{
 		public AbaloneNode(GameState s)
 		{
 			super(s);
+		}
+		
+		public AbaloneNode(SearchState s, AbaloneNode parent) {
+			super(s, parent);
 		}
 
 		@Override
@@ -28,9 +33,19 @@ public class BasicMinimaxAI implements Ai
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for(Action a : getState().getPossibleActions())
 			{
+				// Every possible action in this state
+				
+				//copy the current state and apply the action on the state copy
 				GameState newState = (GameState) getState().clone();
 				logic.applyMove(newState, (Move)a);
-				successors.add(new AbaloneNode(newState));
+				
+				// create new node and assign properties
+				SearchNode newNode = new AbaloneNode(newState,this);
+				newNode.setStepCost(1);
+				newNode.setAction(a);
+				
+				// add new node to list
+				successors.add(newNode);
 			}
 			
 			return successors;
@@ -52,10 +67,12 @@ public class BasicMinimaxAI implements Ai
 		{
 			if(gs(state).equals(logic.getWinner(gs(state))))
 			{
+				// the current player (max) won - result is one
 				return 1;
 			}
 			else
 			{
+				// the other player (min) won - result is minus one
 				return -1;
 			}
 		}

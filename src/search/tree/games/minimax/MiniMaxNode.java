@@ -12,6 +12,11 @@ public abstract class MiniMaxNode extends SearchNode
 		super(s);
 	}
 	
+	public MiniMaxNode(SearchState s, MiniMaxNode parent)
+	{
+		super(s,parent);
+	}
+	
 	public void setValue(double val)
 	{
 		this.value = val;

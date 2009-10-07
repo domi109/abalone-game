@@ -7,16 +7,16 @@ import search.Action;
 
 public class Move extends Action
 {
-	List<Node> nodes;
+	MarbleLine line;
 	Direction direction;
 	
-	public List<Node> getNodes()
+	public MarbleLine getMarbleLine()
 	{
-		return nodes;
+		return line;
 	}
-	public void setNodes(List<Node> nodes)
+	public void setMarbleLine(MarbleLine line)
 	{
-		this.nodes = nodes;
+		this.line = line;
 	}
 	public Direction getDirection()
 	{
