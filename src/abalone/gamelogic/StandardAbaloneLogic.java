@@ -125,24 +125,35 @@ public class StandardAbaloneLogic implements GameLogic
         
         if(nrMarbles == 2){
             neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(2));
-            if (neighbourDir == null) legal = false;        // not neighbours
-            if(neighbourDir == direction || neighbourDir == direction.getOpposite()){                  // in line move or not
+            if (neighbourDir == null) legal = false;                                                    // not neighbours
+            if(neighbourDir == direction || neighbourDir == direction.getOpposite()){                   // in line move or not
                 parallel = false;
             }else parallel = true;   
         }
-        
-        if(nrMarbles == 3){                                 //check if they are neighbours
+
+        if(nrMarbles == 3){
             neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(1));
             if(neighbourDir == null){
                 neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(2));
                 if(neighbourDir == null){
-                    neighbourDir = findNeighbourDirection(nodes.get(1), nodes.get(2));
-                    if(neighbourDir == null) legal = false;
-                }
+                    legal = false;
+                } else
             }
-            
-            
         }
+
+        
+//        if(nrMarbles == 3){                                                                             //check if they are neighbours
+//            neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(1));
+//            if(neighbourDir == null){
+//                neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(2));
+//                if(neighbourDir == null){
+//                    neighbourDir = findNeighbourDirection(nodes.get(1), nodes.get(2));
+//                    if(neighbourDir == null) legal = false;
+//                }
+//            }
+//        }
+
+
     }
 
     private Direction findNeighbourDirection(Node node, Node neighbour){
