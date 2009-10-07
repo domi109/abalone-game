@@ -9,6 +9,7 @@ import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
 import abalone.model.Board;
 import abalone.model.Direction;
+import abalone.model.MarbleLine;
 import abalone.model.Move;
 import abalone.model.Node;
 import abalone.model.Player;
@@ -110,8 +111,42 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 	}
 
+        public boolean legalMove(MarbleLine marbleLine, Move move){
+            boolean legal = true;
+            List<Node> marbles = marbleLine.getNodes();
+            Direction direction = move.getDirection();
+            Direction orientation = marbleLine.getOrientation();
 
+            if(direction == orientation || direction.getOpposite() == orientation){
+                for(Node marble : marbles){
+                    if(marble.getNeighbour(direction) != null){
+                        return false;
+                    }
+                }
+            }else{
+                boolean finished = false;
+                Node firstMarble = marbles.get(0);
+                
+                while(!finished){
+                    for(Node marble : marbles){
+                        if(firstMarble.getNeighbour(direction) == marble){
+                            firstMarble = marble;
+                            break;
+                        }
+                        finished = true;
+                    }
+                }
+                if(marbles.size() == 1 && firstMarble.getNeighbour(direction) == null) return true;
 
+                if(marbles.size() == 2 && (firstMarble.getNeighbour(direction) == null 
+                        || firstMarble.getNeighbour(direction).getNeighbour(direction) == null)) return true;
+
+                if(marbles.size() == 3 && (firstMarble.getNeighbour(direction) == null
+                        || firstMarble.getNeighbour(direction).getNeighbour(direction) == null 
+                        || firstMarble.getNeighbour(direction).getNeighbour(direction).getNeighbour(direction) == null)) return true;
+            }
+            return legal;
+        }
 
 	/**
 	 * Recursively adds nodes to the board graph
