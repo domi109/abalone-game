@@ -72,6 +72,7 @@ public class BoardWidget extends QGraphicsView
 	
 	public void updateBoard()
 	{
+		this.marLine = new MarbleLine();
 		this.setScene(prepareScene());
 	}
 

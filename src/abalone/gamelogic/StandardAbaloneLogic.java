@@ -13,7 +13,6 @@ import abalone.model.MarbleLine;
 import abalone.model.Move;
 import abalone.model.Node;
 import abalone.model.Player;
-import com.sun.org.apache.bcel.internal.generic.IFEQ;
 
 public class StandardAbaloneLogic implements GameLogic
 {
@@ -104,49 +103,61 @@ public class StandardAbaloneLogic implements GameLogic
 	@Override
 	public void applyMove(GameState state, Move move)
 	{
-		for (Node n : move.getMarbleLine().getNodes())
+		// this if statement is correct but looks horrifying...
+		// maybe there's a nicer way.
+		if(move.getMarbleLine().getOrientation() != null
+			&& (move.getDirection().equals(move.getMarbleLine().getOrientation()) ||
+			move.getDirection().equals(move.getMarbleLine().getOrientation().getOpposite())))
+		{
+			applyInlineMove(state,move);
+		}
+		else
+		{
+			applyBroadSideMove(state,move);
+		}
+
+		// Change player
+		int curr = state.getPlayers().indexOf(state.getCurrentPlayer());
+		state.setCurrentPlayer(state.getPlayers().get((curr + 1) % 2));
+	}
+
+	private void applyBroadSideMove(GameState state, Move move)
+	{
+		for(Node n : move.getMarbleLine().getNodes())
 		{
 			n.getNeighbour(move.getDirection()).setMarbleOwner(n.getMarbleOwner());
 			n.setMarbleOwner(null);
 		}
 	}
 
-        public boolean legalMove(MarbleLine marbleLine, Move move){
-            boolean legal = true;
-            List<Node> marbles = marbleLine.getNodes();
-            Direction direction = move.getDirection();
-            Direction orientation = marbleLine.getOrientation();
+	private void applyInlineMove(GameState state, Move move)
+	{
+		int llength = move.getMarbleLine().getNodes().size();
+		Node n = move.getMarbleLine().getNodes().get(0);
+		Player p = n.getMarbleOwner();
+		Node m = null;
 
-            if(direction == orientation || direction.getOpposite() == orientation){
-                for(Node marble : marbles){
-                    if(marble.getNeighbour(direction) != null){
-                        return false;
-                    }
-                }
-            }else{
-                boolean finished = false;
-                Node firstMarble = marbles.get(0);
-                
-                while(!finished){
-                    for(Node marble : marbles){
-                        if(firstMarble.getNeighbour(direction) == marble){
-                            firstMarble = marble;
-                            break;
-                        }
-                        finished = true;
-                    }
-                }
-                if(marbles.size() == 1 && firstMarble.getNeighbour(direction) == null) return true;
+		while (n != null && n.getMarbleOwner() != null)
+		{
+			m = n;
+			n = n.getNeighbour(move.getDirection());
+		}
 
-                if(marbles.size() == 2 && (firstMarble.getNeighbour(direction) == null 
-                        || firstMarble.getNeighbour(direction).getNeighbour(direction) == null)) return true;
+		// now n is the first free spot, m is the last seen node
 
-                if(marbles.size() == 3 && (firstMarble.getNeighbour(direction) == null
-                        || firstMarble.getNeighbour(direction).getNeighbour(direction) == null 
-                        || firstMarble.getNeighbour(direction).getNeighbour(direction).getNeighbour(direction) == null)) return true;
-            }
-            return legal;
-        }
+		int ownNodes = 0;
+		while (ownNodes < llength)
+		{
+			if (p.equals(m.getMarbleOwner()))
+			{
+				ownNodes++;
+			}
+			n.setMarbleOwner(m.getMarbleOwner());
+			n = m;
+			m = m.getNeighbour(move.getDirection().getOpposite());
+		}
+		n.setMarbleOwner(null);		
+	}
 
 	/**
 	 * Recursively adds nodes to the board graph
@@ -216,15 +227,17 @@ public class StandardAbaloneLogic implements GameLogic
 	}
 
 	/**
-	 * Return the player who has won and null if there currently is no winner at all.
+	 * Return the player who has won and null if there currently is no winner at
+	 * all.
+	 * 
 	 * @see abalone.gamelogic.GameLogic#getWinner(abalone.gamestate.GameState)
 	 */
 	@Override
 	public Player getWinner(GameState state)
 	{
-		for(Entry<Player,Integer> e : state.getMarblesRemoved().entrySet())
+		for (Entry<Player, Integer> e : state.getMarblesRemoved().entrySet())
 		{
-			if(e.getValue() >= 6)
+			if (e.getValue() >= 6)
 			{
 				return e.getKey();
 			}
@@ -235,7 +248,51 @@ public class StandardAbaloneLogic implements GameLogic
 	@Override
 	public boolean isLegal(Move m)
 	{
-		return true;
+		boolean legal = true;
+		MarbleLine marbleLine = m.getMarbleLine();
+		List<Node> marbles = marbleLine.getNodes();
+		Direction direction = m.getDirection();
+		Direction orientation = marbleLine.getOrientation();
+
+		if (direction == orientation || direction.getOpposite() == orientation)
+		{
+			for (Node marble : marbles)
+			{
+				if (marble.getNeighbour(direction) != null)
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			boolean finished = false;
+			Node firstMarble = marbles.get(0);
+
+			while (!finished)
+			{
+				for (Node marble : marbles)
+				{
+					if (firstMarble.getNeighbour(direction) == marble)
+					{
+						firstMarble = marble;
+						break;
+					}
+					finished = true;
+				}
+			}
+			if (marbles.size() == 1 && firstMarble.getNeighbour(direction) == null)
+				return true;
+
+			if (marbles.size() == 2 && (firstMarble.getNeighbour(direction) == null || firstMarble.getNeighbour(direction).getNeighbour(direction) == null))
+				return true;
+
+			if (marbles.size() == 3
+					&& (firstMarble.getNeighbour(direction) == null || firstMarble.getNeighbour(direction).getNeighbour(direction) == null || firstMarble
+							.getNeighbour(direction).getNeighbour(direction).getNeighbour(direction) == null))
+				return true;
+		}
+		return legal;
 	}
 
 }

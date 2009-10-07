@@ -51,6 +51,11 @@ public class Main {
 		{
 			logic.applyMove(state, m);
 			front.updateFront();
+			System.out.println("Legal");
+		}
+		else
+		{
+			System.out.println("Not Legal");
 		}
 	}
 	

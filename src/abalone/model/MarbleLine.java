@@ -70,8 +70,12 @@ public class MarbleLine
         	legal = false;
             for(Node n : marbles)
             {
-            	if(n.getNeighbour(orientation).equals(node)
-            			|| n.getNeighbour(orientation.getOpposite()).equals(node))
+            	if(n.getNeighbour(orientation)!=null && n.getNeighbour(orientation).equals(node))
+            	{
+            		legal = true;
+            		break;
+            	}
+            	if(n.getNeighbour(orientation.getOpposite())!=null && n.getNeighbour(orientation.getOpposite()).equals(node))
             	{
             		legal = true;
             		break;
