@@ -19,6 +19,11 @@ public class MarbleLine
 		this.marbles.add(node);
 	}
 	
+	public void remove(Node node)
+	{
+		this.marbles.remove(node);
+	}
+	
 	public Direction getOrientation()
 	{
 		return orientation;
@@ -41,7 +46,7 @@ public class MarbleLine
 	{
         Direction neighbourDir;
         int nrMarbles = marbles.size();
-        if(nrMarbles >= 2)
+        if(nrMarbles >= 3)
         {
         	return false;
         }
@@ -77,6 +82,38 @@ public class MarbleLine
         if(legal)
         {
         	add(node);
+        }
+        return legal;
+	}
+
+	public boolean checkRemove(Node node)
+	{
+        int nrMarbles = marbles.size();
+        if(nrMarbles == 0)
+        {
+        	return false;
+        }
+        
+        if(nrMarbles == 1 || nrMarbles == 2)
+        {
+        	remove(node);
+        	return true;
+        }
+        
+        boolean legal = true;
+        if(nrMarbles == 3){
+        	if(
+        			marbles.contains(node.getNeighbour(getOrientation()))
+        		&&  marbles.contains(node.getNeighbour(getOrientation().getOpposite()))
+        	  )
+        	{
+        		legal = false;
+        	}
+        }
+        
+        if(legal)
+        {
+        	remove(node);
         }
         return legal;
 	}

@@ -9,9 +9,12 @@ import com.trolltech.qt.QSignalEmitter.Signal1;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QPointF;
+import com.trolltech.qt.core.Qt.MouseButton;
+import com.trolltech.qt.core.Qt.MouseButtons;
 import com.trolltech.qt.gui.QBrush;
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QGraphicsPolygonItem;
+import com.trolltech.qt.gui.QGraphicsSceneMouseEvent;
 import com.trolltech.qt.gui.QPolygonF;
 
 public class Arrow extends QGraphicsPolygonItem
@@ -34,6 +37,7 @@ public class Arrow extends QGraphicsPolygonItem
 		points.add(p3);
 
 		QPolygonF poly = new QPolygonF(points);
+		
 		return poly;
 	}
 	
@@ -42,8 +46,15 @@ public class Arrow extends QGraphicsPolygonItem
 		super(createPoly(x,y,angle));
 		this.direction = direction;
 		this.setBrush(new QBrush(QColor.green));
+		this.setAcceptedMouseButtons(new MouseButtons(MouseButton.LeftButton,MouseButton.RightButton));
 		
 		
+	}
+	
+	@Override
+	public void mousePressEvent(QGraphicsSceneMouseEvent event)
+	{
+		clicked.emit(direction);
 	}
 
 }

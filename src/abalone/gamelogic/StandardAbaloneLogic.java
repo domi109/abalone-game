@@ -105,13 +105,8 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		for (Node n : move.getMarbleLine().getNodes())
 		{
-			// TODO check whether n is in state
-			// TODO check whether move is legal
-
 			n.getNeighbour(move.getDirection()).setMarbleOwner(n.getMarbleOwner());
 			n.setMarbleOwner(null);
-			// TODO this won't really work, because marbles that are moved
-			// within one move can overwrite each other
 		}
 	}
 
@@ -200,6 +195,12 @@ public class StandardAbaloneLogic implements GameLogic
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isLegal(Move m)
+	{
+		return true;
 	}
 
 }

@@ -44,7 +44,8 @@ public class AbaloneFront extends QMainWindow
 	private QAction aboutAbaloneAct;
 	private QAction reportProblemAct;
 	private QAction aboutAct;
-	//QAction aboutQtAct;
+	
+	private BoardWidget boardWidget;
 	
 	public AbaloneFront(GameState state)
 	{
@@ -204,15 +205,27 @@ public class AbaloneFront extends QMainWindow
 	 */
 	class MainWidget extends QWidget
 	{
+
 		public MainWidget()
 		{
 			QHBoxLayout leftRight = new QHBoxLayout();
-			leftRight.addWidget(new BoardWidget(state));
+			boardWidget = new BoardWidget(state);
+			leftRight.addWidget(boardWidget);
 			leftRight.addSpacing(20);
 			leftRight.addWidget(new GameInfoWidget());
 
 			setLayout(leftRight);
 		}
+	}
+
+	public BoardWidget getBoardWidget()
+	{
+		return boardWidget;
+	}
+
+	public void updateFront()
+	{
+		boardWidget.updateBoard();
 	}
 	
 
