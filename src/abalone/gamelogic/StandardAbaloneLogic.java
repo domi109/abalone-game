@@ -12,6 +12,7 @@ import abalone.model.Direction;
 import abalone.model.Move;
 import abalone.model.Node;
 import abalone.model.Player;
+import com.sun.org.apache.bcel.internal.generic.IFEQ;
 
 public class StandardAbaloneLogic implements GameLogic
 {
@@ -113,6 +114,46 @@ public class StandardAbaloneLogic implements GameLogic
 			// within one move can overwrite each other
 		}
 	}
+
+    private boolean checkIfLegal(GameState state, Move move){
+        Direction direction = move.getDirection();
+        Direction neighbourDir;
+        List<Node> nodes = move.getNodes();
+        int nrMarbles = nodes.size();
+        boolean parallel;
+        boolean legal = true;
+        
+        if(nrMarbles == 2){
+            neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(2));
+            if (neighbourDir == null) legal = false;        // not neighbours
+            if(neighbourDir == direction || neighbourDir == direction.getOpposite()){                  // in line move or not
+                parallel = false;
+            }else parallel = true;   
+        }
+        
+        if(nrMarbles == 3){                                 //check if they are neighbours
+            neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(1));
+            if(neighbourDir == null){
+                neighbourDir = findNeighbourDirection(nodes.get(0), nodes.get(2));
+                if(neighbourDir == null){
+                    neighbourDir = findNeighbourDirection(nodes.get(1), nodes.get(2));
+                    if(neighbourDir == null) legal = false;
+                }
+            }
+            
+            
+        }
+    }
+
+    private Direction findNeighbourDirection(Node node, Node neighbour){
+        Direction dir = null;
+        for(Direction direction : Direction.values()){
+            if(node.getNeighbour(direction) == neighbour){
+                dir = direction;
+            }
+        }
+        return dir;
+    }
 
 	/**
 	 * Recursively adds nodes to the board graph
