@@ -25,5 +25,5 @@ public interface GameLogic {
 
 	public Object getWinner(GameState gs);
 
-	public boolean isLegal(Move m);
+	public boolean isLegal(GameState state, Move m);
 }

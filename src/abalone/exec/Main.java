@@ -47,7 +47,7 @@ public class Main {
 	
 	private void moveDone(Move m)
 	{
-		if(logic.isLegal(m))
+		if(logic.isLegal(state,m))
 		{
 			logic.applyMove(state, m);
 			front.updateFront();

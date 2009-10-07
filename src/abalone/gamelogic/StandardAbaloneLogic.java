@@ -105,15 +105,15 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		// this if statement is correct but looks horrifying...
 		// maybe there's a nicer way.
-		if(move.getMarbleLine().getOrientation() != null
-			&& (move.getDirection().equals(move.getMarbleLine().getOrientation()) ||
-			move.getDirection().equals(move.getMarbleLine().getOrientation().getOpposite())))
+		if (move.getMarbleLine().getOrientation() != null
+				&& (move.getDirection().equals(move.getMarbleLine().getOrientation()) || move.getDirection().equals(
+						move.getMarbleLine().getOrientation().getOpposite())))
 		{
-			applyInlineMove(state,move);
+			applyInlineMove(state, move);
 		}
 		else
 		{
-			applyBroadSideMove(state,move);
+			applyBroadSideMove(state, move);
 		}
 
 		// Change player
@@ -123,7 +123,7 @@ public class StandardAbaloneLogic implements GameLogic
 
 	private void applyBroadSideMove(GameState state, Move move)
 	{
-		for(Node n : move.getMarbleLine().getNodes())
+		for (Node n : move.getMarbleLine().getNodes())
 		{
 			n.getNeighbour(move.getDirection()).setMarbleOwner(n.getMarbleOwner());
 			n.setMarbleOwner(null);
@@ -156,7 +156,7 @@ public class StandardAbaloneLogic implements GameLogic
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
 		}
-		n.setMarbleOwner(null);		
+		n.setMarbleOwner(null);
 	}
 
 	/**
@@ -246,53 +246,59 @@ public class StandardAbaloneLogic implements GameLogic
 	}
 
 	@Override
-	public boolean isLegal(Move m)
+	public boolean isLegal(GameState state, Move m)
 	{
-		boolean legal = true;
-		MarbleLine marbleLine = m.getMarbleLine();
-		List<Node> marbles = marbleLine.getNodes();
-		Direction direction = m.getDirection();
-		Direction orientation = marbleLine.getOrientation();
-
-		if (direction == orientation || direction.getOpposite() == orientation)
+		boolean legal = false;
+		// this if statement is correct but looks horrifying...
+		// maybe there's a nicer way.
+		if (m.getMarbleLine().getOrientation() != null
+				&& (m.getDirection().equals(m.getMarbleLine().getOrientation()) || m.getDirection().equals(m.getMarbleLine().getOrientation().getOpposite())))
 		{
-			for (Node marble : marbles)
+			legal = isLegalInlineMove(state, m);
+		}
+		else
+		{
+			legal = isLegalBroadSideMove(state, m);
+		}
+
+		return legal;
+	}
+
+	private boolean isLegalInlineMove(GameState state, Move m)
+	{
+		int ownMarbles = m.getMarbleLine().getNodes().size();
+		int opponentMarbles =0;
+		Node n = m.getMarbleLine().getNodes().get(0);
+		Player p = n.getMarbleOwner();
+
+		while (n != null && n.getMarbleOwner() != null)
+		{
+			if(p.equals(n.getMarbleOwner()))
 			{
-				if (marble.getNeighbour(direction) != null)
+				if(!m.getMarbleLine().getNodes().contains(n))
 				{
 					return false;
 				}
 			}
-		}
-		else
-		{
-			boolean finished = false;
-			Node firstMarble = marbles.get(0);
-
-			while (!finished)
+			else
 			{
-				for (Node marble : marbles)
-				{
-					if (firstMarble.getNeighbour(direction) == marble)
-					{
-						firstMarble = marble;
-						break;
-					}
-					finished = true;
-				}
+				opponentMarbles++;
 			}
-			if (marbles.size() == 1 && firstMarble.getNeighbour(direction) == null)
-				return true;
-
-			if (marbles.size() == 2 && (firstMarble.getNeighbour(direction) == null || firstMarble.getNeighbour(direction).getNeighbour(direction) == null))
-				return true;
-
-			if (marbles.size() == 3
-					&& (firstMarble.getNeighbour(direction) == null || firstMarble.getNeighbour(direction).getNeighbour(direction) == null || firstMarble
-							.getNeighbour(direction).getNeighbour(direction).getNeighbour(direction) == null))
-				return true;
+			n = n.getNeighbour(m.getDirection());
 		}
-		return legal;
+		return ownMarbles > opponentMarbles;
+	}
+
+	private boolean isLegalBroadSideMove(GameState state, Move m)
+	{
+		for (Node marble : m.getMarbleLine().getNodes())
+		{
+			if (marble.getNeighbour(m.getDirection()) != null && marble.getNeighbour(m.getDirection()).getMarbleOwner() != null)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
