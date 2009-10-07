@@ -51,7 +51,7 @@ public class AbaloneFront extends QMainWindow
 		this.state=state;
 		QMenuBar menuBar = new QMenuBar();
 		setMenuBar(menuBar);
-		setWindowIcon(new QIcon("classpath:Icons/logo.png"));
+		setWindowIcon(new QIcon("classpath:abalone/gui/Icons/logo.png"));
 		setWindowTitle("Abalone-game");
 		setMinimumSize(300,300);
 		
@@ -107,62 +107,62 @@ public class AbaloneFront extends QMainWindow
 	
 	private void createActions()
 	{
-		newAct = new QAction(tr("&New Game"), this);
+		newAct = new QAction(new QIcon("classpath:abalone/gui/Icons/new.png"),tr("&New Game"), this);
 		newAct.setShortcut(new QKeySequence(tr("Ctrl+N")));
 		newAct.setStatusTip(tr("Create a new Game"));
 		newAct.triggered.connect(this, "newGame()");
 		
-		loadAct = new QAction(new QIcon(),tr("&Load"), this);
+		loadAct = new QAction(new QIcon("classpath:abalone/gui/Icons/open.png"),tr("&Load"), this);
 		loadAct.setShortcut(tr("Ctrl+L"));
 		loadAct.setStatusTip(tr("Opens a saved game"));
 		//openAct.triggered.connect(this, "open()");
 		
-		saveAct = new QAction(new QIcon(),tr("&Save"), this);
+		saveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/save.png"),tr("&Save"), this);
 		saveAct.setShortcut(tr("Ctrl+S"));
 		saveAct.setStatusTip(tr("Saves a game"));
 		//saveAct.triggered.connect(this, "open()");
 		
-		saveAsAct = new QAction(new QIcon(),tr("Save &As"), this);
+		saveAsAct = new QAction(new QIcon("classpath:abalone/gui/Icons/saveAs.png"),tr("Save &As"), this);
 		saveAsAct.setShortcut(tr("Ctrl+A"));
 		saveAsAct.setStatusTip(tr("Saves a game under a new name"));
 		
-		networkgameAct = new QAction(new QIcon(),tr("Network Game"), this);
+		networkgameAct = new QAction(new QIcon("classpath:abalone/gui/Icons/networkGame.png"),tr("Network Game"), this);
 		networkgameAct.setStatusTip(tr("Play a game over the network"));
 		
-		undoMoveAct = new QAction(new QIcon(),tr("Undo move"), this);
+		undoMoveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/undo.png"),tr("Undo move"), this);
 		undoMoveAct.setShortcut(tr("Ctrl+Z"));
 		undoMoveAct.setStatusTip(tr("1 step back"));
 		
-		resignAct = new QAction(new QIcon(),tr("&Resign"), this);
+		resignAct = new QAction(new QIcon("classpath:abalone/gui/Icons/resign.png"),tr("&Resign"), this);
 		resignAct.setShortcut(tr("Ctrl+R"));
 		resignAct.setStatusTip(tr("Resign this game"));
 		
-		quitAct = new QAction(new QIcon(),tr("&Quit"), this);
+		quitAct = new QAction(new QIcon("classpath:abalone/gui/Icons/exit.png"),tr("&Quit"), this);
 		quitAct.setShortcut(tr("Ctrl+Q"));
 		quitAct.setStatusTip(tr("Quits the game"));
 		quitAct.triggered.connect(this, "close()");
 		
-		fullscreenAct = new QAction(new QIcon(),tr("Fullscreen"), this);
+		fullscreenAct = new QAction(tr("Fullscreen"), this);
 		fullscreenAct.setStatusTip(tr("View the game fullscreen"));
 		
-		showLogsAct = new QAction(new QIcon(),tr("Show Logs"), this);
+		showLogsAct = new QAction(tr("Show Logs"), this);
 		showLogsAct.setStatusTip(tr("Shows a log of the game"));
 		
-		showStatisticsAct = new QAction(new QIcon(),tr("Show Statistics"), this);
+		showStatisticsAct = new QAction(tr("Show Statistics"), this);
 		showStatisticsAct.setStatusTip(tr("Shows the statistics of the game"));
 		
-		preferencesAct = new QAction(new QIcon(),tr("Preferences"), this);
+		preferencesAct = new QAction(tr("Preferences"), this);
 		preferencesAct.setStatusTip(tr("Preferences menu"));
 		
-		aboutAbaloneAct = new QAction(new QIcon(),tr("About Abalone"), this);
+		aboutAbaloneAct = new QAction(tr("About Abalone"), this);
 		aboutAbaloneAct.setStatusTip(tr("Link to abalone wiki"));
 		aboutAbaloneAct.triggered.connect(this, "aboutAbalone()");
 		
-		reportProblemAct = new QAction(new QIcon(),tr("Report Problem"), this);
+		reportProblemAct = new QAction(tr("Report Problem"), this);
 		reportProblemAct.setStatusTip(tr("Link to our issuetracker"));
 		reportProblemAct.triggered.connect(this, "reportProblem()");
 		
-		aboutAct = new QAction(new QIcon(),tr("About"), this);
+		aboutAct = new QAction(tr("About"), this);
 		aboutAct.setStatusTip(tr("About this game"));
 		aboutAct.triggered.connect(this, "about()");
 	}

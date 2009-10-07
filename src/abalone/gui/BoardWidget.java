@@ -5,10 +5,7 @@ import java.util.List;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
-import abalone.model.Board;
-import abalone.model.Direction;
-import abalone.model.Node;
-import abalone.model.Player;
+import abalone.model.*;
 
 import com.trolltech.qt.core.QPointF;
 import com.trolltech.qt.core.QRectF;
@@ -26,12 +23,16 @@ import com.trolltech.qt.gui.QLinearGradient;
  */
 public class BoardWidget extends QGraphicsView
 {
+	public Signal1<Move> move = new Signal1<Move>();
+	
 	// The game state that is being watched
 	private GameState state;
 	// The count of activated marbles
 	private int activeCount = 0;
 	// The marble radius
 	private final static double r = 15;
+
+	private MarbleLine marLine;
 
 	/**
 	 * Creates a new Board Widget
@@ -41,6 +42,7 @@ public class BoardWidget extends QGraphicsView
 	public BoardWidget(GameState state)
 	{
 		this.state = state;
+		marLine = new MarbleLine();
 		
 		// We initialize colors for all the participating players
 		// There might be a nicer way for this than the static method
@@ -130,7 +132,9 @@ public class BoardWidget extends QGraphicsView
 			QPointF p = new QPointF(this.width() / 2.0-Math.cos(angle)*11.0*r,this.height() / 2.0-Math.sin(angle)*11.0*r);
 			
 			// the ellipses are just placeholders for the arrows
-			scene.addItem(new Arrow(p.x(),p.y(),angle,d));
+			Arrow marker = new Arrow(p.x(),p.y(),angle,d);
+			marker.clicked.connect(this, "arrowClicked(Direction)");
+			scene.addItem(marker);
 			
 			// continue further around the board
 			angle+=Math.PI/3.0;
@@ -165,9 +169,25 @@ public class BoardWidget extends QGraphicsView
 				// that the current player does not own
 				return;
 			}
+			/* 
+			 * 
+			 * boolean whut = marLine.<not implemented yet>(ellipse.getNode());
+			 * if(!whut)
+			 * {
+				 * return;
+			 * }
+			 */
 			ellipse.activate();
 			activeCount++;
 		}
+	}
+	
+	public void arrowClicked(Direction direction)
+	{
+		Move set = new Move();
+		set.setMarbleLine(marLine);
+		set.setDirection(direction);
+		move.emit(set);
 	}
 
 	public static double getRadius()
