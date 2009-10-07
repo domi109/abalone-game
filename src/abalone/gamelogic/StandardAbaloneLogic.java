@@ -1,6 +1,7 @@
 package abalone.gamelogic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -81,6 +82,14 @@ public class StandardAbaloneLogic implements GameLogic
 		state.setPlayers(players);
 		state.setCurrentPlayer(players.get(0));
 		state.setBoard(board);
+		
+		HashMap<Player,Integer> marblesRemoved = new HashMap<Player,Integer>(2);
+		
+		for(Player p : players)
+		{
+			marblesRemoved.put(p, 0);
+		}
+		state.setMarblesRemoved(marblesRemoved);
 
 		List<KeyValuePair<Direction, Node>> path = board.getEquiPaths().get(0);
 		int i = 0;
@@ -144,7 +153,15 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 
 		// now n is the first free spot, m is the last seen node
-
+		if (n == null)
+		{
+			// marble pushed off the board
+			int removed = state.getMarblesRemoved().get(m.getMarbleOwner());
+			removed++;
+			state.getMarblesRemoved().put(m.getMarbleOwner(),removed);
+			n = m;
+			m = m.getNeighbour(move.getDirection().getOpposite());
+		}
 		int ownNodes = 0;
 		while (ownNodes < llength)
 		{
