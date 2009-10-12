@@ -46,6 +46,8 @@ public class AbaloneFront extends QMainWindow
 	private QAction aboutAct;
 	
 	private BoardWidget boardWidget;
+	private GameInfoWidget gameInfoWidget;
+
 	
 	public AbaloneFront(GameState state)
 	{
@@ -212,7 +214,8 @@ public class AbaloneFront extends QMainWindow
 			boardWidget = new BoardWidget(state);
 			leftRight.addWidget(boardWidget);
 			leftRight.addSpacing(20);
-			leftRight.addWidget(new GameInfoWidget());
+			gameInfoWidget = new GameInfoWidget();
+			leftRight.addWidget(gameInfoWidget);
 
 			setLayout(leftRight);
 		}
@@ -225,7 +228,13 @@ public class AbaloneFront extends QMainWindow
 
 	public void updateFront()
 	{
-		boardWidget.updateBoard();
+		updateFront(this.state);
+	}
+	
+	public void updateFront(GameState state)
+	{
+		boardWidget.updateBoard(state);
+		//gameInfoWidget.setMarblesLost(red, blue)
 	}
 	
 

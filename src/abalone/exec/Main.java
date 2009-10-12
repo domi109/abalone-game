@@ -3,10 +3,13 @@ package abalone.exec;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QMessageBox;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamelogic.GameLogic;
+import abalone.gamelogic.SmallAbaloneLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
 import abalone.gui.AbaloneFront;
@@ -25,11 +28,42 @@ public class Main {
 	private List<Player> players;
 	private GameState state;
 	private AbaloneFront front;
+	private static Class<? extends GameLogic> logicClass = StandardAbaloneLogic.class;
+	
+	
+	
+	@SuppressWarnings("unused") // suppress - it is used: as an event handler
+	private void messageBoxClicked(QAbstractButton button)
+	{
+		resetGame();
+	}
+	
+	private void resetGame()
+	{
+		try
+		{
+			logic = logicClass.newInstance();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		board = logic.initBoard();
+		state = logic.initState(board, players);
+		front.updateFront(state);
+	}
 	
 	public Main(String[] args)
 	{
-		logic = new StandardAbaloneLogic();
-		board = logic.initBoard();
+		try
+		{
+			logic = logicClass.newInstance();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
 		players.add(new HumanPlayer());
 		players.add(new HumanPlayer());
@@ -51,11 +85,17 @@ public class Main {
 		{
 			logic.applyMove(state, m);
 			front.updateFront();
-			System.out.println("Legal");
+			if(logic.getWinner(state)!=null)
+			{
+				QMessageBox message = new QMessageBox();
+				message.setText("You've won");
+				message.setWindowTitle("Winner!");
+				message.show();
+				message.buttonClicked.connect(this,"messageBoxClicked(QAbstractButton)");
+			}
 		}
 		else
 		{
-			System.out.println("Not Legal");
 		}
 	}
 	

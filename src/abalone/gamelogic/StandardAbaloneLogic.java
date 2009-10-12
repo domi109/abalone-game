@@ -17,13 +17,20 @@ import abalone.model.Player;
 
 public class StandardAbaloneLogic implements GameLogic
 {
-
+	protected int radius;
+	
+	
+	public StandardAbaloneLogic()
+	{
+		this.radius = 5;
+	}
+	
 	@Override
 	public Board initBoard()
 	{
 		Board b = new Board();
 		// TODO Create the graph recursively:
-		createNode(b, b.getCentralNode(), 4);
+		createNode(b, b.getCentralNode(), radius-1);
 
 		for (Direction d : Direction.UPPER_LEFT)
 		{
@@ -32,14 +39,14 @@ public class StandardAbaloneLogic implements GameLogic
 		return b;
 	}
 
-	private List<KeyValuePair<Direction, Node>> createPath(Node centralNode, Direction startDirection)
+	protected List<KeyValuePair<Direction, Node>> createPath(Node centralNode, Direction startDirection)
 	{
 		List<KeyValuePair<Direction, Node>> path = new ArrayList<KeyValuePair<Direction, Node>>();
 
 		path.add(new KeyValuePair<Direction, Node>(null, centralNode));
 		Direction currentDir = startDirection;
 		Node currentNode = centralNode;
-		for (int i = 1; i < 5; i++)
+		for (int i = 1; i < radius; i++)
 		{
 			// TODO Iterate through all the 5 rings of the board
 			currentNode = currentNode.getNeighbour(currentDir);
@@ -130,7 +137,7 @@ public class StandardAbaloneLogic implements GameLogic
 		state.setCurrentPlayer(state.getPlayers().get((curr + 1) % 2));
 	}
 
-	private void applyBroadSideMove(GameState state, Move move)
+	protected void applyBroadSideMove(GameState state, Move move)
 	{
 		for (Node n : move.getMarbleLine().getNodes())
 		{
@@ -139,7 +146,7 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 	}
 
-	private void applyInlineMove(GameState state, Move move)
+	protected void applyInlineMove(GameState state, Move move)
 	{
 		int llength = move.getMarbleLine().getNodes().size();
 		Node n = move.getMarbleLine().getNodes().get(0);
@@ -185,7 +192,7 @@ public class StandardAbaloneLogic implements GameLogic
 	 *            level-counter counting backwards from the center - recursion
 	 *            will terminate when level is zero.
 	 */
-	private void createNode(Board b, Node node, int level)
+	protected void createNode(Board b, Node node, int level)
 	{
 		// TODO: this might need to be improved
 		if (level <= 0)
@@ -281,7 +288,7 @@ public class StandardAbaloneLogic implements GameLogic
 		return legal;
 	}
 
-	private boolean isLegalInlineMove(GameState state, Move m)
+	protected boolean isLegalInlineMove(GameState state, Move m)
 	{
 		int ownMarbles = m.getMarbleLine().getNodes().size();
 		int opponentMarbles =0;
@@ -306,7 +313,7 @@ public class StandardAbaloneLogic implements GameLogic
 		return ownMarbles > opponentMarbles;
 	}
 
-	private boolean isLegalBroadSideMove(GameState state, Move m)
+	protected boolean isLegalBroadSideMove(GameState state, Move m)
 	{
 		for (Node marble : m.getMarbleLine().getNodes())
 		{

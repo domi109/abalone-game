@@ -70,8 +70,9 @@ public class BoardWidget extends QGraphicsView
 		marLine = new MarbleLine();
 	}
 	
-	public void updateBoard()
+	public void updateBoard(GameState state)
 	{
+		this.state = state;
 		this.marLine = new MarbleLine();
 		this.setScene(prepareScene());
 	}
@@ -133,11 +134,12 @@ public class BoardWidget extends QGraphicsView
 		
 		// We now want to draw some arrows
 		double angle = 0;
-		
+		double radius = Math.sqrt(Math.pow(this.width() / 2 - center.x(),2)+Math.pow(this.height() / 2 - center.y(),2))+3*r;
+
 		for(Direction d : Direction.LEFT)
 		{
 			// Iterate through all directions
-			QPointF p = new QPointF(this.width() / 2.0-Math.cos(angle)*11.0*r,this.height() / 2.0-Math.sin(angle)*11.0*r);
+			QPointF p = new QPointF(this.width() / 2.0-Math.cos(angle)*radius,this.height() / 2.0-Math.sin(angle)*radius);
 			
 			// the ellipses are just placeholders for the arrows
 			Arrow marker = new Arrow(p.x(),p.y(),angle,d);
@@ -168,7 +170,7 @@ public class BoardWidget extends QGraphicsView
 		{
 			if(!state.getCurrentPlayer().equals(ellipse.getNode().getMarbleOwner()))
 			{
-				// We also don't want to select marlbes
+				// We also don't want to select marbles
 				// that the current player does not own
 				return;
 			}
