@@ -273,6 +273,11 @@ public class StandardAbaloneLogic implements GameLogic
 	public boolean isLegal(GameState state, Move m)
 	{
 		boolean legal = false;
+		if(m.getMarbleLine().getNodes().size() == 0)
+		{
+			// We don't want empty moves
+			return false;
+		}
 		// this if statement is correct but looks horrifying...
 		// maybe there's a nicer way.
 		if (m.getMarbleLine().getOrientation() != null
@@ -310,6 +315,10 @@ public class StandardAbaloneLogic implements GameLogic
 			}
 			n = n.getNeighbour(m.getDirection());
 		}
+		if(n == null && opponentMarbles == 0)
+		{
+			return false;
+		}
 		return ownMarbles > opponentMarbles;
 	}
 
@@ -317,7 +326,7 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		for (Node marble : m.getMarbleLine().getNodes())
 		{
-			if (marble.getNeighbour(m.getDirection()) != null && marble.getNeighbour(m.getDirection()).getMarbleOwner() != null)
+			if (marble.getNeighbour(m.getDirection()) == null || marble.getNeighbour(m.getDirection()).getMarbleOwner() != null)
 			{
 				return false;
 			}

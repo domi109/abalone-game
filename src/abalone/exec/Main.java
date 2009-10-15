@@ -9,7 +9,7 @@ import com.trolltech.qt.gui.QMessageBox;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamelogic.GameLogic;
-//import abalone.gamelogic.SmallAbaloneLogic;
+import abalone.gamelogic.SmallAbaloneLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
 import abalone.gui.AbaloneFront;
