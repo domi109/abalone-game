@@ -9,6 +9,7 @@ public class GameInfoWidget extends QWidget
 	
 	private int redLost = 0;
 	private int blueLost = 0;
+	private QGraphicsView view;
 	
 	public GameInfoWidget()
 	{	
@@ -16,7 +17,7 @@ public class GameInfoWidget extends QWidget
 		 QGraphicsScene scene = prepareScene();
 		 
 		 // we need a QGraphicsView for viewing the scene
-		 QGraphicsView view = new QGraphicsView(scene);
+		 view = new QGraphicsView(scene);
 		 
 		// draw the same background as the board
 		QLinearGradient gradient = new QLinearGradient(0, 1000, 0, 0);
@@ -36,12 +37,6 @@ public class GameInfoWidget extends QWidget
 		 setLayout(layout);
 	}
 	
-	public void setMarblesLost(int red, int blue)
-	{
-		redLost = red;
-		blueLost = blue;
-	}
-	
 	protected QGraphicsScene prepareScene()
 	{
 		double r = BoardWidget.getRadius();
@@ -50,8 +45,12 @@ public class GameInfoWidget extends QWidget
 		
 		QGraphicsScene scene = new QGraphicsScene();
 		
+		/* later on we could fetch the color of the player
+		 * so it would be like red = player 1 and blue = player 2
+		 * and the players could decide their colors
+		 */
 		QGraphicsTextItem red = new QGraphicsTextItem("Red");
-		red.setDefaultTextColor(QColor.red);
+		red.setDefaultTextColor(QColor.red); 
 		red.setPos(new QPointF(0,0));
 		scene.addItem(red);
 		
@@ -98,5 +97,12 @@ public class GameInfoWidget extends QWidget
 	private void revertClicked()
 	{
 		revert.emit();
+	}
+	
+	public void updateGameInfo(int red, int blue)
+	{
+		redLost = red;
+		blueLost = blue;
+		view.setScene(prepareScene());
 	}
 }

@@ -2,6 +2,8 @@ package abalone.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
@@ -234,7 +236,25 @@ public class AbaloneFront extends QMainWindow
 	public void updateFront(GameState state)
 	{
 		boardWidget.updateBoard(state);
-		//gameInfoWidget.setMarblesLost(red, blue)
+		
+		List<Player> players = state.getPlayers();
+		Map<Player, Integer> marblesLost = state.getMarblesRemoved();
+		int i = 0;
+		int[] points = new int[2];
+		Integer j;
+		for(Player player : players)
+		{
+			if(i > 2)
+			{
+				System.out.println("More than 2 players, sir!");
+				return;
+			}
+			j = marblesLost.get(player);
+			points[i] = j.intValue();
+			i++;
+		}
+		//System.out.println("Player 1 lost " + points[0] + " Player 2 lost " + points[1]);
+		gameInfoWidget.updateGameInfo(points[0], points[1]);
 	}
 	
 

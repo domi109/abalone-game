@@ -9,7 +9,7 @@ import com.trolltech.qt.gui.QMessageBox;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamelogic.GameLogic;
-import abalone.gamelogic.SmallAbaloneLogic;
+//import abalone.gamelogic.SmallAbaloneLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
 import abalone.gui.AbaloneFront;
@@ -63,7 +63,8 @@ public class Main {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}		board = logic.initBoard();
+		}		
+		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
 		players.add(new HumanPlayer());
 		players.add(new HumanPlayer());
@@ -73,6 +74,7 @@ public class Main {
 		front = new AbaloneFront(state);
 		front.show();
 		front.getBoardWidget().move.connect(this,"moveDone(Move)");
+		front.newGame.connect(this,"resetGame()");
 
 		QApplication.exec();
 		
@@ -91,7 +93,7 @@ public class Main {
 				message.setText("You've won");
 				message.setWindowTitle("Winner!");
 				message.show();
-				message.buttonClicked.connect(this,"messageBoxClicked(QAbstractButton)");
+				//message.buttonClicked.connect(this,"messageBoxClicked(QAbstractButton)");
 			}
 		}
 		else
