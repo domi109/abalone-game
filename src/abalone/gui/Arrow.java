@@ -14,6 +14,7 @@ import com.trolltech.qt.core.Qt.MouseButtons;
 import com.trolltech.qt.gui.QBrush;
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QGraphicsPolygonItem;
+import com.trolltech.qt.gui.QGraphicsSceneHoverEvent;
 import com.trolltech.qt.gui.QGraphicsSceneMouseEvent;
 import com.trolltech.qt.gui.QPolygonF;
 
@@ -25,8 +26,8 @@ public class Arrow extends QGraphicsPolygonItem
 	private static QPolygonF createPoly(double x, double y, double angle)
 	{
 		double a = Math.PI-angle;
-		double g = Math.PI/6;
-		double d = 15;
+		double g = Math.PI/7;
+		double d = 20;
 		List<QPointF> points = new ArrayList<QPointF>(3);
 		QPointF p1 = new QPointF(x,y);
 		QPointF p2 = new QPointF(x-Math.cos(a-g)*d,y+Math.sin(a-g)*d);
@@ -47,8 +48,21 @@ public class Arrow extends QGraphicsPolygonItem
 		this.direction = direction;
 		this.setBrush(new QBrush(QColor.green));
 		this.setAcceptedMouseButtons(new MouseButtons(MouseButton.LeftButton,MouseButton.RightButton));
-		
-		
+		this.setAcceptHoverEvents(true);
+	}
+	
+	@Override
+	public void hoverEnterEvent(QGraphicsSceneHoverEvent event)
+	{
+		this.setBrush(new QBrush(QColor.green.lighter()));
+		super.hoverEnterEvent(event);
+	}
+	
+	@Override
+	public void hoverLeaveEvent(QGraphicsSceneHoverEvent event)
+	{
+		this.setBrush(new QBrush(QColor.green));
+		super.hoverLeaveEvent(event);
 	}
 	
 	@Override

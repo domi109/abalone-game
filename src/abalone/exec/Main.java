@@ -66,8 +66,8 @@ public class Main {
 		}		
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer());
-		players.add(new HumanPlayer());
+		players.add(new HumanPlayer("Ping"));
+		players.add(new HumanPlayer("Pong"));
 		state = logic.initState(board, players);
 		QApplication.initialize(args);
 		

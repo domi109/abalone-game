@@ -72,7 +72,8 @@ public class AbaloneFront extends QMainWindow
 			e.printStackTrace();
 		}
 		createMenus();
-		//createStatusBar();	
+
+		this.setMinimumSize(this.sizeHint());
 	}
 	
 	public void newGame()
@@ -216,7 +217,7 @@ public class AbaloneFront extends QMainWindow
 			boardWidget = new BoardWidget(state);
 			leftRight.addWidget(boardWidget);
 			leftRight.addSpacing(20);
-			gameInfoWidget = new GameInfoWidget();
+			gameInfoWidget = new GameInfoWidget(state);
 			leftRight.addWidget(gameInfoWidget);
 
 			setLayout(leftRight);
@@ -253,8 +254,7 @@ public class AbaloneFront extends QMainWindow
 			points[i] = j.intValue();
 			i++;
 		}
-		//System.out.println("Player 1 lost " + points[0] + " Player 2 lost " + points[1]);
-		gameInfoWidget.updateGameInfo(points[0], points[1]);
+		gameInfoWidget.updateGameInfo(state);
 	}
 	
 

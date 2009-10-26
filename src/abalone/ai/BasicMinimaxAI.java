@@ -105,4 +105,10 @@ public class BasicMinimaxAI implements Ai
 		return (Move) n.getAction();
 
 	}
+
+	@Override
+	public String getName()
+	{
+		return "Basic Minimax";
+	}
 }
