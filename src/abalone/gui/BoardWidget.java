@@ -126,7 +126,7 @@ public class BoardWidget extends QGraphicsView
 				center.setX(center.x() + r);
 			}
 
-			GameNodeEllipse ellipse = new GameNodeEllipse(step.getValue(),center.x() - r, center.y() - r, 2 * r, 2 * r);
+			GameNodeEllipse ellipse = new GameNodeEllipse(state,step.getValue(),center.x() - r, center.y() - r, 2 * r, 2 * r);
 			ellipse.clicked.connect(this, "nodeClicked(AbaloneEllipse)");
 			scene.addItem(ellipse);
 
@@ -169,7 +169,7 @@ public class BoardWidget extends QGraphicsView
 		}
 		else
 		{
-			if(!state.getCurrentPlayer().equals(e.getNode().getMarbleOwner()))
+			if(!state.getCurrentPlayer().equals(state.getMarbleOwner(e.getNode())))
 			{
 				// We also don't want to select marbles
 				// that the current player does not own

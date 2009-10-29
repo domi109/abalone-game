@@ -20,24 +20,47 @@ import abalone.model.Move;
 import abalone.model.Node;
 import abalone.model.Player;
 
-
-public class Main {
-
+/**
+ * The main class of the abalone game. Here the overall program control is done.
+ * The GUI is instanciated and executed, players and gamelogic are initialized,
+ * ...
+ * 
+ */
+public class Main
+{
+	// This is the object that represents the current GameLogic
 	private GameLogic logic;
+	// This is the board that is currently played on, is also
+	// contained in the state
 	private Board board;
+	// This is the list of all players that are involved in the
+	// curren game; Is also contained in the state
 	private List<Player> players;
+	// The GameState - a central storage of the current state
+	// of the game.
 	private GameState state;
+	// The Qt-based abalone frontend
 	private AbaloneFront front;
+
+	// The GameLogic in use. This constant is more or lass a placeholder:
+	// In principle this can be just a config-option
 	private static Class<? extends GameLogic> logicClass = StandardAbaloneLogic.class;
-	
-	
-	
-	@SuppressWarnings("unused") // suppress - it is used: as an event handler
+
+	/**
+	 * Slot for the signal that is sent when the user confirms the notification
+	 * that a player has won. This method basically initiates a reset.
+	 * 
+	 * @param button
+	 */
+	@SuppressWarnings("unused")
 	private void messageBoxClicked(QAbstractButton button)
 	{
 		resetGame();
 	}
-	
+
+	/**
+	 * Resets the game so it can be played from the very beginning
+	 */
 	private void resetGame()
 	{
 		try
@@ -53,7 +76,7 @@ public class Main {
 		state = logic.initState(board, players);
 		front.updateFront(state);
 	}
-	
+
 	public Main(String[] args)
 	{
 		try
@@ -63,46 +86,47 @@ public class Main {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}		
+		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
 		players.add(new HumanPlayer("Ping"));
 		players.add(new HumanPlayer("Pong"));
 		state = logic.initState(board, players);
 		QApplication.initialize(args);
-		
+
 		front = new AbaloneFront(state);
 		front.show();
-		front.getBoardWidget().move.connect(this,"moveDone(Move)");
-		front.newGame.connect(this,"resetGame()");
+		front.getBoardWidget().move.connect(this, "moveDone(Move)");
+		front.newGame.connect(this, "resetGame()");
 
 		QApplication.exec();
-		
 
 	}
-	
+
+	@SuppressWarnings("unused")
 	private void moveDone(Move m)
 	{
-		if(logic.isLegal(state,m))
+		if (logic.isLegal(state, m))
 		{
 			logic.applyMove(state, m);
 			front.updateFront();
-			if(logic.getWinner(state)!=null)
+			if (logic.getWinner(state) != null)
 			{
 				QMessageBox message = new QMessageBox();
 				message.setText("You've won");
 				message.setWindowTitle("Winner!");
 				message.show();
-				//message.buttonClicked.connect(this,"messageBoxClicked(QAbstractButton)");
+				message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
 			}
 		}
 		else
 		{
 		}
 	}
-	
+
 	public static void main(String[] args)
 	{
+		@SuppressWarnings("unused")
 		Main main = new Main(args);
 	}
 

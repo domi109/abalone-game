@@ -1,14 +1,21 @@
 package search.tree;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
+import search.Action;
 
 /**
  * A general interface for search problems. A search problem as represented by
- * this interface consists of a goal test and a abortion rule. This interface
- * uses the {@link SearchState} class and the {@link SearchNode} class. Classes
+ * this interface consists of a goal test, an abortion rule and a method to
+ * generate possible actions in a state. This interface uses the
+ * {@link SearchState} class and the {@link SearchNode} class. Classes
  * implementing this interface can be used within a {@link TreeSearch}.
  * 
- * Some ideas for this interface are taken from "Artificial Intelligence - A Modern Approach" (Russel, Norvig) 
- *
+ * Some ideas for this interface are taken from
+ * "Artificial Intelligence - A Modern Approach" (Russel, Norvig)
+ * 
  * @author Daniel Mescheder
  */
 public interface SearchProblem
@@ -34,4 +41,11 @@ public interface SearchProblem
 	 *         it does not.
 	 */
 	public boolean breakTest(SearchNode node);
+
+	/**
+	 * Generates a list of actions given a certain state.
+	 * 
+	 * @return List of actions
+	 */
+	public List<Action> generateActions(SearchState state);
 }

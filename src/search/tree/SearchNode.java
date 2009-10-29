@@ -1,6 +1,7 @@
 package search.tree;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 import abalone.model.Move;
 
@@ -22,23 +23,10 @@ public abstract class SearchNode
 	private SearchState searchState;
 	// The parent node which leads to this node
 	private SearchNode parent;
-	// The price to get to this node from the parent node
-	private int stepCost;
 	// The price to get to this node from the start node
-	private int pathCost;
+	private double pathCost;
 	// The action that leads to this node
 	private Action action;
-
-	/**
-	 * Sets the action that leads to this node
-	 * 
-	 * @param a
-	 *            an Action object
-	 */
-	public void setAction(Action a)
-	{
-		action = a;
-	}
 
 	/**
 	 * Creates a new SearchNode object which refers to a given SearchState s and
@@ -48,11 +36,14 @@ public abstract class SearchNode
 	 *            The SearchState object which the new node refers to
 	 * @param parent
 	 *            The SearchNode object which is a parent for the new SearchNode
+	 * @param a The action that leads to this state
 	 */
-	public SearchNode(SearchState s, SearchNode parent)
+	public SearchNode(SearchState s, SearchNode parent, Action a)
 	{
-		searchState = s;
+		this.searchState = s;
 		this.parent = parent;
+		this.action = a;
+		this.pathCost = parent.pathCost + a.getCost();
 	}
 
 	/**
@@ -63,8 +54,10 @@ public abstract class SearchNode
 	 */
 	public SearchNode(SearchState s)
 	{
-		searchState = s;
+		this.searchState = s;
 		this.parent = null;
+		this.pathCost = 0;
+		this.action = null;
 	}
 
 	/**
@@ -78,43 +71,21 @@ public abstract class SearchNode
 	}
 
 	/**
-	 * Expands this node. The return value is a list of nodes that can be
+	 * Expands this node. The return value is a queue of nodes that can be
 	 * reached from this node by taking appropriate actions.
+	 * The implementation of the queue determines the search strategy.
 	 * 
-	 * @return an ArrayList of SearchNode objects which are children of this
+	 * @return an Queue of SearchNode objects which are children of this
 	 *         node.
 	 */
-	public abstract ArrayList<SearchNode> expand();
-
-	/**
-	 * Gets the price to get from the parent node to this node.
-	 * 
-	 * @return an integer representing the price
-	 */
-	public int getStepCost()
-	{
-		return stepCost;
-	}
-
-	/**
-	 * Sets the price to get from the parent node to this node
-	 * 
-	 * @param cost
-	 *            an integer representing the price
-	 */
-	public void setStepCost(int cost)
-	{
-		this.stepCost = cost;
-		this.pathCost = (parent == null) ? stepCost : stepCost
-				+ parent.getPathCost();
-	}
+	public abstract Queue<SearchNode> expand();
 
 	/**
 	 * Gets the price to get from the start node to this node
 	 * 
-	 * @return an integer representing the price
+	 * @return a double representing the price
 	 */
-	public int getPathCost()
+	public double getPathCost()
 	{
 		return pathCost;
 	}
@@ -124,6 +95,7 @@ public abstract class SearchNode
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		String ret = "SearchNode{\nAction leading to node: ";
@@ -141,18 +113,19 @@ public abstract class SearchNode
 	 * 
 	 * @return an ArrayList of Action objects
 	 */
-	public ArrayList<Action> getActionList()
+	public ArrayList<Action> getPath()
 	{
 		ArrayList<Action> a = new ArrayList<Action>();
 		if (parent != null)
 		{
-			a.addAll(parent.getActionList());
+			a.addAll(parent.getPath());
 		}
 		if (action != null)
 		{
 			a.add(action);
 		}
 		return a;
+		
 	}
 
 	public Action getAction()

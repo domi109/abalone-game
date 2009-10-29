@@ -1,6 +1,7 @@
 package search.tree;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 
 /**
@@ -18,20 +19,6 @@ public class TreeSearch
 {
 	// A search problem
 	protected SearchProblem problem;
-
-	/**
-	 * A method that is called to choose the next leaf node that shall be
-	 * expanded. In this implementation, just the first element of the fringe is
-	 * returned.
-	 * 
-	 * @param fringe
-	 *            the ArrayList that holds all the candidates for expansion.
-	 * @return the selected node.
-	 */
-	protected SearchNode chooseLeafNode(ArrayList<SearchNode> fringe)
-	{
-		return fringe.get(0);
-	}
 
 	/**
 	 * Creates a new TreeSearch object for a given search problem
@@ -53,7 +40,7 @@ public class TreeSearch
 	 */
 	public SearchNode search(SearchNode node)
 	{
-		ArrayList<SearchNode> fringe;
+		Queue<SearchNode> fringe;
 		fringe = node.expand();
 		while (!fringe.isEmpty())
 		{
@@ -71,10 +58,8 @@ public class TreeSearch
 				break;
 			}
 			// choose a leaf node
-			node = chooseLeafNode(fringe);
+			node = fringe.remove();
 
-			// remove the chosen node from the fringe
-			fringe.remove(node);
 			// expand the chosen node and add the result to the fringe
 			fringe.addAll(node.expand());
 		}

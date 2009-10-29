@@ -9,15 +9,13 @@ import com.trolltech.qt.gui.*;
 public class PushedMarblesDisplayWidget extends QGraphicsView
 {
 
-	private int capacity;
 	private Player player;
 	private GameState state;
 	private final static double r = 15;
 
 
-	public PushedMarblesDisplayWidget(int capacity, Player player, GameState state)
+	public PushedMarblesDisplayWidget(Player player, GameState state)
 	{
-		this.capacity = capacity;
 		this.player = player;
 		this.state = state;
 		
@@ -25,7 +23,7 @@ public class PushedMarblesDisplayWidget extends QGraphicsView
 		this.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);
 		this.setStyleSheet("background: transparent;border: none");		
 		setScene(prepareScene());
-		setFixedSize((int)(3*r),(int)((2*capacity+1)*r));
+		setFixedSize((int)(3*r),(int)((2*state.getMarblesToWin()+1)*r));
 	}
 
 	protected QGraphicsScene prepareScene()
@@ -33,7 +31,7 @@ public class PushedMarblesDisplayWidget extends QGraphicsView
 
 		QGraphicsScene scene = new QGraphicsScene();
 		
-		for (int i = 0; i < capacity; i++)
+		for (int i = 0; i < state.getMarblesToWin(); i++)
 		{
 			Player p = (i<state.getMarblesRemoved().get(player))?player:null;
 			

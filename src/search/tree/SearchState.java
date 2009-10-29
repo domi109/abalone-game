@@ -1,6 +1,7 @@
 package search.tree;
 
 import java.util.Collection;
+import java.util.Queue;
 
 import search.Action;
 
@@ -26,25 +27,10 @@ public interface SearchState
 	 */
 	public boolean equalState(SearchState state);
 
-	/**
-	 * Call this method to get a collection of actions possible at this state.
-	 * 
-	 * @return a Collection of Action objects
-	 */
-	public Collection<Action> getPossibleActions();
-
-	/**
-	 * Use this method to store the set of possible actions in this state.
-	 * Possible actions are those actions that can possibly be executed in
-	 * this state and will lead to a valid new state.
-	 * 
-	 * @param a Collection of Action objects
-	 */
-	public void setPossibleActions(Collection<Action> a);
 
 	/**
 	 * Generate a cloned version of this state. The copy must be deep enough that the newly generated SearchState is independent from the old one.
-	 * That means that if an action alteres one SearchState object, no other object may be affected by this change.
+	 * That means that if an action alters one SearchState object, no other object may be affected by this change.
 	 * 
 	 * @return a copied version of this SearchState
 	 */

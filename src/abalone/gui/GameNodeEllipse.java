@@ -2,6 +2,7 @@ package abalone.gui;
 
 import java.util.Map;
 
+import abalone.gamestate.GameState;
 import abalone.model.Node;
 import abalone.model.Player;
 
@@ -25,9 +26,9 @@ public class GameNodeEllipse extends AbaloneEllipse
 	private Node node;
 	private boolean activated =false;	
 	
-	public GameNodeEllipse(Node node,double x,double y,double w, double h)
+	public GameNodeEllipse(GameState state,Node node,double x,double y,double w, double h)
 	{
-		super(node.getMarbleOwner(),x,y,w,h);
+		super(state.getMarbleOwner(node),x,y,w,h);
 
 		this.node = node;
 	}

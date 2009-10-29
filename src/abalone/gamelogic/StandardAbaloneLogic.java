@@ -17,12 +17,13 @@ import abalone.model.Player;
 
 public class StandardAbaloneLogic implements GameLogic
 {
-	protected int radius;
+	protected int radius, marblesToWin;
 	
 	
 	public StandardAbaloneLogic()
 	{
 		this.radius = 5;
+		this.marblesToWin = 6;
 	}
 	
 	@Override
@@ -89,6 +90,7 @@ public class StandardAbaloneLogic implements GameLogic
 		state.setPlayers(players);
 		state.setCurrentPlayer(players.get(0));
 		state.setBoard(board);
+		state.setMarblesToWin(marblesToWin);
 		
 		HashMap<Player,Integer> marblesRemoved = new HashMap<Player,Integer>(2);
 		
@@ -104,11 +106,11 @@ public class StandardAbaloneLogic implements GameLogic
 		{
 			if ((i >= 8 && i <= 10) || (i >= 21 && i <= 24) || (i >= 39 && i <= 45))
 			{
-				step.getValue().setMarbleOwner(players.get(0));
+				state.setMarble(step.getValue(), players.get(0));
 			}
 			else if ((i >= 14 && i <= 16) || (i >= 30 && i <= 33) || (i >= 51 && i <= 57))
 			{
-				step.getValue().setMarbleOwner(players.get(1));
+				state.setMarble(step.getValue(), players.get(1));
 			}
 			i++;
 		}
@@ -141,8 +143,8 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		for (Node n : move.getMarbleLine().getNodes())
 		{
-			n.getNeighbour(move.getDirection()).setMarbleOwner(n.getMarbleOwner());
-			n.setMarbleOwner(null);
+			state.setMarble(n.getNeighbour(move.getDirection()),state.getMarbleOwner(n));
+			state.removeMarble(n);
 		}
 	}
 
@@ -150,10 +152,10 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		int llength = move.getMarbleLine().getNodes().size();
 		Node n = move.getMarbleLine().getNodes().get(0);
-		Player p = n.getMarbleOwner();
+		Player p = state.getMarbleOwner(n);
 		Node m = null;
 
-		while (n != null && n.getMarbleOwner() != null)
+		while (n != null && state.getMarbleOwner(n) != null)
 		{
 			m = n;
 			n = n.getNeighbour(move.getDirection());
@@ -163,24 +165,24 @@ public class StandardAbaloneLogic implements GameLogic
 		if (n == null)
 		{
 			// marble pushed off the board
-			int removed = state.getMarblesRemoved().get(m.getMarbleOwner());
+			int removed = state.getMarblesRemoved().get(state.getMarbleOwner(m));
 			removed++;
-			state.getMarblesRemoved().put(m.getMarbleOwner(),removed);
+			state.getMarblesRemoved().put(state.getMarbleOwner(m),removed);
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
 		}
 		int ownNodes = 0;
 		while (ownNodes < llength)
 		{
-			if (p.equals(m.getMarbleOwner()))
+			if (p.equals(state.getMarbleOwner(m)))
 			{
 				ownNodes++;
 			}
-			n.setMarbleOwner(m.getMarbleOwner());
+			state.setMarble(n, state.getMarbleOwner(m));
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
 		}
-		n.setMarbleOwner(null);
+		state.removeMarble(n);
 	}
 
 	/**
@@ -261,7 +263,7 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		for (Entry<Player, Integer> e : state.getMarblesRemoved().entrySet())
 		{
-			if (e.getValue() >= 6)
+			if (e.getValue() >= state.getMarblesToWin())
 			{
 				return e.getKey();
 			}
@@ -298,11 +300,11 @@ public class StandardAbaloneLogic implements GameLogic
 		int ownMarbles = m.getMarbleLine().getNodes().size();
 		int opponentMarbles =0;
 		Node n = m.getMarbleLine().getNodes().get(0);
-		Player p = n.getMarbleOwner();
+		Player p = state.getMarbleOwner(n);
 
-		while (n != null && n.getMarbleOwner() != null)
+		while (n != null && state.getMarbleOwner(n) != null)
 		{
-			if(p.equals(n.getMarbleOwner()))
+			if(p.equals(state.getMarbleOwner(n)))
 			{
 				if(!m.getMarbleLine().getNodes().contains(n))
 				{
@@ -326,7 +328,7 @@ public class StandardAbaloneLogic implements GameLogic
 	{
 		for (Node marble : m.getMarbleLine().getNodes())
 		{
-			if (marble.getNeighbour(m.getDirection()) == null || marble.getNeighbour(m.getDirection()).getMarbleOwner() != null)
+			if (marble.getNeighbour(m.getDirection()) == null || state.getMarbleOwner(marble.getNeighbour(m.getDirection())) != null)
 			{
 				return false;
 			}

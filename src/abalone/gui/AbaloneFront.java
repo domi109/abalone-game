@@ -236,24 +236,8 @@ public class AbaloneFront extends QMainWindow
 	
 	public void updateFront(GameState state)
 	{
+		this.state = state;
 		boardWidget.updateBoard(state);
-		
-		List<Player> players = state.getPlayers();
-		Map<Player, Integer> marblesLost = state.getMarblesRemoved();
-		int i = 0;
-		int[] points = new int[2];
-		Integer j;
-		for(Player player : players)
-		{
-			if(i > 2)
-			{
-				System.out.println("More than 2 players, sir!");
-				return;
-			}
-			j = marblesLost.get(player);
-			points[i] = j.intValue();
-			i++;
-		}
 		gameInfoWidget.updateGameInfo(state);
 	}
 	

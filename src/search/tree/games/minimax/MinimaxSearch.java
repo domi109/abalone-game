@@ -1,13 +1,8 @@
 package search.tree.games.minimax;
 
-import java.util.ArrayList;
-
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
-import search.tree.exhaustive.DepthFirstSearch;
-import search.tree.optimization.OptimizationDepthFirstSearch;
-import search.tree.optimization.OptimizationProblem;
 
 /**
  * A basic minimax search that tries to maximize the game result (Minimax-Value)
@@ -53,6 +48,7 @@ public class MinimaxSearch extends TreeSearch
 	 * @return the node of the next level for which max should decide in order
 	 *         to win the game
 	 */
+	@Override
 	public SearchNode search(SearchNode node)
 	{
 		// We assume that max executes the search.

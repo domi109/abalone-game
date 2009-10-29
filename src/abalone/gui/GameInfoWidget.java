@@ -29,7 +29,7 @@ public class GameInfoWidget extends QWidget
 		 int i = 0;
 		 for(Player p : state.getPlayers())
 		 {
-			 PushedMarblesDisplayWidget pmdw = new PushedMarblesDisplayWidget(6, p, state);
+			 PushedMarblesDisplayWidget pmdw = new PushedMarblesDisplayWidget(p, state);
 			 pmDisplays.add(pmdw);
 			 QLabel pLabel = new QLabel(p.getName());
 			 pLabel.setAlignment(AlignmentFlag.AlignCenter);
@@ -57,6 +57,7 @@ public class GameInfoWidget extends QWidget
 
 	public void updateGameInfo(GameState state)
 	{
+
 		for(PushedMarblesDisplayWidget display : pmDisplays)
 		{
 			display.updateDisplay(state);
