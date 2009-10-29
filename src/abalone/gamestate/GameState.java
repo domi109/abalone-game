@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import search.Action;
 import search.tree.SearchState;
@@ -143,8 +144,14 @@ public class GameState implements SearchState
 		s2.board = board;
 		s2.currentPlayer = this.currentPlayer;
 		s2.marblesRemoved = new HashMap<Player, Integer>(marblesRemoved);
+		s2.setPlayers(this.players);
+		s2.marbleOwners = new HashMap<Node,Player>(this.marbleOwners);
+		for(Entry<Player,Set<Node>> e : marblePositions.entrySet())
+		{
+			Set<Node> nodeset = new HashSet<Node>(e.getValue());
+			s2.marblePositions.put(e.getKey(), nodeset);
+		}
 		s2.marblesToWin = this.marblesToWin;
-		s2.players = this.players;
 
 		return s2;
 

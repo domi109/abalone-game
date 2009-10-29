@@ -174,7 +174,7 @@ public class StandardAbaloneLogic implements GameLogic
 		int ownNodes = 0;
 		while (ownNodes < llength)
 		{
-			if (p.equals(state.getMarbleOwner(m)))
+			if (state.getMarbleOwner(m)==p)
 			{
 				ownNodes++;
 			}

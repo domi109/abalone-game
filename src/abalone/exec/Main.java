@@ -8,6 +8,8 @@ import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QMessageBox;
 
 import abalone.adt.KeyValuePair;
+import abalone.ai.Ai;
+import abalone.ai.BasicMinimaxAI;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.SmallAbaloneLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
@@ -44,7 +46,7 @@ public class Main
 
 	// The GameLogic in use. This constant is more or lass a placeholder:
 	// In principle this can be just a config-option
-	private static Class<? extends GameLogic> logicClass = StandardAbaloneLogic.class;
+	private static Class<? extends GameLogic> logicClass = SmallAbaloneLogic.class;
 
 	/**
 	 * Slot for the signal that is sent when the user confirms the notification
@@ -90,7 +92,7 @@ public class Main
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
 		players.add(new HumanPlayer("Ping"));
-		players.add(new HumanPlayer("Pong"));
+		players.add(new BasicMinimaxAI(logic));
 		state = logic.initState(board, players);
 		QApplication.initialize(args);
 
@@ -117,10 +119,18 @@ public class Main
 				message.setWindowTitle("Winner!");
 				message.show();
 				message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
+				return; // Game is over.
 			}
 		}
-		else
+		
+		// What if the next player is ai?
+		if(state.getCurrentPlayer() instanceof Ai)
 		{
+			Ai ai = (Ai) state.getCurrentPlayer();
+
+			Move decision = ai.decide(state);
+			
+			moveDone(decision);
 		}
 	}
 
