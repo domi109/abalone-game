@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import search.Action;
+
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
 import abalone.model.Board;
@@ -37,6 +39,13 @@ public class StandardAbaloneLogic implements GameLogic
 		{
 			b.addPath(createPath(b.getCentralNode(), d));
 		}
+		
+		int i = 0;
+		for(KeyValuePair<Direction,Node> p : b.getEquiPaths().get(0))
+		{
+			p.getValue().setName(String.valueOf(i));
+			i++;
+		}
 		return b;
 	}
 
@@ -49,7 +58,6 @@ public class StandardAbaloneLogic implements GameLogic
 		Node currentNode = centralNode;
 		for (int i = 1; i < radius; i++)
 		{
-			// TODO Iterate through all the 5 rings of the board
 			currentNode = currentNode.getNeighbour(currentDir);
 			path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
 			currentDir = currentDir.getNextCW();
@@ -60,7 +68,6 @@ public class StandardAbaloneLogic implements GameLogic
 				{
 					for (int j = 0; j < i - 1; j++)
 					{
-						// System.out.println(i + " " +d);
 						currentNode = currentNode.getNeighbour(d);
 						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
@@ -69,7 +76,6 @@ public class StandardAbaloneLogic implements GameLogic
 				{
 					for (int j = 0; j < i; j++)
 					{
-						// System.out.println(i + " " +d);
 						currentNode = currentNode.getNeighbour(d);
 						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
 					}
@@ -100,22 +106,27 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 		state.setMarblesRemoved(marblesRemoved);
 
-		List<KeyValuePair<Direction, Node>> path = board.getEquiPaths().get(0);
+		initMarbles(state);
+
+		return state;
+	}
+	
+	protected void initMarbles(GameState state)
+	{
+		List<KeyValuePair<Direction, Node>> path = state.getBoard().getEquiPaths().get(0);
 		int i = 0;
 		for (KeyValuePair<Direction, Node> step : path)
 		{
 			if ((i >= 8 && i <= 10) || (i >= 21 && i <= 24) || (i >= 39 && i <= 45))
 			{
-				state.setMarble(step.getValue(), players.get(0));
+				state.setMarble(step.getValue(), state.getPlayers().get(0));
 			}
 			else if ((i >= 14 && i <= 16) || (i >= 30 && i <= 33) || (i >= 51 && i <= 57))
 			{
-				state.setMarble(step.getValue(), players.get(1));
+				state.setMarble(step.getValue(), state.getPlayers().get(1));
 			}
 			i++;
 		}
-
-		return state;
 	}
 
 	@Override
@@ -155,7 +166,7 @@ public class StandardAbaloneLogic implements GameLogic
 		Player p = state.getMarbleOwner(n);
 		Node m = null;
 
-		while (n != null && state.getMarbleOwner(n) != null)
+		while (state.getMarbleOwner(n) != null)
 		{
 			m = n;
 			n = n.getNeighbour(move.getDirection());
@@ -168,6 +179,7 @@ public class StandardAbaloneLogic implements GameLogic
 			int removed = state.getMarblesRemoved().get(state.getMarbleOwner(m));
 			removed++;
 			state.getMarblesRemoved().put(state.getMarbleOwner(m),removed);
+			state.removeMarble(m);
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
 		}
@@ -179,10 +191,11 @@ public class StandardAbaloneLogic implements GameLogic
 				ownNodes++;
 			}
 			state.setMarble(n, state.getMarbleOwner(m));
+			state.removeMarble(m);
+
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
 		}
-		state.removeMarble(n);
 	}
 
 	/**

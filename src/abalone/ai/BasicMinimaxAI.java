@@ -63,6 +63,7 @@ public class BasicMinimaxAI implements Ai
 		@Override
 		public Queue<SearchNode> expand()
 		{
+
 			PriorityQueue<SearchNode> successors = new PriorityQueue<SearchNode>(10, new MoveComparator());
 			for (Action a : problem.generateActions(this.getState()))
 			{
@@ -74,8 +75,7 @@ public class BasicMinimaxAI implements Ai
 				if (!logic.isLegal(newState, (Move) a))
 				{
 					// TODO: leave this if statement here until youre sure that
-					// the AI
-					// knows what it's doin'
+					// the AI knows what it's doin'
 					throw new RuntimeException("illegal move generated: " + a.toString());
 				}
 
@@ -122,7 +122,7 @@ public class BasicMinimaxAI implements Ai
 		{
 			// Cancel after a certain number of plys...
 			// TODO maybe rather set some time limit here?
-			return node.getPathCost() >= 4;
+			return node.getPathCost() >= 5;
 		}
 
 		@Override
@@ -147,8 +147,6 @@ public class BasicMinimaxAI implements Ai
 					Node neighbour = n.getNeighbour(d);
 					if (neighbour != null)
 					{
-						// no suicide moves!
-
 						Player owner = s.getMarbleOwner(neighbour);
 						if (owner == null)
 						{
@@ -276,7 +274,6 @@ public class BasicMinimaxAI implements Ai
 
 		MinimaxSearch s = new MinimaxSearch(problem);
 		SearchNode n = s.search(startNode);
-
 		return (Move) n.getAction();
 
 	}

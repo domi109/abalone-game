@@ -132,4 +132,9 @@ public abstract class SearchNode
 	{
 		return this.action;
 	}
+	
+	public SearchNode getParent()
+	{
+		return parent;
+	}
 }

@@ -13,10 +13,22 @@ public class Node
 	// The list of neighbours of the current node,
 	// ordered by direction
 	private Map<Direction, Node> neighbourList;
-
-	public Node()
+	private String name;
+	
+	public Node(String name)
 	{
 		neighbourList = new HashMap<Direction, Node>();
+		this.name = name;
+	}
+	
+	public Node()
+	{
+		this("un");
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	/**
@@ -49,5 +61,11 @@ public class Node
 	public Node getNeighbour(Direction position)
 	{
 		return neighbourList.get(position);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
 	}
 }

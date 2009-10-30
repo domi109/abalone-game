@@ -1,5 +1,6 @@
 package search.tree.games.minimax;
 
+import search.Action;
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
@@ -53,7 +54,9 @@ public class MinimaxSearch extends TreeSearch
 	{
 		// We assume that max executes the search.
 		// Therefore we're interested in finding the max node from here on.
-		return maxNode((MiniMaxNode) node, Double.MIN_VALUE, Double.MAX_VALUE);
+		SearchNode n = maxNode((MiniMaxNode) node, Double.MIN_VALUE, Double.MAX_VALUE);
+
+		return n;
 	}
 
 	/**
@@ -107,7 +110,9 @@ public class MinimaxSearch extends TreeSearch
 				// Either we haven't found any node at all yet, or we found
 				// one who will eventually lead to a higher outcome.
 				// Anyway: store it in v!
-				v = min;
+				v = (MiniMaxNode) n;
+				v.setValue(min.getValue());
+
 			}
 			if (v.getValue() >= beta)
 			{
@@ -178,7 +183,8 @@ public class MinimaxSearch extends TreeSearch
 				// Either we haven't found any node at all yet, or we found
 				// one who will eventually lead to a lower outcome.
 				// Anyway: store it in v!
-				v = max;
+				v = (MiniMaxNode) n;
+				v.setValue(max.getValue());
 			}
 			if (v.getValue() <= alpha)
 			{

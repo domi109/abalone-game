@@ -91,8 +91,9 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer("Ping"));
+		players.add(new HumanPlayer("Pong"));
 		players.add(new BasicMinimaxAI(logic));
+		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 		QApplication.initialize(args);
 
@@ -108,28 +109,33 @@ public class Main
 	@SuppressWarnings("unused")
 	private void moveDone(Move m)
 	{
-		if (logic.isLegal(state, m))
+		if (!logic.isLegal(state, m))
 		{
-			logic.applyMove(state, m);
-			front.updateFront();
-			if (logic.getWinner(state) != null)
-			{
-				QMessageBox message = new QMessageBox();
-				message.setText("You've won");
-				message.setWindowTitle("Winner!");
-				message.show();
-				message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
-				return; // Game is over.
-			}
+			return;
 		}
-		
+		logic.applyMove(state, m);
+		front.updateFront();
+		if (logic.getWinner(state) != null)
+		{
+			QMessageBox message = new QMessageBox();
+			message.setText("You've won");
+			message.setWindowTitle("Winner!");
+			message.show();
+			message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
+			return; // Game is over.
+		}
+
 		// What if the next player is ai?
-		if(state.getCurrentPlayer() instanceof Ai)
+		if (state.getCurrentPlayer() instanceof Ai)
 		{
 			Ai ai = (Ai) state.getCurrentPlayer();
-
 			Move decision = ai.decide(state);
-			
+			if (!logic.isLegal(state, decision))
+			{
+				// TODO: leave this if statement here until youre sure that
+				// the AI knows what it's doin'
+				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
+			}
 			moveDone(decision);
 		}
 	}
