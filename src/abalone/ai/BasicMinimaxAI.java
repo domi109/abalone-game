@@ -63,10 +63,12 @@ public class BasicMinimaxAI implements Ai
 		@Override
 		public Queue<SearchNode> expand()
 		{
-
+			System.out.println("Expanding "+getAction());
 			PriorityQueue<SearchNode> successors = new PriorityQueue<SearchNode>(10, new MoveComparator());
+			
 			for (Action a : problem.generateActions(this.getState()))
 			{
+				System.out.println("--> "+((GameState)getState()).getCurrentPlayer().getName()+" "+a);
 				// Every possible action in this state
 
 				// copy the current state and apply the action on the state copy
@@ -94,6 +96,11 @@ public class BasicMinimaxAI implements Ai
 
 	private class AbaloneSearchProblem implements MinimaxProblem
 	{
+		private GameState initialState;
+		public AbaloneSearchProblem(GameState initial)
+		{
+			this.initialState = initial;
+		}
 		/**
 		 * This is just a helper to save all this ((GameState) state) typing
 		 */
@@ -105,7 +112,7 @@ public class BasicMinimaxAI implements Ai
 		@Override
 		public int getFinalStateValue(SearchState state)
 		{
-			if (gs(state).equals(logic.getWinner(gs(state))))
+			if (initialState.getCurrentPlayer() == logic.getWinner(gs(state)))
 			{
 				// the current player (max) won - result is one
 				return 1;
@@ -122,7 +129,7 @@ public class BasicMinimaxAI implements Ai
 		{
 			// Cancel after a certain number of plys...
 			// TODO maybe rather set some time limit here?
-			return node.getPathCost() >= 5;
+			return node.getPathCost() >= 7;
 		}
 
 		@Override
@@ -269,11 +276,12 @@ public class BasicMinimaxAI implements Ai
 
 	public Move decide(GameState state)
 	{
-		problem = new AbaloneSearchProblem();
+		problem = new AbaloneSearchProblem(state);
 		AbaloneNode startNode = new AbaloneNode(state);
 
 		MinimaxSearch s = new MinimaxSearch(problem);
 		SearchNode n = s.search(startNode);
+		System.out.println("I WANT TO PERFORM "+n.getAction()+" with score "+((MiniMaxNode)n).getValue());
 		return (Move) n.getAction();
 
 	}

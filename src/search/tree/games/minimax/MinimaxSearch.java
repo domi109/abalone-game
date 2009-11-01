@@ -54,7 +54,7 @@ public class MinimaxSearch extends TreeSearch
 	{
 		// We assume that max executes the search.
 		// Therefore we're interested in finding the max node from here on.
-		SearchNode n = maxNode((MiniMaxNode) node, Double.MIN_VALUE, Double.MAX_VALUE);
+		SearchNode n = maxNode((MiniMaxNode) node, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
 
 		return n;
 	}
