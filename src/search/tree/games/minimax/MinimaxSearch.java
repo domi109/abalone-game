@@ -163,6 +163,7 @@ public class MinimaxSearch extends TreeSearch
 			// So here's the plan: get the value of the final
 			// state (win for min/win for max/draw/...?)
 			// and return the node with this value.
+			System.out.println("Goal: "+node.getPath()+" = "+problem.getFinalStateValue(node.getState()));
 			node.setValue(problem.getFinalStateValue(node.getState()));
 			return node;
 		}

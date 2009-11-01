@@ -34,7 +34,7 @@ public class Main
 	// contained in the state
 	private Board board;
 	// This is the list of all players that are involved in the
-	// curren game; Is also contained in the state
+	// current game; Is also contained in the state
 	private List<Player> players;
 	// The GameState - a central storage of the current state
 	// of the game.

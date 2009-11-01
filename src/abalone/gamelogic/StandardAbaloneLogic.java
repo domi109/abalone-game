@@ -278,7 +278,7 @@ public class StandardAbaloneLogic implements GameLogic
 		{
 			if (e.getValue() >= state.getMarblesToWin())
 			{
-				return e.getKey();
+				return state.getPlayers().get((state.getPlayers().indexOf(e.getKey())+1)%2);
 			}
 		}
 		return null;

@@ -63,12 +63,10 @@ public class BasicMinimaxAI implements Ai
 		@Override
 		public Queue<SearchNode> expand()
 		{
-			System.out.println("Expanding "+getAction());
 			PriorityQueue<SearchNode> successors = new PriorityQueue<SearchNode>(10, new MoveComparator());
 			
 			for (Action a : problem.generateActions(this.getState()))
 			{
-				System.out.println("--> "+((GameState)getState()).getCurrentPlayer().getName()+" "+a);
 				// Every possible action in this state
 
 				// copy the current state and apply the action on the state copy
@@ -129,7 +127,7 @@ public class BasicMinimaxAI implements Ai
 		{
 			// Cancel after a certain number of plys...
 			// TODO maybe rather set some time limit here?
-			return node.getPathCost() >= 7;
+			return node.getPathCost() >= 6;
 		}
 
 		@Override
@@ -281,7 +279,6 @@ public class BasicMinimaxAI implements Ai
 
 		MinimaxSearch s = new MinimaxSearch(problem);
 		SearchNode n = s.search(startNode);
-		System.out.println("I WANT TO PERFORM "+n.getAction()+" with score "+((MiniMaxNode)n).getValue());
 		return (Move) n.getAction();
 
 	}
