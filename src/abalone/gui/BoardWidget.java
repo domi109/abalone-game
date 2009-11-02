@@ -25,7 +25,8 @@ import com.trolltech.qt.gui.QLinearGradient;
 public class BoardWidget extends QGraphicsView
 {
 	public Signal1<Move> move = new Signal1<Move>();
-	
+	public Signal0 updated = new Signal0();
+
 	// The game state that is being watched
 	private GameState state;
 	// The count of activated marbles
@@ -34,6 +35,7 @@ public class BoardWidget extends QGraphicsView
 	private final static double r = 15;
 	
 	private MarbleLine marLine;
+
 
 	/**
 	 * Creates a new Board Widget
@@ -75,6 +77,7 @@ public class BoardWidget extends QGraphicsView
 		this.state = state;
 		this.marLine = new MarbleLine();
 		this.setScene(prepareScene());
+		updated.emit();
 	}
 
 	/**

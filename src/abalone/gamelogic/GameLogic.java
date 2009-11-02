@@ -23,7 +23,7 @@ public interface GameLogic {
 	
 	public void applyMove(GameState state, Move move);
 
-	public Object getWinner(GameState gs);
+	public Player getWinner(GameState gs);
 
 	public boolean isLegal(GameState state, Move m);
 }

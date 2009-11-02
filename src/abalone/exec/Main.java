@@ -44,7 +44,7 @@ public class Main
 
 	// The GameLogic in use. This constant is more or less a placeholder:
 	// In principle this can be just a config-option
-	private static Class<? extends GameLogic> logicClass = TinyAbaloneLogic.class;
+	private static Class<? extends GameLogic> logicClass = SmallAbaloneLogic.class;
 
 	/**
 	 * Slot for the signal that is sent when the user confirms the notification
@@ -98,13 +98,28 @@ public class Main
 		front = new AbaloneFront(state);
 		front.show();
 		front.getBoardWidget().move.connect(this, "moveDone(Move)");
+		front.getBoardWidget().updated.connect(this, "boardUpdated()");
 		front.newGame.connect(this, "resetGame()");
-
+		
+		boardUpdated();
 		QApplication.exec();
 
 	}
 
-	@SuppressWarnings("unused")
+	private void boardUpdated()
+	{
+		if (state.getCurrentPlayer() instanceof Ai)
+		{
+			Ai ai = (Ai) state.getCurrentPlayer();
+			Move decision = ai.decide(state);
+			if (!logic.isLegal(state, decision))
+			{
+				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
+			}
+			moveDone(decision);
+		}
+	}
+	
 	private void moveDone(Move m)
 	{
 		if (!logic.isLegal(state, m))
@@ -116,7 +131,7 @@ public class Main
 		if (logic.getWinner(state) != null)
 		{
 			QMessageBox message = new QMessageBox();
-			message.setText("You've won");
+			message.setText(logic.getWinner(state).getName()+", You've won.");
 			message.setWindowTitle("Winner!");
 			message.show();
 			message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
@@ -130,8 +145,6 @@ public class Main
 			Move decision = ai.decide(state);
 			if (!logic.isLegal(state, decision))
 			{
-				// TODO: leave this if statement here until youre sure that
-				// the AI knows what it's doin'
 				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
 			}
 			moveDone(decision);

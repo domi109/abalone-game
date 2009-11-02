@@ -1,6 +1,7 @@
 package search.tree.games.minimax;
 
-import search.Action;
+import java.util.Queue;
+
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
@@ -163,7 +164,6 @@ public class MinimaxSearch extends TreeSearch
 			// So here's the plan: get the value of the final
 			// state (win for min/win for max/draw/...?)
 			// and return the node with this value.
-			System.out.println("Goal: "+node.getPath()+" = "+problem.getFinalStateValue(node.getState()));
 			node.setValue(problem.getFinalStateValue(node.getState()));
 			return node;
 		}
@@ -176,7 +176,6 @@ public class MinimaxSearch extends TreeSearch
 		for (SearchNode n : node.expand())
 		{
 			// For every successor node
-
 			// Get maximal child node of this successor
 			MiniMaxNode max = maxNode((MiniMaxNode) n, alpha, beta);
 			if (v == null || v.getValue() > max.getValue())

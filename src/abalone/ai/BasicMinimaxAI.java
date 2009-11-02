@@ -35,7 +35,7 @@ public class BasicMinimaxAI implements Ai
 
 			if (m1.getMarbleLine().getNodes().size() < m2.getMarbleLine().getNodes().size())
 			{
-				return -1;
+				return 1;
 			}
 			else if (m1.getMarbleLine().getNodes().size() == m2.getMarbleLine().getNodes().size())
 			{
@@ -43,7 +43,7 @@ public class BasicMinimaxAI implements Ai
 			}
 			else
 			{
-				return 1;
+				return -1;
 			}
 		}
 	}
@@ -64,8 +64,9 @@ public class BasicMinimaxAI implements Ai
 		public Queue<SearchNode> expand()
 		{
 			PriorityQueue<SearchNode> successors = new PriorityQueue<SearchNode>(10, new MoveComparator());
-			
-			for (Action a : problem.generateActions(this.getState()))
+			List<Action> actions = problem.generateActions(this.getState());
+			//System.out.println(actions.size());
+			for (Action a : actions)
 			{
 				// Every possible action in this state
 
@@ -207,7 +208,7 @@ public class BasicMinimaxAI implements Ai
 				// found a regular inline move
 				MarbleLine l = new MarbleLine();
 				Node curr = last;
-				for (int i = 1; i < length; i++)
+				for (int i = 0; i < length; i++)
 				{
 					l.add(curr);
 					curr = curr.getNeighbour(direction.getOpposite());
