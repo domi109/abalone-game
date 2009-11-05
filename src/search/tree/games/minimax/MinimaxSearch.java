@@ -5,6 +5,7 @@ import java.util.Queue;
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
+import search.tree.heuristic.Evaluator;
 
 /**
  * A basic minimax search that tries to maximize the game result (Minimax-Value)
@@ -24,8 +25,28 @@ import search.tree.TreeSearch;
  */
 public class MinimaxSearch extends TreeSearch
 {
-	// a local variable that points to the search problem object
-	protected MinimaxProblem problem;
+	/**
+	 * A basic placeholder evaluator that always returns zero as an evaluation
+	 * and therefore does not help at all.
+	 * BUT the search will at least be able to run.
+	 *
+	 */
+	private static class DummyEvaluator implements Evaluator<Double>
+	{
+
+		/**
+		 * Returns zero.
+		 * @see search.tree.heuristic.Evaluator#eval(search.tree.SearchState)
+		 */
+		@Override
+		public Double eval(SearchState state)
+		{
+			return 0d;
+		}
+	}	
+	
+	
+	private Evaluator<Double> evaluator;
 
 	/**
 	 * Construct a new minimax search given a minimax search problem. The search
@@ -38,8 +59,13 @@ public class MinimaxSearch extends TreeSearch
 	 */
 	public MinimaxSearch(MinimaxProblem t)
 	{
+		this(t, new DummyEvaluator());
+	}
+	
+	public MinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator)
+	{
 		super(t);
-		this.problem = t;
+		this.evaluator = evaluator;
 	}
 
 	/**
@@ -76,21 +102,8 @@ public class MinimaxSearch extends TreeSearch
 	 */
 	private MiniMaxNode maxNode(MiniMaxNode node, double alpha, double beta)
 	{
-		if (problem.breakTest(node))
+		if(testNode(node))
 		{
-			// The problem says that the search should be
-			// aborted here (e.g. as it already took too long...)
-			// so it's time to get some default value and return.
-			node.setValue(breakValue(node.getState()));
-			return node;
-		}
-		if (problem.goalTest(node.getState()))
-		{
-			// Voila, we really found a goal state!!
-			// So here's the plan: get the value of the final
-			// state (win for min/win for max/draw/...?)
-			// and return the node with this value.
-			node.setValue(problem.getFinalStateValue(node.getState()));
 			return node;
 		}
 
@@ -150,21 +163,8 @@ public class MinimaxSearch extends TreeSearch
 	 */
 	private MiniMaxNode minNode(MiniMaxNode node, double alpha, double beta)
 	{
-		if (problem.breakTest(node))
+		if(testNode(node))
 		{
-			// The problem says that the search should be
-			// aborted here (e.g. as it already took too long...)
-			// so it's time to get some default value and return.
-			node.setValue(breakValue(node.getState()));
-			return node;
-		}
-		if (problem.goalTest(node.getState()))
-		{
-			// Voila, we really found a goal state!!
-			// So here's the plan: get the value of the final
-			// state (win for min/win for max/draw/...?)
-			// and return the node with this value.
-			node.setValue(problem.getFinalStateValue(node.getState()));
 			return node;
 		}
 		
@@ -205,12 +205,34 @@ public class MinimaxSearch extends TreeSearch
 		return v;
 
 	}
-
-	protected double breakValue(SearchState state)
+	
+	/**
+	 * Test a given node on whether or not the search can be canceled.
+	 * @param node
+	 * @return true if the search can be canceled
+	 */
+	protected boolean testNode(MiniMaxNode node)
 	{
-		// In a real application we probably want to
-		// return some kind of estimation here.
-		return 0;
+		MinimaxProblem problem = (MinimaxProblem) getProblem();
+		if (problem.breakTest(node))
+		{
+			// The problem says that the search should be
+			// aborted here (e.g. as it already took too long...)
+			// so it's time to get some default value and return.
+			node.setValue(evaluator.eval(node.getState()));
+			return true;
+		}
+		if (problem.goalTest(node.getState()))
+		{
+			// Voila, we really found a goal state!!
+			// So here's the plan: get the value of the final
+			// state (win for min/win for max/draw/...?)
+			// and return the node with this value.
+			node.setValue(problem.getFinalStateValue(node.getState()));
+			return true;
+		}
+		
+		return false;
 	}
 
 }

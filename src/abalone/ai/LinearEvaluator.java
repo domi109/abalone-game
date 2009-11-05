@@ -15,7 +15,7 @@ import search.tree.SearchState;
 import abalone.gamestate.GameState;
 import abalone.model.Player;
 
-public class LinearEvaluator implements Evaluator
+public class LinearEvaluator implements Evaluator<Double>
 {
 
     // Variables for strategies.
@@ -49,7 +49,7 @@ public class LinearEvaluator implements Evaluator
     * @param    state   a searchstate which the AI wishes to evaluate
     * @return           the 'goodness' of a searched move
     */
-    public eval(SearchState state){
+    public Double eval(SearchState state){
         // Checks to see if the searchstate given is an instance of a gamestate.
         if(state instanceof GameState){
 
@@ -64,6 +64,8 @@ public class LinearEvaluator implements Evaluator
         else{
 
         }
+        
+        return 0d;
     }
 
    /**

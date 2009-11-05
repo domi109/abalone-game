@@ -279,7 +279,13 @@ public class BasicMinimaxAI implements Ai
 		AbaloneNode startNode = new AbaloneNode(state);
 
 		MinimaxSearch s = new MinimaxSearch(problem);
+		System.out.println("My Options: ");
+		for(Action a : problem.generateActions(state))
+		{
+			System.out.println(a);
+		}
 		SearchNode n = s.search(startNode);
+		System.out.println("I want to perform "+n.getAction()+" value: "+((MiniMaxNode)n).getValue());
 		return (Move) n.getAction();
 
 	}

@@ -16,6 +16,10 @@ import abalone.model.HumanPlayer;
 import abalone.model.Move;
 import abalone.model.Player;
 
+import com.trolltech.qt.QThread;
+import com.trolltech.qt.core.QRunnable;
+import com.trolltech.qt.core.QThreadPool;
+import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QMessageBox;
@@ -28,6 +32,36 @@ import com.trolltech.qt.gui.QMessageBox;
  */
 public class Main
 {
+	private class Decider implements Runnable
+    {
+    	private Move decision;
+    	private Ai ai;
+    	
+    	public Decider()
+    	{
+    	}
+    	
+    	public void setAi(Ai ai)
+    	{
+    		this.ai = ai;
+    	}
+    	
+        @Override
+        public void run()
+        {
+        	decision = ai.decide(state);
+			if (!logic.isLegal(state, decision))
+			{
+				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
+			}
+        }
+        
+        public Move getDecision()
+        {
+        	return decision;
+        }
+    }
+    
 	// This is the object that represents the current GameLogic
 	private GameLogic logic;
 	// This is the board that is currently played on, is also
@@ -41,6 +75,8 @@ public class Main
 	private GameState state;
 	// The Qt-based abalone frontend
 	private AbaloneFront front;
+	
+	private Decider decider;
 
 	// The GameLogic in use. This constant is more or less a placeholder:
 	// In principle this can be just a config-option
@@ -89,10 +125,14 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer("Pong"));
+		//players.add(new HumanPlayer("Pong"));
+		players.add(new BasicMinimaxAI(logic));
 		players.add(new BasicMinimaxAI(logic));
 		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
+		
+		decider = new Decider();
+		
 		QApplication.initialize(args);
 
 		front = new AbaloneFront(state);
@@ -102,22 +142,36 @@ public class Main
 		front.newGame.connect(this, "resetGame()");
 		
 		boardUpdated();
+		
 		QApplication.exec();
 
 	}
 
+	/**
+	 * Slot for board updated signal.
+	 * Used to trigger an ai decission if ai is next
+	 */
 	private void boardUpdated()
 	{
-		if (state.getCurrentPlayer() instanceof Ai)
+		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state)==null)
 		{
-			Ai ai = (Ai) state.getCurrentPlayer();
-			Move decision = ai.decide(state);
-			if (!logic.isLegal(state, decision))
-			{
-				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
-			}
-			moveDone(decision);
+			decider.setAi((Ai)state.getCurrentPlayer());
+	        QThread runner = new QThread(decider);
+		    
+	        runner.start();
+	        runner.finished.connect(this, "decisionDone()",ConnectionType.QueuedConnection);
 		}
+	}
+	
+	/**
+	 * Slot for the signal that is emitted when the AI has taken
+	 * a decision.
+	 */
+	@SuppressWarnings("unused")
+	private void decisionDone()
+	{
+		
+		moveDone(decider.getDecision());
 	}
 	
 	private void moveDone(Move m)
@@ -136,18 +190,6 @@ public class Main
 			message.show();
 			message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
 			return; // Game is over.
-		}
-
-		// What if the next player is ai?
-		if (state.getCurrentPlayer() instanceof Ai)
-		{
-			Ai ai = (Ai) state.getCurrentPlayer();
-			Move decision = ai.decide(state);
-			if (!logic.isLegal(state, decision))
-			{
-				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
-			}
-			moveDone(decision);
 		}
 	}
 
