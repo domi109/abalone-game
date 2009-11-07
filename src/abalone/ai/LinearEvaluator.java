@@ -1,5 +1,6 @@
 /*
- *  A Linear Evaluation function based on a paper by 
+ *  A linear, weighted evaluation function based on a paper by N.P.P.M. Lemmens.
+ * 
  */
 
 package abalone.ai;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import search.tree.heuristic.Evaluator;
 import search.tree.SearchState;
 import abalone.gamestate.GameState;
+import abalone.model.Board;
 import abalone.model.Player;
 
 public class LinearEvaluator implements Evaluator<Double>
@@ -52,27 +54,28 @@ public class LinearEvaluator implements Evaluator<Double>
     public Double eval(SearchState state){
         // Checks to see if the searchstate given is an instance of a gamestate.
         if(state instanceof GameState){
-
+            // Cast searchstate to gamestate.
             GameState s = (GameState) state;
+            // Get the board.
+            Board board = s.getBoard();
             // Get player list.
             List<Player> players = s.getPlayers();
-            // Get some more stuff
-
-            // Calculate the functions.
-            calculateF1();
+         
+            // Calculate the individual functions.
+            calculateF1(board, players);
             calculateF2();
             calculateF3();
             calculateF4();
             calculateF5();
             calculateF6();
 
-            //
-            
+            // Evaluate.
+            double eval = f1 + f2 + f3 + f4 + f5 - f6;
+            return eval;
         }
         else{
 
-        }
-        
+        }       
         return 0d;
     }
 
@@ -82,8 +85,10 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return
     */
-    private double calculateF1(){
-
+    private double calculateF1(Board board, List<Player> players){
+        for (Player player : players) {
+            //TODO: check distance of all marbles to center.
+        }
         return f1;
     }
     
