@@ -45,9 +45,9 @@ public class LinearEvaluator implements Evaluator<Double>
     }
 
    /**
-    * Method which evaluates the 'goodness' of a move done in a search state.
+    * Method which evaluates the desirability of a move done in a search state.
     * @param    state   a searchstate which the AI wishes to evaluate
-    * @return           the 'goodness' of a searched move
+    * @return           the desirability of a searched move
     */
     public Double eval(SearchState state){
         // Checks to see if the searchstate given is an instance of a gamestate.
@@ -57,9 +57,17 @@ public class LinearEvaluator implements Evaluator<Double>
             // Get player list.
             List<Player> players = s.getPlayers();
             // Get some more stuff
+
+            // Calculate the functions.
+            calculateF1();
+            calculateF2();
+            calculateF3();
+            calculateF4();
+            calculateF5();
+            calculateF6();
+
+            //
             
-
-
         }
         else{
 
@@ -192,7 +200,7 @@ public class LinearEvaluator implements Evaluator<Double>
 
    /**
     * Setter method which changes weight of function 5 (w5).
-    * @param    w4  the new weight of function 5 (w5)
+    * @param    w5  the new weight of function 5 (w5)
     */
     public void setW5(double w5){
         this.w5 = w5;
@@ -208,7 +216,7 @@ public class LinearEvaluator implements Evaluator<Double>
 
    /**
     * Setter method which changes weight of function 6 (w6).
-    * @param    w4  the new weight of function 6 (w6)
+    * @param    w6  the new weight of function 6 (w6)
     */
     public void setW6(double w6){
         this.w6 = w6;
