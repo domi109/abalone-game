@@ -63,9 +63,9 @@ public class LinearEvaluator implements Evaluator<Double>
          
             // Calculate the individual functions.
             calculateF1(board, players);
-            calculateF2();
-            calculateF3();
-            calculateF4();
+            calculateF2(board, players);
+            calculateF3(board, players);
+            calculateF4(board, players);
             calculateF5();
             calculateF6();
 
@@ -93,38 +93,50 @@ public class LinearEvaluator implements Evaluator<Double>
     }
     
    /**
-    * Returns the 
+    * Method which calculates the difference between the
     * @param
     * @return      
     */
-    private double calculateF2(){
+    private double calculateF2(Board board, List<Player> players){
 
         return f2;
     }
 
    /**
-    * Returns the
+    * Method which
     * @param
     * @return
     */
-    private double calculateF3(){
+    private double calculateF3(Board board, List<Player> players){
 
         return f3;
     }
 
-    //
-    private double calculateF4(){
+   /**
+    * Method which
+    * @param
+    * @return
+    */
+    private double calculateF4(Board board, List<Player> players){
 
         return f4;
     }
 
-    //
+   /**
+    * Method which
+    * @param
+    * @return
+    */
     private double calculateF5(){
 
         return f5;
     }
 
-    //
+   /**
+    * Method which
+    * @param
+    * @return
+    */
     private double calculateF6(){
 
         return f6;
