@@ -9,7 +9,6 @@ package abalone.ai;
 // Imports from Java libraries.
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 // Imports from other libraries.
 import search.tree.heuristic.Evaluator;
@@ -39,6 +38,14 @@ public class LinearEvaluator implements Evaluator<Double>
 
     // Constructor for LinearEvaluator class.
     public LinearEvaluator(){
+        // Ensure functions are set back to default values.
+        f1 = 0;
+        f2 = 0;
+        f3 = 0;
+        f4 = 0;
+        f5 = 0;
+        f6 = 0;
+        // Ensure weights are set back to default values.
         w1 = 1;
         w2 = 1;
         w3 = 1;
@@ -61,19 +68,25 @@ public class LinearEvaluator implements Evaluator<Double>
             Board board = s.getBoard();
             // Get player list.
             List<Player> players = s.getPlayers();
+            // Get the current player.
+            Player currentPlayer = s.getCurrentPlayer();
+            // Get the opponent player
+            int tempCur = s.getPlayers().indexOf(s.getCurrentPlayer());
+            Player opponentPlayer = s.getPlayers().get((tempCur + 1) % 2);
             // Get the lost marbles per player.
             Map<Player, Integer> lostMarbles = s.getMarblesRemoved();
+
          
             // Calculate the individual functions.
             calculateF1(players, board);
             calculateF2(players, board);
             calculateF3(players, board);
             calculateF4(players, board);
-            calculateF5(players, lostMarbles);
-            calculateF6(players, lostMarbles);
+            calculateF5(lostMarbles, opponentPlayer);
+            calculateF6(lostMarbles, currentPlayer);
 
             // Evaluate.
-            double eval = f1 + f2 + f3 + f4 + f5 - f6;
+            double eval = (w1 * f1) + (w2 * f2) + (w3 * f3) + (w4 * f4) + (w5 * f5) - (w6 * f6);
             return eval;
         }
         else{
@@ -153,10 +166,8 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param    Player  a list of players
     * @return
     */
-    private double calculateF5(List<Player> players, Map<Player, Integer> removed){
-        for (Player player : players) {
-            //TODO: Calculate number of opponent marbles lost.
-        }       
+    private double calculateF5(Map<Player, Integer> removed, Player opponentPlayer ){
+        f5 = removed.get(opponentPlayer);
         return f5;
     }
 
@@ -165,12 +176,9 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param    Player  a list of players
     * @return
     */
-    private double calculateF6(List<Player> players, Map<Player, Integer> removed){
-        for (Player player : players) {
-            //TODO: Calculate number of marbles lost.
-        }
+    private double calculateF6(Map<Player, Integer> removed, Player currentPlayer){
+        f6 = removed.get(currentPlayer);
         return f6;
-
     }
 
    /**
