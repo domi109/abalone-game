@@ -15,6 +15,7 @@ public class Node implements Serializable
 	// ordered by direction
 	private Map<Direction, Node> neighbourList;
 	private String name;
+	private int manhDist;
 	
 	public Node(String name)
 	{
@@ -62,6 +63,22 @@ public class Node implements Serializable
 	public Node getNeighbour(Direction position)
 	{
 		return neighbourList.get(position);
+	}
+	
+	/**
+	 * Sets the Manhattan distance
+	 * @param aDistance
+	 */
+	public void setManhDist(int aDistance){
+		manhDist = aDistance;
+	}
+	
+	/**
+	 * returns the Manhattan distance
+	 * @return
+	 */
+	public int getManhDist(){
+		return manhDist;
 	}
 	
 	@Override
