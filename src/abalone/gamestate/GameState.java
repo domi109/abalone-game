@@ -27,6 +27,7 @@ public class GameState implements SearchState, Serializable
 	private List<Player> players;
 	private Map<Player, Integer> marblesRemoved;
 	private Player currentPlayer;
+        private Player opponentPlayer;
 	private int marblesToWin;
 	private Map<Node, Player> marbleOwners;
 	private Map<Player,Set<Node>> marblePositions;
@@ -81,6 +82,16 @@ public class GameState implements SearchState, Serializable
 		this.currentPlayer = currentPlayer;
 	}
 
+        public Player getOpponentPlayer()
+        {
+            return opponentPlayer;
+        }
+
+        public void setOpponentPlayer(Player opponentPlayer)
+        {
+            this.opponentPlayer = opponentPlayer;
+        }
+        
 	@Override
 	public boolean equalState(SearchState state)
 	{
@@ -98,7 +109,10 @@ public class GameState implements SearchState, Serializable
 		{
 			return false;
 		}
-		
+                if(opponentPlayer != s.opponentPlayer)
+                {
+                        return false;
+                }    
 		if(marblesToWin != s.marblesToWin)
 		{
 			return false;
