@@ -9,13 +9,19 @@ package abalone.ai;
 // Imports from Java libraries.
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-// Imports from other libraries.
-import search.tree.heuristic.Evaluator;
-import search.tree.SearchState;
-import abalone.gamestate.GameState;
+// Imports from Model library.
 import abalone.model.Board;
 import abalone.model.Player;
+import abalone.model.Node;
+
+// Import from Search library.
+import search.tree.heuristic.Evaluator;
+import search.tree.SearchState;
+
+// Imports from Gamestate library.
+import abalone.gamestate.GameState;
 
 public class LinearEvaluator implements Evaluator<Double>
 {
@@ -70,12 +76,15 @@ public class LinearEvaluator implements Evaluator<Double>
             List<Player> players = s.getPlayers();
             // Get the current player.
             Player currentPlayer = s.getCurrentPlayer();
-            // Get the opponent player
+            // Get the opponent player.
             int tempCur = s.getPlayers().indexOf(s.getCurrentPlayer());
             Player opponentPlayer = s.getPlayers().get((tempCur + 1) % 2);
+            // Get current player's marbles.
+            Set<Node> currentPlayerMarbles = s.getMarbles(currentPlayer);
+            // Get opponent player's marbles.
+            Set<Node> opponentPlayerMarbles = s.getMarbles(opponentPlayer);
             // Get the lost marbles per player.
             Map<Player, Integer> lostMarbles = s.getMarblesRemoved();
-
          
             // Calculate the individual functions.
             calculateF1(players, board);
@@ -163,8 +172,9 @@ public class LinearEvaluator implements Evaluator<Double>
 
    /**
     * Method which calculates the number of marbles the opponent has lost in this searchstate.
-    * @param    Player  a list of players
-    * @return
+    * @param    Map a map containing the
+    * @param    Player a opponent player
+    * @return   
     */
     private double calculateF5(Map<Player, Integer> removed, Player opponentPlayer ){
         f5 = removed.get(opponentPlayer);
