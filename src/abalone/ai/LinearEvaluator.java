@@ -67,8 +67,8 @@ public class LinearEvaluator implements Evaluator<Double>
             calculateF2(board, players);
             calculateF3(board, players);
             calculateF4(board, players);
-            calculateF5();
-            calculateF6();
+            calculateF5(players);
+            calculateF6(players);
 
             // Evaluate.
             double eval = f1 + f2 + f3 + f4 + f5 - f6;
@@ -148,21 +148,25 @@ public class LinearEvaluator implements Evaluator<Double>
 
    /**
     * Method which calculates the number of marbles the opponent has lost in this searchstate.
-    * @param
+    * @param    Player  a list of players
     * @return
     */
-    private double calculateF5(){
-        //TODO: Calculate number of opponenet marbles lost.
+    private double calculateF5(List<Player> players){
+        for (Player player : players) {
+            //TODO: Calculate number of opponent marbles lost.
+        }       
         return f5;
     }
 
    /**
     * Method which calculates the number of marbles the player has lost in this searchstate.
-    * @param
+    * @param    Player  a list of players
     * @return
     */
-    private double calculateF6(){
-        //TODO: Calculate number of marbles lost.
+    private double calculateF6(List<Player> players){
+        for (Player player : players) {
+            //TODO: Calculate number of marbles lost.
+        }
         return f6;
 
     }
