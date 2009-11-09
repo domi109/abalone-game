@@ -46,6 +46,7 @@ public class StandardAbaloneLogic implements GameLogic
 			p.getValue().setName(String.valueOf(i));
 			i++;
 		}
+		addManhDist(b.getEquiPaths().get(0));		
 		return b;
 	}
 
@@ -54,7 +55,7 @@ public class StandardAbaloneLogic implements GameLogic
 		List<KeyValuePair<Direction, Node>> path = new ArrayList<KeyValuePair<Direction, Node>>();
 
 		path.add(new KeyValuePair<Direction, Node>(null, centralNode));
-		Direction currentDir = startDirection;
+		Direction currentDir = startDirection;		
 		Node currentNode = centralNode;
 		for (int i = 1; i < radius; i++)
 		{
@@ -64,6 +65,7 @@ public class StandardAbaloneLogic implements GameLogic
 
 			for (Direction d : currentDir)
 			{
+				
 				if (d.equals(startDirection.getNextCW()))
 				{
 					for (int j = 0; j < i - 1; j++)
@@ -347,6 +349,24 @@ public class StandardAbaloneLogic implements GameLogic
 			}
 		}
 		return true;
+	}
+	
+	private void addManhDist(List<KeyValuePair<Direction, Node>> aPath){
+		boolean finished = false;
+		int lvl = 0;
+		int from = 1;
+		
+		aPath.get(0).getValue().setManhDist(lvl);
+		
+		while(!finished){
+			lvl++;
+			int to = (lvl * 6) + from;
+			for (int i = from ; i < to ; i++) {
+				aPath.get(i).getValue().setManhDist(lvl);
+			}
+			from = to;
+			if(lvl == radius - 1) finished = true;
+		}
 	}
 
 }
