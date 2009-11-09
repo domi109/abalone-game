@@ -2,8 +2,9 @@ package abalone.model;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.io.Serializable;
 
-public enum Direction implements Iterable<Direction>
+public enum Direction implements Iterable<Direction>,Serializable
 {
 	
 	UPPER_LEFT,

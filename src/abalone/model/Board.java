@@ -3,6 +3,7 @@ package abalone.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.io.Serializable;
 
 import abalone.adt.KeyValuePair;
 
@@ -11,7 +12,7 @@ import abalone.adt.KeyValuePair;
  *
  * The board is represented as a graph with interconnected nodes.
  */
-public class Board
+public class Board implements Serializable
 {
 	/**
 	 * The central node of the board.

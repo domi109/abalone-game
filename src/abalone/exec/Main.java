@@ -2,6 +2,7 @@ package abalone.exec;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 import abalone.ai.Ai;
 import abalone.ai.BasicMinimaxAI;
@@ -23,6 +24,7 @@ import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QMessageBox.Icon;
 
 /**
  * The main class of the abalone game. Here the overall program control is done.
@@ -140,6 +142,7 @@ public class Main
 		front.getBoardWidget().move.connect(this, "moveDone(Move)");
 		front.getBoardWidget().updated.connect(this, "boardUpdated()");
 		front.newGame.connect(this, "resetGame()");
+		front.saveGame.connect(this, "saveGame(String)");
 		
 		boardUpdated();
 		
@@ -190,6 +193,23 @@ public class Main
 			message.show();
 			message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
 			return; // Game is over.
+		}
+	}
+	
+	private void saveGame(String place)
+	{
+		System.out.println(place);
+		try
+		{
+			FileOutputStream stream = new FileOutputStream(place);
+			ObjectOutputStream objects = new ObjectOutputStream(stream);
+			//objects.writeObject(state);
+			objects.close();
+			stream.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 

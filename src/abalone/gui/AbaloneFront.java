@@ -20,6 +20,7 @@ import com.trolltech.qt.webkit.*;
 public class AbaloneFront extends QMainWindow
 {
 	public Signal0 newGame = new Signal0();
+	public Signal1<String> saveGame = new Signal1<String>();
 	
 	private GameState state;
 	
@@ -49,6 +50,8 @@ public class AbaloneFront extends QMainWindow
 	
 	private BoardWidget boardWidget;
 	private GameInfoWidget gameInfoWidget;
+	
+	private String outputFile;
 
 	
 	public AbaloneFront(GameState state)
@@ -79,6 +82,31 @@ public class AbaloneFront extends QMainWindow
 	public void newGame()
 	{
 		newGame.emit();
+	}
+	
+	public void save()
+	{
+		QFileInfo file = new QFileInfo(outputFile);
+		if(file.exists())
+		{
+			saveGame.emit(outputFile);
+		}
+		else
+		{
+			saveAs();
+		}
+	}
+	
+	public void saveAs()
+	{
+		String format = "sav";
+        String initialPath = QDir.currentPath() + tr("/untitled.") + format;
+        String filter = "Save Files (*.sav)";
+        outputFile = QFileDialog.getSaveFileName(this, tr("Save As"), initialPath, new QFileDialog.Filter(filter));
+        if(!outputFile.equals(""))
+        {
+			saveGame.emit(outputFile);
+		}
 	}
 	
 	public void aboutAbalone()
@@ -126,11 +154,12 @@ public class AbaloneFront extends QMainWindow
 		saveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/save.png"),tr("&Save"), this);
 		saveAct.setShortcut(tr("Ctrl+S"));
 		saveAct.setStatusTip(tr("Saves a game"));
-		//saveAct.triggered.connect(this, "open()");
+		saveAct.triggered.connect(this, "save()");
 		
 		saveAsAct = new QAction(new QIcon("classpath:abalone/gui/Icons/saveAs.png"),tr("Save &As"), this);
 		saveAsAct.setShortcut(tr("Ctrl+A"));
 		saveAsAct.setStatusTip(tr("Saves a game under a new name"));
+		saveAsAct.triggered.connect(this, "saveAs()");
 		
 		networkgameAct = new QAction(new QIcon("classpath:abalone/gui/Icons/networkGame.png"),tr("Network Game"), this);
 		networkgameAct.setStatusTip(tr("Play a game over the network"));

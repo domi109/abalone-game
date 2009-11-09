@@ -1,7 +1,8 @@
 package abalone.model;
+import java.io.Serializable;
 
 
-public class HumanPlayer implements Player
+public class HumanPlayer implements Player, Serializable
 {
 	private String name;
 	

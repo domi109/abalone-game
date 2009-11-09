@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.io.Serializable;
 
 import search.Action;
 import search.tree.SearchState;
@@ -20,7 +21,7 @@ import abalone.model.Player;
  * 
  * @author rutger
  */
-public class GameState implements SearchState
+public class GameState implements SearchState, Serializable
 {
 	private Board board;
 	private List<Player> players;

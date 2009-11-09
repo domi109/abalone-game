@@ -2,12 +2,13 @@ package abalone.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * A node in the board graph
  * 
  */
-public class Node
+public class Node implements Serializable
 {
 
 	// The list of neighbours of the current node,
