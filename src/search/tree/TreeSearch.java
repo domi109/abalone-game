@@ -1,5 +1,6 @@
 package search.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -15,8 +16,9 @@ import java.util.Queue;
  * @author Daniel Mescheder
  * 
  */
-public class TreeSearch
+public class TreeSearch implements Serializable
 {
+	private static final long serialVersionUID = 4288368939410798005L;
 	// A search problem
 	private SearchProblem problem;
 

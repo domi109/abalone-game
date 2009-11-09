@@ -1,5 +1,6 @@
 package search.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -17,8 +18,9 @@ import search.Action;
  * 
  * @author Daniel Mescheder
  */
-public abstract class SearchNode
+public abstract class SearchNode implements Serializable
 {
+	private static final long serialVersionUID = -3043848397791138974L;
 	// The state that this node refers to
 	private SearchState searchState;
 	// The parent node which leads to this node

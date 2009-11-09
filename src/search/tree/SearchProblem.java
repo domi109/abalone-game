@@ -1,5 +1,6 @@
 package search.tree;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -18,7 +19,7 @@ import search.Action;
  * 
  * @author Daniel Mescheder
  */
-public interface SearchProblem
+public interface SearchProblem extends Serializable
 {
 	/**
 	 * Checks whether a given state is a goal state. The implementing class is

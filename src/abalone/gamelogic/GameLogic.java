@@ -5,6 +5,7 @@
 
 package abalone.gamelogic;
 
+import java.io.Serializable;
 import java.util.List;
 
 import abalone.gamestate.GameState;
@@ -12,7 +13,7 @@ import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
 
-public interface GameLogic {
+public interface GameLogic  extends Serializable{
 
     // create board, return board. Initialize the game, set marbles to initial positions, with board as argument.
     // 

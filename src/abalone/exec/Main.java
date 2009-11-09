@@ -18,13 +18,10 @@ import abalone.model.Move;
 import abalone.model.Player;
 
 import com.trolltech.qt.QThread;
-import com.trolltech.qt.core.QRunnable;
-import com.trolltech.qt.core.QThreadPool;
 import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QMessageBox.Icon;
 
 /**
  * The main class of the abalone game. Here the overall program control is done.
@@ -127,8 +124,8 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		//players.add(new HumanPlayer("Pong"));
-		players.add(new BasicMinimaxAI(logic));
+		players.add(new HumanPlayer("Pong"));
+		//players.add(new BasicMinimaxAI(logic));
 		players.add(new BasicMinimaxAI(logic));
 		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
@@ -203,7 +200,7 @@ public class Main
 		{
 			FileOutputStream stream = new FileOutputStream(place);
 			ObjectOutputStream objects = new ObjectOutputStream(stream);
-			//objects.writeObject(state);
+			objects.writeObject(state);
 			objects.close();
 			stream.close();
 		}

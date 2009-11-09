@@ -1,7 +1,10 @@
 package abalone.adt;
 
-public class KeyValuePair<I,E>
+import java.io.Serializable;
+
+public class KeyValuePair<I,E> implements Serializable
 {
+	private static final long serialVersionUID = -5343270055865402286L;
 	private I key;
 	private E value;
 	

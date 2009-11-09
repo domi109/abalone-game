@@ -1,8 +1,11 @@
 package search;
 
+import java.io.Serializable;
 
-public class Action
+
+public class Action implements Serializable
 {
+	private static final long serialVersionUID = -8835650567166127605L;
 	private String name;
 	private double cost;
 	

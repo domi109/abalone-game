@@ -1,5 +1,6 @@
 package search.tree;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Queue;
 
@@ -15,7 +16,7 @@ import search.Action;
  * 
  * @author Daniel Mescheder
  */
-public interface SearchState
+public interface SearchState extends Serializable
 {
 	/**
 	 * Checks whether this state equals a given second state in regard of a
