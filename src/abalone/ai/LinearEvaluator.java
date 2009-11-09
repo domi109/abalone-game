@@ -61,14 +61,16 @@ public class LinearEvaluator implements Evaluator<Double>
             Board board = s.getBoard();
             // Get player list.
             List<Player> players = s.getPlayers();
+            // Get the lost marbles per player.
+            Map<Player, Integer> lostMarbles = s.getMarblesRemoved();
          
             // Calculate the individual functions.
-            calculateF1(board, players);
-            calculateF2(board, players);
-            calculateF3(board, players);
-            calculateF4(board, players);
-            calculateF5(players);
-            calculateF6(players);
+            calculateF1(players, board);
+            calculateF2(players, board);
+            calculateF3(players, board);
+            calculateF4(players, board);
+            calculateF5(players, lostMarbles);
+            calculateF6(players, lostMarbles);
 
             // Evaluate.
             double eval = f1 + f2 + f3 + f4 + f5 - f6;
@@ -89,7 +91,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return
     */
-    private double calculateF1(Board board, List<Player> players){
+    private double calculateF1(List<Player> players, Board board){
         for (Player player : players) {
             //TODO: check distance of all marbles to center.
         }
@@ -105,7 +107,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return      
     */
-    private double calculateF2(Board board, List<Player> players){
+    private double calculateF2(List<Player> players, Board board){
         for (Player player : players) {
             //TODO: check number of teammates
         }
@@ -123,7 +125,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return
     */
-    private double calculateF3(Board board, List<Player> players){
+    private double calculateF3(List<Player> players, Board board){
         for (Player player : players) {
             //TODO: check two sides for opponents.
         }
@@ -139,7 +141,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return
     */
-    private double calculateF4(Board board, List<Player> players){
+    private double calculateF4(List<Player> players, Board board){
         for (Player player : players) {
             //TODO: check two sides for opponent and friend match.
         }
@@ -151,7 +153,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param    Player  a list of players
     * @return
     */
-    private double calculateF5(List<Player> players){
+    private double calculateF5(List<Player> players, Map<Player, Integer> removed){
         for (Player player : players) {
             //TODO: Calculate number of opponent marbles lost.
         }       
@@ -163,7 +165,7 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param    Player  a list of players
     * @return
     */
-    private double calculateF6(List<Player> players){
+    private double calculateF6(List<Player> players, Map<Player, Integer> removed){
         for (Player player : players) {
             //TODO: Calculate number of marbles lost.
         }
