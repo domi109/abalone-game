@@ -1,5 +1,6 @@
 /*
- *  A linear, weighted evaluation function based on a paper by N.P.P.M. Lemmens.
+ *  A linear, weighted evaluation function based on a paper 'Constructing an Abalone Game-Playing Agent'
+ *  by N.P.P.M. Lemmens (18th June 2005).
  * 
  */
 
@@ -81,6 +82,9 @@ public class LinearEvaluator implements Evaluator<Double>
 
    /**
     * Method which calculates the difference between the sum of the Manhattan distances of marbles for each players.
+    * <p>
+    * This compares how close two players marbles are to the center. Reason for this is that in Abalone being at the
+    * center is a good strategy, as it makes it harder for a player's marbles to be knocked off the board.
     * @param    Player  a list of players
     * @param
     * @return
@@ -93,52 +97,72 @@ public class LinearEvaluator implements Evaluator<Double>
     }
     
    /**
-    * Method which calculates the difference between the
+    * Method which calculates the difference between the sum of neighboring teammates of each marble for each player.
+    * <p>
+    * This is also known as the Cohesion Strategy. Reason for this is that in Abalone it is good for a player to have
+    * his/her marbles close to each other, as it adds offensive and defensive capabilities.
+    * @param    Player  a list of players
     * @param
     * @return      
     */
     private double calculateF2(Board board, List<Player> players){
-
+        for (Player player : players) {
+            //TODO: check number of teammates
+        }
         return f2;
     }
 
    /**
-    * Method which
+    * Method which calculates the difference between the sum of opponent marble on adjacent side and opponent marble on
+    * opposing adjacent side.
+    * <p>
+    * This is also known as the break-strong-group strategy. Reason is that when you break a group of the opponent, it
+    * will weaken them offensively and defensively. Also often, when inbetween two opponent groups, a player's marbles
+    * cannot be pushed.
+    * @param    Player  a list of players
     * @param
     * @return
     */
     private double calculateF3(Board board, List<Player> players){
-
+        for (Player player : players) {
+            //TODO: check two sides for opponents.
+        }
         return f3;
     }
 
    /**
-    * Method which
+    * Method which calculates
+    * <p>
+    * This is also known as the strengthen-group strategy. Reason is if you have contact position with an opponent marble,
+    * it should be reinforced to ensure that it is safe from attack, but also to add offensive capabilities.
+    * @param    Player a list of players
     * @param
     * @return
     */
     private double calculateF4(Board board, List<Player> players){
-
+        for (Player player : players) {
+            //TODO: check two sides for opponent and friend match.
+        }
         return f4;
     }
 
    /**
-    * Method which
+    * Method which calculates the number of marbles the opponent has lost in this searchstate.
     * @param
     * @return
     */
     private double calculateF5(){
-
+        //TODO: Calculate number of opponenet marbles lost.
         return f5;
     }
 
    /**
-    * Method which
+    * Method which calculates the number of marbles the player has lost in this searchstate.
     * @param
     * @return
     */
     private double calculateF6(){
-
+        //TODO: Calculate number of marbles lost.
         return f6;
 
     }
