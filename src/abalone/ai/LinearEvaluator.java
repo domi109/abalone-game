@@ -87,7 +87,7 @@ public class LinearEvaluator implements Evaluator<Double>
             Map<Player, Integer> lostMarbles = s.getMarblesRemoved();
          
             // Calculate the individual functions.
-            calculateF1(players, board);
+            calculateF1(currentPlayerMarbles, opponentPlayerMarbles);
             calculateF2(players, board);
             calculateF3(players, board);
             calculateF4(players, board);
@@ -113,10 +113,16 @@ public class LinearEvaluator implements Evaluator<Double>
     * @param
     * @return
     */
-    private double calculateF1(List<Player> players, Board board){
-        for (Player player : players) {
-            //TODO: check distance of all marbles to center.
+    private double calculateF1(Set<Node> currentPlayerMarbles, Set<Node> opponentPlayerMarbles){
+        int opponentCount = 0;
+        int currentCount = 0;
+        for (Node node : opponentPlayerMarbles) {
+            opponentCount += node.getManhDist();
         }
+        for (Node node : currentPlayerMarbles) {
+            currentCount += node.getManhDist();
+        }
+        f1 = opponentCount - currentCount;
         return f1;
     }
     
