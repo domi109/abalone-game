@@ -7,14 +7,13 @@
 package abalone.ai;
 
 // Imports from Java libraries.
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 // Imports from Model library.
-import abalone.model.Board;
 import abalone.model.Player;
 import abalone.model.Node;
+import abalone.model.Direction;
 
 // Import from Search library.
 import search.tree.heuristic.Evaluator;
@@ -22,6 +21,7 @@ import search.tree.SearchState;
 
 // Imports from Gamestate library.
 import abalone.gamestate.GameState;
+
 
 public class LinearEvaluator implements Evaluator<Double>
 {
@@ -70,15 +70,12 @@ public class LinearEvaluator implements Evaluator<Double>
         if(state instanceof GameState){
             // Cast searchstate to gamestate.
             GameState s = (GameState) state;
-            // Get the board.
-            Board board = s.getBoard();
-            // Get player list.
-            List<Player> players = s.getPlayers();
             // Get the current player.
             Player currentPlayer = s.getCurrentPlayer();
             // Get the opponent player.
-            int tempCur = s.getPlayers().indexOf(s.getCurrentPlayer());
-            Player opponentPlayer = s.getPlayers().get((tempCur + 1) % 2);
+            //int tempCur = s.getPlayers().indexOf(s.getCurrentPlayer());
+            //Player opponentPlayer = s.getPlayers().get((tempCur + 1) % 2);
+            Player opponentPlayer = s.getOpponentPlayer();
             // Get current player's marbles.
             Set<Node> currentPlayerMarbles = s.getMarbles(currentPlayer);
             // Get opponent player's marbles.
@@ -88,9 +85,9 @@ public class LinearEvaluator implements Evaluator<Double>
          
             // Calculate the individual functions.
             calculateF1(currentPlayerMarbles, opponentPlayerMarbles);
-            calculateF2(players, board);
-            calculateF3(players, board);
-            calculateF4(players, board);
+            calculateF2(currentPlayerMarbles, opponentPlayerMarbles, s);
+            calculateF3(currentPlayerMarbles, opponentPlayerMarbles, s);
+            calculateF4(currentPlayerMarbles, opponentPlayerMarbles, s);
             calculateF5(lostMarbles, opponentPlayer);
             calculateF6(lostMarbles, currentPlayer);
 
@@ -109,18 +106,18 @@ public class LinearEvaluator implements Evaluator<Double>
     * <p>
     * This compares how close two players marbles are to the center. Reason for this is that in Abalone being at the
     * center is a good strategy, as it makes it harder for a player's marbles to be knocked off the board.
-    * @param    Player  a list of players
+    * @param
     * @param
     * @return
     */
     private double calculateF1(Set<Node> currentPlayerMarbles, Set<Node> opponentPlayerMarbles){
-        int opponentCount = 0;
         int currentCount = 0;
-        for (Node node : opponentPlayerMarbles) {
-            opponentCount += node.getManhDist();
-        }
+        int opponentCount = 0;
         for (Node node : currentPlayerMarbles) {
             currentCount += node.getManhDist();
+        }
+        for (Node node : opponentPlayerMarbles) {
+            opponentCount += node.getManhDist();
         }
         f1 = opponentCount - currentCount;
         return f1;
@@ -131,14 +128,28 @@ public class LinearEvaluator implements Evaluator<Double>
     * <p>
     * This is also known as the Cohesion Strategy. Reason for this is that in Abalone it is good for a player to have
     * his/her marbles close to each other, as it adds offensive and defensive capabilities.
-    * @param    Player  a list of players
+    * @param
     * @param
     * @return      
     */
-    private double calculateF2(List<Player> players, Board board){
-        for (Player player : players) {
-            //TODO: check number of teammates
+    private double calculateF2(Set<Node> currentPlayerMarbles, Set<Node> opponentPlayerMarbles, GameState s){
+        int currentCount = 0;
+        int opponentCount = 0; 
+        for (Node node : currentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node)){
+                    currentCount++;
+                }
+            }
         }
+        for (Node node : opponentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node)){
+                    opponentCount++;
+                }
+            }
+        }
+        f2 = currentCount - opponentCount;
         return f2;
     }
 
@@ -149,14 +160,28 @@ public class LinearEvaluator implements Evaluator<Double>
     * This is also known as the break-strong-group strategy. Reason is that when you break a group of the opponent, it
     * will weaken them offensively and defensively. Also often, when inbetween two opponent groups, a player's marbles
     * cannot be pushed.
-    * @param    Player  a list of players
+    * @param
     * @param
     * @return
     */
-    private double calculateF3(List<Player> players, Board board){
-        for (Player player : players) {
-            //TODO: check two sides for opponents.
+    private double calculateF3(Set<Node> currentPlayerMarbles, Set<Node> opponentPlayerMarbles, GameState s){
+        int currentCount = 0;
+        int opponentCount = 0;
+        for (Node node : currentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                    currentCount++;
+                }
+            }
         }
+        for (Node node : opponentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                    opponentCount++;
+                }
+            }
+        }
+        f3 = currentCount - opponentCount;
         return f3;
     }
 
@@ -165,14 +190,28 @@ public class LinearEvaluator implements Evaluator<Double>
     * <p>
     * This is also known as the strengthen-group strategy. Reason is if you have contact position with an opponent marble,
     * it should be reinforced to ensure that it is safe from attack, but also to add offensive capabilities.
-    * @param    Player a list of players
+    * @param
     * @param
     * @return
     */
-    private double calculateF4(List<Player> players, Board board){
-        for (Player player : players) {
-            //TODO: check two sides for opponent and friend match.
+    private double calculateF4(Set<Node> currentPlayerMarbles, Set<Node> opponentPlayerMarbles, GameState s){
+        int currentCount = 0;
+        int opponentCount = 0;
+        for (Node node : currentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                    currentCount++;
+                }
+            }
         }
+        for (Node node : opponentPlayerMarbles) {
+            for (Direction d : Direction.UPPER_LEFT) {
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                    opponentCount++;
+                }
+            }
+        }
+        f4 =
         return f4;
     }
 
