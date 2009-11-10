@@ -169,14 +169,14 @@ public class LinearEvaluator implements Evaluator<Double>
         int opponentCount = 0;
         for (Node node : currentPlayerMarbles) {
             for (Direction d : Direction.UPPER_LEFT) {
-                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getOpponentPlayer() && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == s.getOpponentPlayer()){
                     currentCount++;
                 }
             }
         }
         for (Node node : opponentPlayerMarbles) {
             for (Direction d : Direction.UPPER_LEFT) {
-                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getCurrentPlayer() && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == s.getCurrentPlayer()){
                     opponentCount++;
                 }
             }
@@ -199,14 +199,14 @@ public class LinearEvaluator implements Evaluator<Double>
         int opponentCount = 0;
         for (Node node : currentPlayerMarbles) {
             for (Direction d : Direction.UPPER_LEFT) {
-                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getOpponentPlayer() && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == s.getCurrentPlayer()){
                     currentCount++;
                 }
             }
         }
         for (Node node : opponentPlayerMarbles) {
             for (Direction d : Direction.UPPER_LEFT) {
-                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node.getNeighbour(d.getOpposite()))){
+                if(s.getMarbleOwner(node.getNeighbour(d)) == s.getCurrentPlayer() && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == s.getOpponentPlayer()){
                     opponentCount++;
                 }
             }
