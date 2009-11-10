@@ -211,7 +211,7 @@ public class LinearEvaluator implements Evaluator<Double>
                 }
             }
         }
-        f4 =
+        f4 = currentCount - opponentCount;
         return f4;
     }
 
