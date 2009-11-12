@@ -30,13 +30,13 @@ public class DepthFirstQueue extends LinkedList<SearchNode>
 	@Override
 	public SearchNode peek()
 	{
-		return super.peekLast();
+		return super.getLast();
 	}
 	
 	@Override
 	public SearchNode poll()
 	{
-		return super.pollLast();
+		return super.removeLast();
 	}
 	
 	@Override

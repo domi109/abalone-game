@@ -12,6 +12,8 @@ import search.tree.SearchState;
 import search.tree.games.minimax.MiniMaxNode;
 import search.tree.games.minimax.MinimaxProblem;
 import search.tree.games.minimax.MinimaxSearch;
+import search.tree.games.minimax.hashing.HashableMiniMaxNode;
+import search.tree.games.minimax.hashing.HashingMinimaxSearch;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.model.Direction;
@@ -21,8 +23,10 @@ import abalone.model.Node;
 import abalone.model.Player;
 import abalone.model.Move.MoveType;
 
-public class BasicMinimaxAI implements Ai
+public class BasicMinimaxAI extends Ai
 {
+	private static final long serialVersionUID = -448667623469161736L;
+
 	private class MoveComparator implements Comparator<SearchNode>
 	{
 		@Override
@@ -48,14 +52,16 @@ public class BasicMinimaxAI implements Ai
 		}
 	}
 
-	private class AbaloneNode extends MiniMaxNode
+	private class AbaloneNode extends HashableMiniMaxNode
 	{
+		private static final long serialVersionUID = -6277809797290009239L;
+
 		public AbaloneNode(GameState s)
 		{
 			super(s);
 		}
 
-		public AbaloneNode(SearchState s, AbaloneNode parent, Action a)
+		public AbaloneNode(GameState s, AbaloneNode parent, Action a)
 		{
 			super(s, parent, a);
 		}
@@ -95,6 +101,8 @@ public class BasicMinimaxAI implements Ai
 
 	private class AbaloneSearchProblem implements MinimaxProblem
 	{
+
+		private static final long serialVersionUID = -3644069950454603818L;
 		private GameState initialState;
 		public AbaloneSearchProblem(GameState initial)
 		{
@@ -121,14 +129,6 @@ public class BasicMinimaxAI implements Ai
 				// the other player (min) won - result is minus one
 				return -1;
 			}
-		}
-
-		@Override
-		public boolean breakTest(SearchNode node)
-		{
-			// Cancel after a certain number of plys...
-			// TODO maybe rather set some time limit here?
-			return node.getPathCost() >= 6;
 		}
 
 		@Override
@@ -273,18 +273,21 @@ public class BasicMinimaxAI implements Ai
 		this.logic = logic;
 	}
 
+	@Override
 	public Move decide(GameState state)
 	{
 		problem = new AbaloneSearchProblem(state);
 		AbaloneNode startNode = new AbaloneNode(state);
 
-		MinimaxSearch s = new MinimaxSearch(problem);
-		System.out.println("My Options: ");
-		for(Action a : problem.generateActions(state))
-		{
-			System.out.println(a);
-		}
+		MinimaxSearch s = new HashingMinimaxSearch(problem,10);
+//		System.out.println("My Options: ");
+//		for(Action a : problem.generateActions(state))
+//		{
+//			System.out.println(a);
+//		}
+		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
+		System.out.println(System.currentTimeMillis()-time);
 		System.out.println("I want to perform "+n.getAction()+" value: "+((MiniMaxNode)n).getValue());
 		return (Move) n.getAction();
 

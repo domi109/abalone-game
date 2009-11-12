@@ -1,5 +1,6 @@
 package abalone.gamestate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,9 +11,12 @@ import java.util.Map.Entry;
 import java.io.Serializable;
 
 import search.Action;
+import search.tree.ZobristHashableState;
 import search.tree.SearchState;
 
+import abalone.adt.KeyValuePair;
 import abalone.model.Board;
+import abalone.model.Direction;
 import abalone.model.Node;
 import abalone.model.Player;
 
@@ -21,8 +25,10 @@ import abalone.model.Player;
  * 
  * @author rutger
  */
-public class GameState implements SearchState, Serializable
+public class GameState extends ZobristHashableState
 {
+
+	private static final long serialVersionUID = 8517713366992214920L;
 	private Board board;
 	private List<Player> players;
 	private Map<Player, Integer> marblesRemoved;
@@ -31,6 +37,8 @@ public class GameState implements SearchState, Serializable
 	private int marblesToWin;
 	private Map<Node, Player> marbleOwners;
 	private Map<Player,Set<Node>> marblePositions;
+	private Long hash = null;
+	
 
 	public GameState()
 	{
@@ -41,6 +49,20 @@ public class GameState implements SearchState, Serializable
 	public Board getBoard()
 	{
 		return board;
+	}
+	
+	public void initHash()
+	{
+		List<Object> states = new ArrayList<Object>(this.getPlayers());
+		states.add(null);
+		List<Object> nodes = new ArrayList<Object>(board.getNodes());
+		generateZobristTable(nodes, states);
+		this.hash = 0l;
+		for(Node n : board.getNodes())
+		{
+			hash ^= getZobristValue(n, getMarbleOwner(n));
+		}
+		hash ^= currentPlayer.hash();
 	}
 
 	public void setBoard(Board board)
@@ -79,7 +101,14 @@ public class GameState implements SearchState, Serializable
 
 	public void setCurrentPlayer(Player currentPlayer)
 	{
+		if(hash != null)
+		{
+			hash ^= this.currentPlayer.hash(); 
+			hash ^= currentPlayer.hash(); 
+		}
 		this.currentPlayer = currentPlayer;
+		
+
 	}
 
         public Player getOpponentPlayer()
@@ -95,46 +124,7 @@ public class GameState implements SearchState, Serializable
 	@Override
 	public boolean equalState(SearchState state)
 	{
-		if(!(state instanceof GameState))
-		{
-			return false;
-		}
-		GameState s = (GameState) state;
-		if(!players.equals(s.players))
-		{
-			return false;
-		}
-		
-		if(currentPlayer != s.currentPlayer)
-		{
-			return false;
-		}
-                if(opponentPlayer != s.opponentPlayer)
-                {
-                        return false;
-                }    
-		if(marblesToWin != s.marblesToWin)
-		{
-			return false;
-		}
-		
-		if(!board.equals(s.board))
-		{
-			return false;
-		}
-		
-		if(!marbleOwners.equals(s.marbleOwners))
-		{
-			return false;
-		}
-		
-		if(!marblesRemoved.equals(s.marblesRemoved))
-		{
-			return false;
-		}
-		
-		return true;
-		
+		return this.equals(state);
 	}
 
 	/**
@@ -156,8 +146,10 @@ public class GameState implements SearchState, Serializable
 	{
 		GameState s2 = new GameState();
 
+		s2.hash = hash;
 		s2.board = board;
 		s2.currentPlayer = this.currentPlayer;
+		s2.opponentPlayer = this.opponentPlayer;
 		s2.marblesRemoved = new HashMap<Player, Integer>(marblesRemoved);
 		s2.setPlayers(this.players);
 		s2.marbleOwners = new HashMap<Node,Player>(this.marbleOwners);
@@ -186,12 +178,24 @@ public class GameState implements SearchState, Serializable
 	{
 		this.marbleOwners.put(node, player);
 		this.marblePositions.get(player).add(node);
+		if(hash != null)
+		{
+			hash ^= getZobristValue(node, player);
+			hash ^= getZobristValue(node, null);
+		}
 	}
 	
 	public void removeMarble(Node node)
 	{
-		this.marblePositions.get(marbleOwners.get(node)).remove(node);
+		Player owner = marbleOwners.get(node);
+		this.marblePositions.get(owner).remove(node);
 		this.marbleOwners.remove(node);
+
+		if(hash != null)
+		{
+			hash ^= getZobristValue(node, owner);
+			hash ^= getZobristValue(node, null);
+		}
 	}
 
 	public Player getMarbleOwner(Node node)
@@ -205,9 +209,9 @@ public class GameState implements SearchState, Serializable
 	}
 
 	@Override
-	public int hashCode()
+	public long zobristHash()
 	{
-		// TODO Generate hashcode including symmetries!!!
-		return super.hashCode();
+		return hash;
 	}
+
 }

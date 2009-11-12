@@ -2,6 +2,7 @@ package search.tree.games.minimax;
 
 import java.util.Queue;
 
+import search.tree.DepthLimitedTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
@@ -23,8 +24,10 @@ import search.tree.heuristic.Evaluator;
  * @author Daniel Mescheder
  * 
  */
-public class MinimaxSearch extends TreeSearch
+public class MinimaxSearch extends DepthLimitedTreeSearch
 {
+	private static final long serialVersionUID = -1027257254713156503L;
+
 	/**
 	 * A basic placeholder evaluator that always returns zero as an evaluation
 	 * and therefore does not help at all.
@@ -57,14 +60,14 @@ public class MinimaxSearch extends TreeSearch
 	 * @param t
 	 *            the minimax search problem that contains the search settings
 	 */
-	public MinimaxSearch(MinimaxProblem t)
+	public MinimaxSearch(MinimaxProblem t, int limit)
 	{
-		this(t, new DummyEvaluator());
+		this(t, new DummyEvaluator(), limit);
 	}
 	
-	public MinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator)
+	public MinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int limit)
 	{
-		super(t);
+		super(t, limit);
 		this.evaluator = evaluator;
 	}
 
@@ -100,7 +103,7 @@ public class MinimaxSearch extends TreeSearch
 	 * 
 	 * @return the maximal child of the node.
 	 */
-	private MiniMaxNode maxNode(MiniMaxNode node, double alpha, double beta)
+	protected MiniMaxNode maxNode(MiniMaxNode node, double alpha, double beta)
 	{
 		if(testNode(node))
 		{
@@ -161,7 +164,7 @@ public class MinimaxSearch extends TreeSearch
 	 * 
 	 * @return the minimal child of the node.
 	 */
-	private MiniMaxNode minNode(MiniMaxNode node, double alpha, double beta)
+	protected MiniMaxNode minNode(MiniMaxNode node, double alpha, double beta)
 	{
 		if(testNode(node))
 		{
@@ -214,7 +217,7 @@ public class MinimaxSearch extends TreeSearch
 	protected boolean testNode(MiniMaxNode node)
 	{
 		MinimaxProblem problem = (MinimaxProblem) getProblem();
-		if (problem.breakTest(node))
+		if (this.breakTest(node))
 		{
 			// The problem says that the search should be
 			// aborted here (e.g. as it already took too long...)

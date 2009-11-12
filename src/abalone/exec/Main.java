@@ -18,6 +18,8 @@ import abalone.model.Move;
 import abalone.model.Player;
 
 import com.trolltech.qt.QThread;
+import com.trolltech.qt.core.QRunnable;
+import com.trolltech.qt.core.QThreadPool;
 import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
@@ -109,6 +111,7 @@ public class Main
 
 		board = logic.initBoard();
 		state = logic.initState(board, players);
+		state.initHash();
 		front.updateFront(state);
 	}
 
@@ -124,11 +127,13 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer("Pong"));
-		//players.add(new BasicMinimaxAI(logic));
+		//players.add(new HumanPlayer("Pong"));
+		players.add(new BasicMinimaxAI(logic));
 		players.add(new BasicMinimaxAI(logic));
 		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
+		
+		state.initHash();
 		
 		decider = new Decider();
 		
@@ -156,10 +161,11 @@ public class Main
 		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state)==null)
 		{
 			decider.setAi((Ai)state.getCurrentPlayer());
-	        QThread runner = new QThread(decider);
-		    
-	        runner.start();
+		    QThread runner = new QThread(decider);
 	        runner.finished.connect(this, "decisionDone()",ConnectionType.QueuedConnection);
+
+	        
+		    runner.start();
 		}
 	}
 	
@@ -193,9 +199,10 @@ public class Main
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void saveGame(String place)
 	{
-		System.out.println(place);
+		//System.out.println(place);
 		try
 		{
 			FileOutputStream stream = new FileOutputStream(place);

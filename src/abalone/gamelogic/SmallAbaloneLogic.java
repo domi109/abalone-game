@@ -10,6 +10,9 @@ import abalone.model.Node;
 
 public class SmallAbaloneLogic extends StandardAbaloneLogic
 {	
+	private static final long serialVersionUID = -4432185250414823525L;
+
+
 	public SmallAbaloneLogic()
 	{
 		this.radius = 3;

@@ -10,7 +10,7 @@ import abalone.model.Move;
 import abalone.model.Player;
 
 
-public interface Ai extends Player {
-    public Move decide(GameState state);
+public abstract class Ai extends Player {
+    public abstract Move decide(GameState state);
    
 }

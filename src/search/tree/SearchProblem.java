@@ -33,17 +33,6 @@ public interface SearchProblem extends Serializable
 	public boolean goalTest(SearchState state);
 
 	/**
-	 * Checks whether a given node matches the abortion criterion. This
-	 * criterion can for instance be a certain depth in the search tree.
-	 * 
-	 * @param node
-	 *            This node will be checked
-	 * @return true if the given node matches the abortion criterion, false if
-	 *         it does not.
-	 */
-	public boolean breakTest(SearchNode node);
-
-	/**
 	 * Generates a list of actions given a certain state.
 	 * 
 	 * @return List of actions

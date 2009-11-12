@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.io.Serializable;
 
+import search.hashing.ZobristHashable;
+
 import abalone.adt.KeyValuePair;
 
 /**
@@ -20,6 +22,7 @@ public class Board implements Serializable
 	private Node centralNode;
 	private List<Node> nodes;
 	private List<List<KeyValuePair<Direction, Node>>> equiPaths;
+	private long hash;
 	
 	public List<List<KeyValuePair<Direction,Node>>> getEquiPaths()
 	{
@@ -48,8 +51,6 @@ public class Board implements Serializable
 		nodes = new LinkedList<Node>();
 		nodes.add(centralNode);
 	}
-
-
 
 	public void printBoard()
 	{

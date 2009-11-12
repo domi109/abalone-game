@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Node implements Serializable
 {
-
+	private static final long serialVersionUID = -3785862281057717877L;
 	// The list of neighbours of the current node,
 	// ordered by direction
 	private Map<Direction, Node> neighbourList;

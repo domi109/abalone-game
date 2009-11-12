@@ -3,22 +3,20 @@ package abalone.gamelogic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
 
-import search.Action;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
 import abalone.model.Board;
 import abalone.model.Direction;
-import abalone.model.MarbleLine;
 import abalone.model.Move;
 import abalone.model.Node;
 import abalone.model.Player;
 
 public class StandardAbaloneLogic implements GameLogic
 {
+	private static final long serialVersionUID = -1116931368388798072L;
 	protected int radius, marblesToWin;
 	
 	

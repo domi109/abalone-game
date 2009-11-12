@@ -3,8 +3,6 @@ package abalone.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.GroupLayout.Alignment;
-
 import abalone.gamestate.GameState;
 import abalone.model.Player;
 

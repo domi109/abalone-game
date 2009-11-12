@@ -29,6 +29,7 @@ public abstract class SearchNode implements Serializable
 	private double pathCost;
 	// The action that leads to this node
 	private Action action;
+	private int depth;
 
 	/**
 	 * Creates a new SearchNode object which refers to a given SearchState s and
@@ -46,6 +47,7 @@ public abstract class SearchNode implements Serializable
 		this.parent = parent;
 		this.action = a;
 		this.pathCost = parent.pathCost + a.getCost();
+		this.depth = parent.depth + 1;
 	}
 
 	/**
@@ -60,6 +62,7 @@ public abstract class SearchNode implements Serializable
 		this.parent = null;
 		this.pathCost = 0;
 		this.action = null;
+		this.depth = 0;
 	}
 
 	/**
@@ -101,7 +104,7 @@ public abstract class SearchNode implements Serializable
 	public String toString()
 	{
 		String ret = "SearchNode{\nAction leading to node: ";
-		ret += (action == null) ? "<?>\n" : "<" + action.getName() + ">\n";
+		ret += (action == null) ? "<?>\n" :action.toString() + "\n";
 		ret += searchState.toString();
 		ret += "\n}";
 
@@ -138,5 +141,10 @@ public abstract class SearchNode implements Serializable
 	public SearchNode getParent()
 	{
 		return parent;
+	}
+	
+	public int getDepth()
+	{
+		return depth;
 	}
 }

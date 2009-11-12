@@ -1,9 +1,9 @@
 package abalone.model;
-import java.io.Serializable;
 
 
-public class HumanPlayer implements Player, Serializable
+public class HumanPlayer extends Player
 {
+	private static final long serialVersionUID = -6049398987397186067L;
 	private String name;
 	
 	public HumanPlayer(String name)
