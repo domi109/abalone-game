@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
 import abalone.model.Board;
@@ -18,33 +17,32 @@ public class StandardAbaloneLogic implements GameLogic
 {
 	private static final long serialVersionUID = -1116931368388798072L;
 	protected int radius, marblesToWin;
-	
-	
+
 	public StandardAbaloneLogic()
 	{
 		this.radius = 5;
 		this.marblesToWin = 6;
 	}
-	
+
 	@Override
 	public Board initBoard()
 	{
 		Board b = new Board();
 		// TODO Create the graph recursively:
-		createNode(b, b.getCentralNode(), radius-1);
+		createNode(b, b.getCentralNode(), radius - 1);
 
 		for (Direction d : Direction.UPPER_LEFT)
 		{
 			b.addPath(createPath(b.getCentralNode(), d));
 		}
-		
+
 		int i = 0;
-		for(KeyValuePair<Direction,Node> p : b.getEquiPaths().get(0))
+		for (KeyValuePair<Direction, Node> p : b.getEquiPaths().get(0))
 		{
 			p.getValue().setName(String.valueOf(i));
 			i++;
 		}
-		addManhDist(b.getEquiPaths().get(0));		
+		addManhDist(b.getEquiPaths().get(0));
 		return b;
 	}
 
@@ -53,7 +51,7 @@ public class StandardAbaloneLogic implements GameLogic
 		List<KeyValuePair<Direction, Node>> path = new ArrayList<KeyValuePair<Direction, Node>>();
 
 		path.add(new KeyValuePair<Direction, Node>(null, centralNode));
-		Direction currentDir = startDirection;		
+		Direction currentDir = startDirection;
 		Node currentNode = centralNode;
 		for (int i = 1; i < radius; i++)
 		{
@@ -63,7 +61,7 @@ public class StandardAbaloneLogic implements GameLogic
 
 			for (Direction d : currentDir)
 			{
-				
+
 				if (d.equals(startDirection.getNextCW()))
 				{
 					for (int j = 0; j < i - 1; j++)
@@ -97,10 +95,10 @@ public class StandardAbaloneLogic implements GameLogic
 		state.setCurrentPlayer(players.get(0));
 		state.setBoard(board);
 		state.setMarblesToWin(marblesToWin);
-		
-		HashMap<Player,Integer> marblesRemoved = new HashMap<Player,Integer>(2);
-		
-		for(Player p : players)
+
+		HashMap<Player, Integer> marblesRemoved = new HashMap<Player, Integer>(2);
+
+		for (Player p : players)
 		{
 			marblesRemoved.put(p, 0);
 		}
@@ -110,7 +108,7 @@ public class StandardAbaloneLogic implements GameLogic
 
 		return state;
 	}
-	
+
 	protected void initMarbles(GameState state)
 	{
 		List<KeyValuePair<Direction, Node>> path = state.getBoard().getEquiPaths().get(0);
@@ -146,15 +144,14 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 
 		// Change player
-		int curr = state.getPlayers().indexOf(state.getCurrentPlayer());
-		state.setCurrentPlayer(state.getPlayers().get((curr + 1) % 2));
+		state.setCurrentPlayer(state.getOpponentPlayer());
 	}
 
 	protected void applyBroadSideMove(GameState state, Move move)
 	{
 		for (Node n : move.getMarbleLine().getNodes())
 		{
-			state.setMarble(n.getNeighbour(move.getDirection()),state.getMarbleOwner(n));
+			state.setMarble(n.getNeighbour(move.getDirection()), state.getMarbleOwner(n));
 			state.removeMarble(n);
 		}
 	}
@@ -178,7 +175,7 @@ public class StandardAbaloneLogic implements GameLogic
 			// marble pushed off the board
 			int removed = state.getMarblesRemoved().get(state.getMarbleOwner(m));
 			removed++;
-			state.getMarblesRemoved().put(state.getMarbleOwner(m),removed);
+			state.getMarblesRemoved().put(state.getMarbleOwner(m), removed);
 			state.removeMarble(m);
 			n = m;
 			m = m.getNeighbour(move.getDirection().getOpposite());
@@ -186,7 +183,7 @@ public class StandardAbaloneLogic implements GameLogic
 		int ownNodes = 0;
 		while (ownNodes < llength)
 		{
-			if (state.getMarbleOwner(m)==p)
+			if (state.getMarbleOwner(m) == p)
 			{
 				ownNodes++;
 			}
@@ -274,12 +271,13 @@ public class StandardAbaloneLogic implements GameLogic
 	@Override
 	public Player getWinner(GameState state)
 	{
-		for (Entry<Player, Integer> e : state.getMarblesRemoved().entrySet())
+		if (state.getMarblesRemoved().get(state.getCurrentPlayer()) >= marblesToWin)
 		{
-			if (e.getValue() >= state.getMarblesToWin())
-			{
-				return state.getPlayers().get((state.getPlayers().indexOf(e.getKey())+1)%2);
-			}
+			return state.getOpponentPlayer();
+		}
+		else if (state.getMarblesRemoved().get(state.getOpponentPlayer()) >= marblesToWin)
+		{
+			return state.getCurrentPlayer();
 		}
 		return null;
 	}
@@ -288,7 +286,7 @@ public class StandardAbaloneLogic implements GameLogic
 	public boolean isLegal(GameState state, Move m)
 	{
 		boolean legal = false;
-		if(m.getMarbleLine().getNodes().size() == 0)
+		if (m.getMarbleLine().getNodes().size() == 0)
 		{
 			// We don't want empty moves
 			return false;
@@ -311,15 +309,15 @@ public class StandardAbaloneLogic implements GameLogic
 	protected boolean isLegalInlineMove(GameState state, Move m)
 	{
 		int ownMarbles = m.getMarbleLine().getNodes().size();
-		int opponentMarbles =0;
+		int opponentMarbles = 0;
 		Node n = m.getMarbleLine().getNodes().get(0);
 		Player p = state.getMarbleOwner(n);
 
 		while (n != null && state.getMarbleOwner(n) != null)
 		{
-			if(p.equals(state.getMarbleOwner(n)))
+			if (p.equals(state.getMarbleOwner(n)))
 			{
-				if(!m.getMarbleLine().getNodes().contains(n))
+				if (!m.getMarbleLine().getNodes().contains(n))
 				{
 					return false;
 				}
@@ -330,7 +328,7 @@ public class StandardAbaloneLogic implements GameLogic
 			}
 			n = n.getNeighbour(m.getDirection());
 		}
-		if(n == null && opponentMarbles == 0)
+		if (n == null && opponentMarbles == 0)
 		{
 			return false;
 		}
@@ -348,22 +346,26 @@ public class StandardAbaloneLogic implements GameLogic
 		}
 		return true;
 	}
-	
-	private void addManhDist(List<KeyValuePair<Direction, Node>> aPath){
+
+	private void addManhDist(List<KeyValuePair<Direction, Node>> aPath)
+	{
 		boolean finished = false;
 		int lvl = 0;
 		int from = 1;
-		
+
 		aPath.get(0).getValue().setManhDist(lvl);
-		
-		while(!finished){
+
+		while (!finished)
+		{
 			lvl++;
 			int to = (lvl * 6) + from;
-			for (int i = from ; i < to ; i++) {
+			for (int i = from; i < to; i++)
+			{
 				aPath.get(i).getValue().setManhDist(lvl);
 			}
 			from = to;
-			if(lvl == radius - 1) finished = true;
+			if (lvl == radius - 1)
+				finished = true;
 		}
 	}
 

@@ -9,6 +9,7 @@ import search.tree.heuristic.Evaluator;
 
 /**
  * TODO: Documentation
+ * 
  * @author Daniel Mescheder
  * 
  */
@@ -17,26 +18,27 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	private static final long serialVersionUID = 5354076006129704855L;
 
 	private MinimaxHashTable table;
-	
+
 	public HashingMinimaxSearch(MinimaxProblem t, int limit)
 	{
 		super(t, limit);
-		this.table = new MinimaxHashTable(100);
+		this.table = new MinimaxHashTable(200);
 	}
-	public HashingMinimaxSearch(MinimaxProblem t,Evaluator<Double> evaluator, int limit)
+
+	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int limit)
 	{
 		super(t, evaluator, limit);
-		
-		this.table = new MinimaxHashTable(100);
+
+		this.table = new MinimaxHashTable(200);
 	}
-	
+
 	@Override
 	public SearchNode search(SearchNode node)
 	{
 		SearchNode result = super.search(node);
 		return result;
 	}
-	
+
 	/**
 	 * Recursively finds the maximal child of the passed node
 	 * 
@@ -62,17 +64,16 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 
-			if(!testNode(current))
+			if (!testNode(current))
 			{
+				table.put(current, MinimaxHashEntry.OPEN);
 				// Get minimal child node of this successor
 				MiniMaxNode min = minNode(current, alpha, beta);
 				current.setValue(min.getValue());
-			}
-			
-			
+				table.put(current, current.getValue(), this.depthLimit - current.getDepth());
 
-			// close this node in the hash table by storing the value
-			table.put(current, current.getValue(),this.depthLimit-current.getDepth());
+			}
+
 
 			if (v == null || v.getValue() < current.getValue())
 			{
@@ -126,18 +127,16 @@ public class HashingMinimaxSearch extends MinimaxSearch
 			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 			// For every successor node
 
-			if(!testNode(current))
+			if (!testNode(current))
 			{
+				table.put(current, MinimaxHashEntry.OPEN);
 				// Get maximal child node of this successor
 				MiniMaxNode max = maxNode(current, alpha, beta);
 				current.setValue(max.getValue());
+				table.put(current, current.getValue(), this.depthLimit - current.getDepth());
 			}
 
 
-			
-			// put this node in the hash table by storing the value
-			table.put(current, current.getValue(),this.depthLimit-current.getDepth());
-			
 			if (v == null || v.getValue() > current.getValue())
 			{
 				// Either we haven't found any node at all yet, or we found
@@ -164,16 +163,27 @@ public class HashingMinimaxSearch extends MinimaxSearch
 		return v;
 
 	}
-	
+
 	@Override
 	protected boolean testNode(MiniMaxNode node)
 	{
-		MinimaxHashEntry e=table.get(node);
-		if(e!=null && e.getPrecision() <= (this.depthLimit - node.getDepth()))
+
+		MinimaxHashEntry e = table.get(node);
+		if (e != null)
 		{
-			node.setValue(e.getValue());
-			return true;
+			if (e == MinimaxHashEntry.OPEN)
+			{
+				node.setValue(((MinimaxProblem) getProblem()).repetitionValue());
+				return true;
+			}
+			else if (e.getPrecision() >= (this.depthLimit - node.getDepth()))
+			{
+				node.setValue(e.getValue());
+				return true;
+			}
+
 		}
+
 		return super.testNode(node);
 	}
 }

@@ -2,6 +2,7 @@ package search.tree.games.minimax.hashing;
 
 public class MinimaxHashEntry
 {
+	public static final MinimaxHashEntry OPEN = new MinimaxHashEntry(0,0);
 	private int precision;
 	private Double value;
 	

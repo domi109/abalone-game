@@ -33,24 +33,23 @@ public class GameState extends ZobristHashableState
 	private List<Player> players;
 	private Map<Player, Integer> marblesRemoved;
 	private Player currentPlayer;
-        private Player opponentPlayer;
+	private Player opponentPlayer;
 	private int marblesToWin;
 	private Map<Node, Player> marbleOwners;
-	private Map<Player,Set<Node>> marblePositions;
+	private Map<Player, Set<Node>> marblePositions;
 	private Long hash = null;
-	
 
 	public GameState()
 	{
 		marbleOwners = new HashMap<Node, Player>();
-		marblePositions = new HashMap<Player,Set<Node>>();
+		marblePositions = new HashMap<Player, Set<Node>>();
 	}
 
 	public Board getBoard()
 	{
 		return board;
 	}
-	
+
 	public void initHash()
 	{
 		List<Object> states = new ArrayList<Object>(this.getPlayers());
@@ -58,7 +57,7 @@ public class GameState extends ZobristHashableState
 		List<Object> nodes = new ArrayList<Object>(board.getNodes());
 		generateZobristTable(nodes, states);
 		this.hash = 0l;
-		for(Node n : board.getNodes())
+		for (Node n : board.getNodes())
 		{
 			hash ^= getZobristValue(n, getMarbleOwner(n));
 		}
@@ -78,7 +77,7 @@ public class GameState extends ZobristHashableState
 	public void setPlayers(List<Player> players)
 	{
 		this.players = players;
-		for(Player p : players)
+		for (Player p : players)
 		{
 			marblePositions.put(p, new HashSet<Node>());
 		}
@@ -101,26 +100,21 @@ public class GameState extends ZobristHashableState
 
 	public void setCurrentPlayer(Player currentPlayer)
 	{
-		if(hash != null)
+		if (hash != null)
 		{
-			hash ^= this.currentPlayer.hash(); 
-			hash ^= currentPlayer.hash(); 
+			hash ^= this.currentPlayer.hash();
+			hash ^= currentPlayer.hash();
 		}
 		this.currentPlayer = currentPlayer;
-		
+		this.opponentPlayer = players.get((players.indexOf(currentPlayer)+1)%2);
 
 	}
 
-        public Player getOpponentPlayer()
-        {
-            return opponentPlayer;
-        }
+	public Player getOpponentPlayer()
+	{
+		return opponentPlayer;
+	}
 
-        public void setOpponentPlayer(Player opponentPlayer)
-        {
-            this.opponentPlayer = opponentPlayer;
-        }
-        
 	@Override
 	public boolean equalState(SearchState state)
 	{
@@ -130,14 +124,9 @@ public class GameState extends ZobristHashableState
 	/**
 	 * Copying the game state. The clone is done in a not quite deep but also
 	 * not quite shallow way. Things that are significant for the current state
-	 * within the game are copied deep:
-     *  - number of removed marbles
-     *  - positions
+	 * within the game are copied deep: - number of removed marbles - positions
 	 * of marbles on the board Things that are significant for the game, are
-	 * copied shallow: 
-	 *  - the board geometry 
-	 *  - the players
-	 *  - ...
+	 * copied shallow: - the board geometry - the players - ...
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
@@ -152,8 +141,8 @@ public class GameState extends ZobristHashableState
 		s2.opponentPlayer = this.opponentPlayer;
 		s2.marblesRemoved = new HashMap<Player, Integer>(marblesRemoved);
 		s2.setPlayers(this.players);
-		s2.marbleOwners = new HashMap<Node,Player>(this.marbleOwners);
-		for(Entry<Player,Set<Node>> e : marblePositions.entrySet())
+		s2.marbleOwners = new HashMap<Node, Player>(this.marbleOwners);
+		for (Entry<Player, Set<Node>> e : marblePositions.entrySet())
 		{
 			Set<Node> nodeset = new HashSet<Node>(e.getValue());
 			s2.marblePositions.put(e.getKey(), nodeset);
@@ -178,20 +167,20 @@ public class GameState extends ZobristHashableState
 	{
 		this.marbleOwners.put(node, player);
 		this.marblePositions.get(player).add(node);
-		if(hash != null)
+		if (hash != null)
 		{
 			hash ^= getZobristValue(node, player);
 			hash ^= getZobristValue(node, null);
 		}
 	}
-	
+
 	public void removeMarble(Node node)
 	{
 		Player owner = marbleOwners.get(node);
 		this.marblePositions.get(owner).remove(node);
 		this.marbleOwners.remove(node);
 
-		if(hash != null)
+		if (hash != null)
 		{
 			hash ^= getZobristValue(node, owner);
 			hash ^= getZobristValue(node, null);
@@ -202,7 +191,7 @@ public class GameState extends ZobristHashableState
 	{
 		return marbleOwners.get(node);
 	}
-	
+
 	public Set<Node> getMarbles(Player player)
 	{
 		return marblePositions.get(player);

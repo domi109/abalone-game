@@ -6,4 +6,8 @@ import search.tree.SearchState;
 public interface MinimaxProblem extends SearchProblem
 {
 	public int getFinalStateValue(SearchState state);
+
+	public double repetitionValue();
+
+
 }

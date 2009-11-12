@@ -129,8 +129,8 @@ public class Main
 		players = new ArrayList<Player>(2);
 		//players.add(new HumanPlayer("Pong"));
 		players.add(new BasicMinimaxAI(logic));
-		players.add(new BasicMinimaxAI(logic));
-		//players.add(new HumanPlayer("Ping"));
+		//players.add(new BasicMinimaxAI(logic));
+		players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 		
 		state.initHash();

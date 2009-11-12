@@ -6,6 +6,7 @@ import search.tree.DepthLimitedTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
 import search.tree.TreeSearch;
+import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.heuristic.Evaluator;
 
 /**
@@ -105,30 +106,28 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 	 */
 	protected MiniMaxNode maxNode(MiniMaxNode node, double alpha, double beta)
 	{
-		if(testNode(node))
-		{
-			return node;
-		}
-
-		// Ok, this seems to be just a regular node, so we will
-		// expand it and find the maximal child
-
 		// We store the maximal child in v:
 		MiniMaxNode v = null;
 		for (SearchNode n : node.expand())
 		{
 			// For every successor node
 
-			// Get minimal child node of this successor
-			MiniMaxNode min = minNode((MiniMaxNode) n, alpha, beta);
+			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 
-			if (v == null || v.getValue() < min.getValue())
+			if(!testNode(current))
+			{
+				// Get minimal child node of this successor
+				MiniMaxNode min = minNode(current, alpha, beta);
+				current.setValue(min.getValue());
+			}
+			
+			
+			if (v == null || v.getValue() < current.getValue())
 			{
 				// Either we haven't found any node at all yet, or we found
 				// one who will eventually lead to a higher outcome.
 				// Anyway: store it in v!
-				v = (MiniMaxNode) n;
-				v.setValue(min.getValue());
+				v = current;
 
 			}
 			if (v.getValue() >= beta)
@@ -166,28 +165,27 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 	 */
 	protected MiniMaxNode minNode(MiniMaxNode node, double alpha, double beta)
 	{
-		if(testNode(node))
-		{
-			return node;
-		}
-		
-		// Ok, this seems to be just a regular node, so we will
-		// expand it and find the minimal child
 
 		// We store the minimal child in v:
 		MiniMaxNode v = null;
 		for (SearchNode n : node.expand())
 		{
+			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 			// For every successor node
-			// Get maximal child node of this successor
-			MiniMaxNode max = maxNode((MiniMaxNode) n, alpha, beta);
-			if (v == null || v.getValue() > max.getValue())
+
+			if(!testNode(current))
+			{
+				// Get maximal child node of this successor
+				MiniMaxNode max = maxNode(current, alpha, beta);
+				current.setValue(max.getValue());
+			}
+			
+			if (v == null || v.getValue() > current.getValue())
 			{
 				// Either we haven't found any node at all yet, or we found
 				// one who will eventually lead to a lower outcome.
 				// Anyway: store it in v!
-				v = (MiniMaxNode) n;
-				v.setValue(max.getValue());
+				v = current;
 			}
 			if (v.getValue() <= alpha)
 			{
