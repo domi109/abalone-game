@@ -1,7 +1,5 @@
 package search.genetics.selection;
 
-import java.util.Collections;
-
 import search.genetics.GeneticIndividual;
 import search.genetics.GeneticPopulation;
 

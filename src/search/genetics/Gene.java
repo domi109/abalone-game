@@ -1,9 +1,9 @@
 package search.genetics;
 
-public interface Gene
+public interface Gene<T extends Comparable<T>>
 {
-	public void setValue(Object value);
-	public Object getValue();
-	public boolean equals(Gene g2);
-	public Object clone();
+	public void setValue(T value);
+	public T getValue();
+	public boolean equals(Gene<T> g2);
+	public Gene<T> clone();
 }

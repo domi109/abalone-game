@@ -10,5 +10,6 @@ public interface GeneticIndividual extends Comparable<GeneticIndividual>
 	public Genotype getPhenotype();
 	public boolean equalsGenetic(GeneticIndividual j);
 	public GeneticIndividual reproduceWith(GeneticIndividual j);
+    public void mutate();
 	
 }

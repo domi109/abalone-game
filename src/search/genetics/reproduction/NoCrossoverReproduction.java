@@ -15,7 +15,7 @@ public class NoCrossoverReproduction implements ReproductionMethod
 		for (int i = 0; i < pop.size(); i++)
 		{
 			GeneticIndividual newGI = pop.get(i);
-			newGI.getPhenotype().mutate();
+			newGI.mutate();
 			newGeneration.add(newGI);
 		}
 

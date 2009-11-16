@@ -15,7 +15,7 @@ public class CrossReproduction implements ReproductionMethod
 			for(GeneticIndividual j: pop)
 			{
 				GeneticIndividual newGI = i.reproduceWith(j);
-				newGI.getPhenotype().mutate();
+				newGI.mutate();
 				newGeneration.add(newGI);
 			}
 		}

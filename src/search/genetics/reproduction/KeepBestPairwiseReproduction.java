@@ -36,7 +36,7 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 			// generation (but still mutate it)
 			GeneticIndividual max = pop.getFittest();
 			pop.remove(max);
-			max.getPhenotype().mutate();
+			max.mutate();
 			newGeneration.add(max);
 		}
 		for (int t = 0; t < multiplicator; t++)
@@ -46,7 +46,7 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 			{
 				GeneticIndividual newGI = pop.get(i).reproduceWith(
 						pop.get(i + 1));
-				newGI.getPhenotype().mutate();
+				newGI.mutate();
 				newGeneration.add(newGI);
 			}
 		}

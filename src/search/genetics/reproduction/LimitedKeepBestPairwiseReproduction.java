@@ -37,7 +37,7 @@ public class LimitedKeepBestPairwiseReproduction implements ReproductionMethod
 		{
 			GeneticIndividual newGI = pop.get(i%pop.size())
 					.reproduceWith(pop.get(r.nextInt(pop.size() - 1)));
-			newGI.getPhenotype().mutate();
+			newGI.mutate();
 			newGeneration.add(newGI);
 			i++;
 		}

@@ -36,7 +36,7 @@ public class LimitedKeepBestNoCrossoverReproduction implements ReproductionMetho
 		while (newGeneration.size() < limit)
 		{
 			GeneticIndividual newGI = pop.get(i%pop.size()).reproduceWith(pop.get(i%pop.size()));
-			newGI.getPhenotype().mutate();
+			newGI.mutate();
 			newGeneration.add(newGI);
 			i++;
 		}
