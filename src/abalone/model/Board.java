@@ -60,7 +60,7 @@ public class Board implements Serializable
 			Node node = leftNode;
 			while (node != null)
 			{
-				System.out.print("0");
+				System.out.print(node.getManhDist());
 				node=node.getNeighbour(Direction.RIGHT);
 			}
 			leftNode = (leftNode.getNeighbour(Direction.DOWN_LEFT)==null)?leftNode.getNeighbour(Direction.DOWN_RIGHT):leftNode.getNeighbour(Direction.DOWN_LEFT);
