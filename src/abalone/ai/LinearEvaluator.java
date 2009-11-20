@@ -43,7 +43,7 @@ public class LinearEvaluator implements Evaluator<Double>
     private double w6;
 
     // Constructor for LinearEvaluator class.
-    public LinearEvaluator(){
+    public LinearEvaluator(GameState state){
         // Ensure functions are set back to default values.
         f1 = 0;
         f2 = 0;
