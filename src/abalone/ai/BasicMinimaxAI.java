@@ -105,8 +105,10 @@ public class BasicMinimaxAI extends Ai
 	{
 		problem = new AbaloneSearchProblem(state,logic);
 		AbaloneNode startNode = new AbaloneNode(state);
+                LinearEvaluator evaluated = new LinearEvaluator(state);
+                int PlyLevels = 5;
 
-		MinimaxSearch s = new HashingMinimaxSearch(problem,new SimpleEvaluator(state),7);
+		MinimaxSearch s = new HashingMinimaxSearch(problem,evaluated,PlyLevels);
 //		System.out.println("My Options: ");
 //		for(Action a : problem.generateActions(state))
 //		{
@@ -115,6 +117,8 @@ public class BasicMinimaxAI extends Ai
 		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
 		System.out.println("["+(System.currentTimeMillis()-time)+"ms] I want to perform "+n.getAction()+" value: "+((MiniMaxNode)n).getValue());
+                evaluated.eval(n.getState());
+                System.out.println("F1 is "+evaluated.getF1()+" "+"F2 is "+evaluated.getF2()+" "+"F3 is "+evaluated.getF3()+" "+"F4 is "+evaluated.getF4()+" "+"F5 is "+evaluated.getF5()+" "+"F6 is "+evaluated.getF6());
 		return (Move) n.getAction();
 
 	}
