@@ -88,11 +88,11 @@ class AbaloneSearchProblem implements MinimaxProblem {
 		actions.addAll(inline);
 		actions.addAll(broadside);
 
-		System.out.println();
-		System.out.println("single moves: " + singleMarble.size());
-		System.out.println("inline moves: " + inline.size());
-		System.out.println("broadside moves: " + broadside.size());
-		System.out.println("total moves: " + actions.size());
+//		System.out.println();
+//		System.out.println("single moves: " + singleMarble.size());
+//		System.out.println("inline moves: " + inline.size());
+//		System.out.println("broadside moves: " + broadside.size());
+//		System.out.println("total moves: " + actions.size());
 
 		return actions;
 	}
@@ -109,20 +109,26 @@ class AbaloneSearchProblem implements MinimaxProblem {
 			return;
 		}
 		
-		if (length > 1) {
-			l.setOrientation(orientation);
-			Move m = new Move();
-			m.setType(MoveType.BROADSIDE);
-			m.setMarbleLine(l);
-			m.setDirection(direction);
-			result.add(m);
-		}
 		
-		Node neighbour = node.getNeighbour(orientation);
-		if (state.getMarbleOwner(node.getNeighbour(direction)) == null && node.getNeighbour(direction) != null) {
+		
+		Node oriontationNeighbour = node.getNeighbour(orientation);
+		Node directionNeighbour = node.getNeighbour(direction);
+		Player currentPlayer = state.getMarbleOwner(node);
+		Player directionPlayer = state.getMarbleOwner(node.getNeighbour(direction));
+		Player orientationPlayer = state.getMarbleOwner(node.getNeighbour(orientation));
+		
+		if ((directionPlayer == null) && (directionNeighbour != null)) {
 			l.add(node);
-			if (state.getMarbleOwner(node) == state.getMarbleOwner(neighbour)) {
-				generateBroadsideMoves(state, neighbour, direction, orientation, result, length + 1, l);
+			if (l.getNodes().size() > 1) {
+				l.setOrientation(orientation);
+				Move m = new Move();
+				m.setType(MoveType.BROADSIDE);
+				m.setMarbleLine(l);
+				m.setDirection(direction);
+				result.add(m);
+			}
+			if (currentPlayer == orientationPlayer) {
+				generateBroadsideMoves(state, oriontationNeighbour, direction, orientation, result, (length + 1), l);
 			}
 		} else return;
 	}
