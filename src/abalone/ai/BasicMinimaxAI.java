@@ -1,6 +1,5 @@
 package abalone.ai;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -11,6 +10,7 @@ import search.tree.games.minimax.MiniMaxNode;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
+import search.tree.heuristic.Evaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.model.Move;
@@ -19,30 +19,6 @@ public class BasicMinimaxAI extends Ai
 {
 	private static final long serialVersionUID = -448667623469161736L;
 
-	private class MoveComparator implements Comparator<SearchNode>
-	{
-		@Override
-		public int compare(SearchNode o1, SearchNode o2)
-		{
-			// TODO Insert better heuristics about move quality here!
-
-			Move m1 = (Move) o1.getAction();
-			Move m2 = (Move) o2.getAction();
-
-			if (m1.getMarbleLine().getNodes().size() < m2.getMarbleLine().getNodes().size())
-			{
-				return 1;
-			}
-			else if (m1.getMarbleLine().getNodes().size() == m2.getMarbleLine().getNodes().size())
-			{
-				return 0;
-			}
-			else
-			{
-				return -1;
-			}
-		}
-	}
 
 	private class AbaloneNode extends HashableMiniMaxNode
 	{
@@ -104,10 +80,12 @@ public class BasicMinimaxAI extends Ai
 	{
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-		LinearEvaluator evaluated = new LinearEvaluator(state);
+		//Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
+		Evaluator<Double> evaluator = new SimpleEvaluator(state);
+
 		int PlyLevels = 8;
 
-		MinimaxSearch s = new HashingMinimaxSearch(problem, new SimpleEvaluator(state), PlyLevels);
+		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
 //		System.out.println("My Options: ");
 //		for (Action a : problem.generateActions(state))
 //		{
@@ -116,7 +94,6 @@ public class BasicMinimaxAI extends Ai
 		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
 		System.out.println("[" + (System.currentTimeMillis() - time) + "ms] I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
-		evaluated.eval(n.getState());
 		return (Move) n.getAction();
 
 	}
