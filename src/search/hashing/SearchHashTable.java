@@ -5,7 +5,7 @@ import java.util.Map;
 
 import search.tree.SearchNode;
 
-public class SearchHashTable<V> extends HashMap<SearchNode, V>
+public class SearchHashTable<V> extends HashMap<Long, V>
 {
 	private static final long serialVersionUID = 5567886885239514943L;
 
@@ -24,7 +24,7 @@ public class SearchHashTable<V> extends HashMap<SearchNode, V>
 		super(initialCapacity);
 	}
 
-	public SearchHashTable(Map<? extends SearchNode, ? extends V> m)
+	public SearchHashTable(Map<? extends Long, ? extends V> m)
 	{
 		super(m);
 	}

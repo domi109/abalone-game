@@ -31,15 +31,16 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 
 	/**
 	 * A basic placeholder evaluator that always returns zero as an evaluation
-	 * and therefore does not help at all.
-	 * BUT the search will at least be able to run.
-	 *
+	 * and therefore does not help at all. BUT the search will at least be able
+	 * to run.
+	 * 
 	 */
 	private static class DummyEvaluator implements Evaluator<Double>
 	{
 
 		/**
 		 * Returns zero.
+		 * 
 		 * @see search.tree.heuristic.Evaluator#eval(search.tree.SearchState)
 		 */
 		@Override
@@ -47,9 +48,8 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 		{
 			return 0d;
 		}
-	}	
-	
-	
+	}
+
 	private Evaluator<Double> evaluator;
 
 	/**
@@ -65,7 +65,7 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 	{
 		this(t, new DummyEvaluator(), limit);
 	}
-	
+
 	public MinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int limit)
 	{
 		super(t, limit);
@@ -114,14 +114,13 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 
 			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 
-			if(!testNode(current))
+			if (!testNode(current))
 			{
 				// Get minimal child node of this successor
 				MiniMaxNode min = minNode(current, alpha, beta);
 				current.setValue(min.getValue());
 			}
-			
-			
+
 			if (v == null || v.getValue() < current.getValue())
 			{
 				// Either we haven't found any node at all yet, or we found
@@ -173,13 +172,13 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 			// For every successor node
 
-			if(!testNode(current))
+			if (!testNode(current))
 			{
 				// Get maximal child node of this successor
 				MiniMaxNode max = maxNode(current, alpha, beta);
 				current.setValue(max.getValue());
 			}
-			
+
 			if (v == null || v.getValue() > current.getValue())
 			{
 				// Either we haven't found any node at all yet, or we found
@@ -206,9 +205,10 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 		return v;
 
 	}
-	
+
 	/**
 	 * Test a given node on whether or not the search can be canceled.
+	 * 
 	 * @param node
 	 * @return true if the search can be canceled
 	 */
@@ -232,7 +232,7 @@ public class MinimaxSearch extends DepthLimitedTreeSearch
 			node.setValue(problem.getFinalStateValue(node.getState()));
 			return true;
 		}
-		
+
 		return false;
 	}
 

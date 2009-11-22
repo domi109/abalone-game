@@ -3,6 +3,7 @@ package abalone.exec;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
+import java.nio.ByteBuffer;
 
 import abalone.ai.Ai;
 import abalone.ai.BasicMinimaxAI;
@@ -129,8 +130,8 @@ public class Main
 		players = new ArrayList<Player>(2);
 		//players.add(new HumanPlayer("Pong"));
 		players.add(new BasicMinimaxAI(logic));
-		//players.add(new BasicMinimaxAI(logic));
-		players.add(new HumanPlayer("Ping"));
+		players.add(new BasicMinimaxAI(logic));
+		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 		
 		state.initHash();
@@ -158,6 +159,22 @@ public class Main
 	 */
 	private void boardUpdated()
 	{
+		// uncommend this to print board hashes
+//		for(int i = 0; i<8;i++)
+//		{
+//			System.out.print(" |"+(int)state.zobristHash().get(i)+"|");
+//		}
+//		System.out.println();
+//		System.out.println("Symmetries: --------------");
+//		for(ByteBuffer bb : state.symmetryHashes())
+//		{
+//			for(int i = 0; i<8;i++)
+//			{
+//				System.out.print(" |"+bb.get(i)+"|");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println("--------------------------");
 		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state)==null)
 		{
 			decider.setAi((Ai)state.getCurrentPlayer());

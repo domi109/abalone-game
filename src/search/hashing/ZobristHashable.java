@@ -1,8 +1,8 @@
 package search.hashing;
 
-import java.util.List;
+import java.nio.ByteBuffer;
 
 public interface ZobristHashable
 {
-	public long zobristHash();
+	public ByteBuffer zobristHash();
 }

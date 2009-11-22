@@ -63,7 +63,7 @@ public class BasicMinimaxAI extends Ai
 		{
 			PriorityQueue<SearchNode> successors = new PriorityQueue<SearchNode>(10, new MoveComparator());
 			List<Action> actions = problem.generateActions(this.getState());
-			//System.out.println(actions.size());
+			// System.out.println(actions.size());
 			for (Action a : actions)
 			{
 				// Every possible action in this state
@@ -91,7 +91,6 @@ public class BasicMinimaxAI extends Ai
 		}
 	}
 
-
 	private GameLogic logic;
 	private AbaloneSearchProblem problem;
 
@@ -103,21 +102,21 @@ public class BasicMinimaxAI extends Ai
 	@Override
 	public Move decide(GameState state)
 	{
-		problem = new AbaloneSearchProblem(state,logic);
+		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-                OptimizedLinearEvaluator evaluated = new OptimizedLinearEvaluator(state);
-                int PlyLevels = 5;
+		LinearEvaluator evaluated = new LinearEvaluator(state);
+		int PlyLevels = 8;
 
-		HashingMinimaxSearch s = new HashingMinimaxSearch(problem,evaluated,PlyLevels);
+		MinimaxSearch s = new HashingMinimaxSearch(problem, new SimpleEvaluator(state), PlyLevels);
 //		System.out.println("My Options: ");
-//		for(Action a : problem.generateActions(state))
+//		for (Action a : problem.generateActions(state))
 //		{
 //			System.out.println(a);
 //		}
 		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
-		System.out.println("["+(System.currentTimeMillis()-time)+"ms] I want to perform "+n.getAction()+" value: "+((MiniMaxNode)n).getValue());
-                evaluated.eval(n.getState());
+		System.out.println("[" + (System.currentTimeMillis() - time) + "ms] I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
+		evaluated.eval(n.getState());
 		return (Move) n.getAction();
 
 	}

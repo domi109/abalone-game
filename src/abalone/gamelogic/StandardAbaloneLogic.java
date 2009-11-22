@@ -33,7 +33,12 @@ public class StandardAbaloneLogic implements GameLogic
 
 		for (Direction d : Direction.UPPER_LEFT)
 		{
-			b.addPath(createPath(b.getCentralNode(), d));
+			b.addPath(createPathCW(b.getCentralNode(), d));
+		}
+		
+		for (Direction d : Direction.UPPER_LEFT)
+		{
+			b.addPath(createPathCCW(b.getCentralNode(), d));
 		}
 
 		int i = 0;
@@ -46,7 +51,7 @@ public class StandardAbaloneLogic implements GameLogic
 		return b;
 	}
 
-	protected List<KeyValuePair<Direction, Node>> createPath(Node centralNode, Direction startDirection)
+	protected List<KeyValuePair<Direction, Node>> createPathCW(Node centralNode, Direction startDirection)
 	{
 		List<KeyValuePair<Direction, Node>> path = new ArrayList<KeyValuePair<Direction, Node>>();
 
@@ -79,6 +84,48 @@ public class StandardAbaloneLogic implements GameLogic
 					}
 				}
 			}
+
+			currentDir = startDirection;
+
+		}
+
+		return path;
+	}
+	
+	protected List<KeyValuePair<Direction, Node>> createPathCCW(Node centralNode, Direction startDirection)
+	{
+		List<KeyValuePair<Direction, Node>> path = new ArrayList<KeyValuePair<Direction, Node>>();
+
+		path.add(new KeyValuePair<Direction, Node>(null, centralNode));
+		Direction currentDir = startDirection;
+		Node currentNode = centralNode;
+		for (int i = 1; i < radius; i++)
+		{
+			currentNode = currentNode.getNeighbour(currentDir);
+			path.add(new KeyValuePair<Direction, Node>(currentDir, currentNode));
+			currentDir = currentDir.getNextCCW();
+			
+			Direction d = currentDir;
+			do 
+			{
+				if (d.equals(startDirection.getNextCCW()))
+				{
+					for (int j = 0; j < i - 1; j++)
+					{
+						currentNode = currentNode.getNeighbour(d);
+						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
+					}
+				}
+				else
+				{
+					for (int j = 0; j < i; j++)
+					{
+						currentNode = currentNode.getNeighbour(d);
+						path.add(new KeyValuePair<Direction, Node>(d, currentNode));
+					}
+				}
+				d = d.getNextCCW();
+			}while((!d.equals(startDirection.getNextCCW())));
 
 			currentDir = startDirection;
 

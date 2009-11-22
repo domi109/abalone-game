@@ -31,29 +31,29 @@ public class MinimaxHashTable extends SearchHashTable<MinimaxHashEntry>
 
 	}
 
-	public MinimaxHashTable(int maxSize, Map<? extends HashableMiniMaxNode, ? extends MinimaxHashEntry> m)
+	public MinimaxHashTable(int maxSize, Map<? extends Long, ? extends MinimaxHashEntry> m)
 	{
 		super(m);
 		this.maxSize = maxSize;
 	}
 	
-	public MinimaxHashEntry put(HashableMiniMaxNode key, double value, int precision)
+	public MinimaxHashEntry put(Long hash, double value, int precision)
 	{
-		return super.put(key, new MinimaxHashEntry(precision,value));
+		return super.put(hash, new MinimaxHashEntry(precision,value));
 	}
 	
 	@Override
-	public MinimaxHashEntry put(SearchNode key, MinimaxHashEntry value)
+	public MinimaxHashEntry put(Long hash, MinimaxHashEntry value)
 	{
 		if(this.size()+1>maxSize)
 		{
 			return null;
 		}
-		return super.put(key, value);
+		return super.put(hash, value);
 	}
 	
 	@Override
-	public void putAll(Map<? extends SearchNode, ? extends MinimaxHashEntry> m)
+	public void putAll(Map<? extends Long, ? extends MinimaxHashEntry> m)
 	{
 		if(this.size()+m.size()>maxSize)
 		{
@@ -67,9 +67,9 @@ public class MinimaxHashTable extends SearchHashTable<MinimaxHashEntry>
 	{
 		StringBuffer sb = new StringBuffer();
 		
-		for(Entry<SearchNode, MinimaxHashEntry> e : this.entrySet())
+		for(Entry<Long, MinimaxHashEntry> e : this.entrySet())
 		{
-			sb.append(e.getKey().hashCode() + " | " + e.getValue()+"\n");
+			sb.append(e.getKey() + " | " + e.getValue()+"\n");
 		}
 		return sb.toString();
 	}

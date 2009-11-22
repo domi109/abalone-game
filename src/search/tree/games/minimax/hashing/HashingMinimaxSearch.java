@@ -1,5 +1,9 @@
 package search.tree.games.minimax.hashing;
 
+import java.nio.ByteBuffer;
+
+import search.hashing.SymZobristHashable;
+import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
 import search.tree.ZobristHashableState;
 import search.tree.games.minimax.MiniMaxNode;
@@ -66,11 +70,18 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 			if (!testNode(current))
 			{
-				table.put(current, MinimaxHashEntry.OPEN);
+				table.put(current.zobristHash().getLong(0), MinimaxHashEntry.OPEN);
 				// Get minimal child node of this successor
 				MiniMaxNode min = minNode(current, alpha, beta);
+				if(min == null)
+				{
+					current.setValue(-1); // TODO magic number
+				}
+				else
+				{
 				current.setValue(min.getValue());
-				table.put(current, current.getValue(), this.depthLimit - current.getDepth());
+				}				
+				putHash(current);
 
 			}
 
@@ -129,11 +140,18 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 			if (!testNode(current))
 			{
-				table.put(current, MinimaxHashEntry.OPEN);
+				table.put(current.zobristHash().getLong(0), MinimaxHashEntry.OPEN);
 				// Get maximal child node of this successor
 				MiniMaxNode max = maxNode(current, alpha, beta);
+				if(max == null)
+				{
+					current.setValue(-1); // TODO magic number
+				}
+				else
+				{
 				current.setValue(max.getValue());
-				table.put(current, current.getValue(), this.depthLimit - current.getDepth());
+				}
+				putHash(current);
 			}
 
 
@@ -167,8 +185,8 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	@Override
 	protected boolean testNode(MiniMaxNode node)
 	{
-
-		MinimaxHashEntry e = table.get(node);
+		HashableMiniMaxNode n = (HashableMiniMaxNode) node;
+		MinimaxHashEntry e = table.get(n.zobristHash().getLong(0));
 		if (e != null)
 		{
 			if (e == MinimaxHashEntry.OPEN)
@@ -185,5 +203,20 @@ public class HashingMinimaxSearch extends MinimaxSearch
 		}
 
 		return super.testNode(node);
+	}
+	
+	protected void putHash(HashableMiniMaxNode n)
+	{
+		Long hash = n.zobristHash().getLong(0);
+		table.put(hash, n.getValue(), this.depthLimit - n.getDepth());
+// TODO: uncomment once symmetry hashing works properly
+//		if(n instanceof SymZobristHashable)
+//		{
+//			SymZobristHashable s = (SymZobristHashable) n;
+//			for(ByteBuffer bb : s.symmetryHashes())
+//			{
+//				table.put(bb.getLong(0), n.getValue(), this.depthLimit-n.getDepth());
+//			}
+//		}
 	}
 }

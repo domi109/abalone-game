@@ -9,8 +9,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 
 import search.Action;
+import search.hashing.SymZobristHashable;
 import search.tree.ZobristHashableState;
 import search.tree.SearchState;
 
@@ -25,7 +27,7 @@ import abalone.model.Player;
  * 
  * @author rutger
  */
-public class GameState extends ZobristHashableState
+public class GameState implements ZobristHashableState, SymZobristHashable
 {
 
 	private static final long serialVersionUID = 8517713366992214920L;
@@ -52,14 +54,13 @@ public class GameState extends ZobristHashableState
 
 	public void initHash()
 	{
-		List<Object> states = new ArrayList<Object>(this.getPlayers());
+		List<Player> states = new ArrayList<Player>(this.getPlayers());
 		states.add(null);
-		List<Object> nodes = new ArrayList<Object>(board.getNodes());
-		generateZobristTable(nodes, states);
+		ZobristHasher.generateZobristTable(board, states);
 		this.hash = 0l;
 		for (Node n : board.getNodes())
 		{
-			hash ^= getZobristValue(n, getMarbleOwner(n));
+			hash ^= ZobristHasher.get(n, getMarbleOwner(n)).getLong(0);
 		}
 		hash ^= currentPlayer.hash();
 	}
@@ -169,8 +170,8 @@ public class GameState extends ZobristHashableState
 		this.marblePositions.get(player).add(node);
 		if (hash != null)
 		{
-			hash ^= getZobristValue(node, player);
-			hash ^= getZobristValue(node, null);
+			hash ^= ZobristHasher.get(node, player).getLong(0);
+			hash ^= ZobristHasher.get(node, null).getLong(0);
 		}
 	}
 
@@ -182,8 +183,8 @@ public class GameState extends ZobristHashableState
 
 		if (hash != null)
 		{
-			hash ^= getZobristValue(node, owner);
-			hash ^= getZobristValue(node, null);
+			hash ^= ZobristHasher.get(node, owner).getLong(0);
+			hash ^= ZobristHasher.get(node, null).getLong(0);
 		}
 	}
 
@@ -198,9 +199,19 @@ public class GameState extends ZobristHashableState
 	}
 
 	@Override
-	public long zobristHash()
+	public ByteBuffer zobristHash()
 	{
-		return hash;
+		ByteBuffer bb = ByteBuffer.allocate(8);
+		bb.putLong(0, hash);
+		return bb;
+	}
+
+	@Override
+	public List<ByteBuffer> symmetryHashes()
+	{
+		ByteBuffer bb = ByteBuffer.allocate(8);
+		bb.putLong(0, hash);
+		return ZobristHasher.getSymmetries(bb);
 	}
 
 }

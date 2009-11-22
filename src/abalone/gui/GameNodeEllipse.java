@@ -1,8 +1,10 @@
 package abalone.gui;
 
+import java.nio.ByteBuffer;
 import java.util.Map;
 
 import abalone.gamestate.GameState;
+import abalone.gamestate.ZobristHasher;
 import abalone.model.Node;
 import abalone.model.Player;
 
@@ -31,8 +33,28 @@ public class GameNodeEllipse extends AbaloneEllipse
 		super(state.getMarbleOwner(node),x,y,w,h);
 
 		this.node = node;
+		
+		// --- Init tooltip --- //
+		String tt = "";
+		for(Player p : state.getPlayers())
+		{
+			ByteBuffer hash = ZobristHasher.get(node, p);
+			for(int i = 0; i<8;i++)
+			{
+				tt += " |"+hash.get(i)+"|";
+			}
+			tt+="\n";
+		}
+		ByteBuffer hash = ZobristHasher.get(node, null);
+		for(int i = 0; i<8;i++)
+		{
+			tt += " |"+hash.get(i)+"|";
+		}
+		tt+="\n";		
+		this.setToolTip(tt);
+		// --- //
 	}
-	
+
 	public void activate()
 	{
 		activated = true;

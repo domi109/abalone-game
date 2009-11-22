@@ -110,4 +110,5 @@ public enum Direction implements Iterable<Direction>,Serializable
 	{
 		return new DirectionIterator(this);
 	}
+	
 }
