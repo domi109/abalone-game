@@ -21,6 +21,7 @@ public class AbaloneFront extends QMainWindow
 {
 	public Signal0 newGame = new Signal0();
 	public Signal1<String> saveGame = new Signal1<String>();
+	public Signal1<String> loadGame = new Signal1<String>();
 	
 	private GameState state;
 	
@@ -52,7 +53,7 @@ public class AbaloneFront extends QMainWindow
 	private GameInfoWidget gameInfoWidget;
 	
 	private String outputFile;
-
+	private String filter = "Save Files (*.sav)";
 	
 	public AbaloneFront(GameState state)
 	{
@@ -84,6 +85,12 @@ public class AbaloneFront extends QMainWindow
 		newGame.emit();
 	}
 	
+	public void load()
+	{
+		String fileName = QFileDialog.getOpenFileName(this, tr("load game"), QDir.currentPath(), new QFileDialog.Filter(filter));
+		loadGame.emit(fileName);
+	}
+	
 	public void save()
 	{
 		QFileInfo file = new QFileInfo(outputFile);
@@ -101,7 +108,6 @@ public class AbaloneFront extends QMainWindow
 	{
 		String format = "sav";
         String initialPath = QDir.currentPath() + tr("/untitled.") + format;
-        String filter = "Save Files (*.sav)";
         outputFile = QFileDialog.getSaveFileName(this, tr("Save As"), initialPath, new QFileDialog.Filter(filter));
         if(!outputFile.equals(""))
         {
@@ -149,7 +155,7 @@ public class AbaloneFront extends QMainWindow
 		loadAct = new QAction(new QIcon("classpath:abalone/gui/Icons/open.png"),tr("&Load"), this);
 		loadAct.setShortcut(tr("Ctrl+L"));
 		loadAct.setStatusTip(tr("Opens a saved game"));
-		//openAct.triggered.connect(this, "open()");
+		loadAct.triggered.connect(this, "load()");
 		
 		saveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/save.png"),tr("&Save"), this);
 		saveAct.setShortcut(tr("Ctrl+S"));
@@ -258,11 +264,18 @@ public class AbaloneFront extends QMainWindow
 		return boardWidget;
 	}
 
+	/**
+	 * Method for updating (redrawing) the front-end quickly
+	 * with the current game(state) in mind
+	 */
 	public void updateFront()
 	{
 		updateFront(this.state);
 	}
 	
+	/**
+	 * Updates the whole front end with a new GameState
+	 */
 	public void updateFront(GameState state)
 	{
 		this.state = state;

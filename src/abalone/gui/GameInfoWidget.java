@@ -52,7 +52,9 @@ public class GameInfoWidget extends QWidget
 		revert.emit();
 	}
 
-
+	/**
+	 * updater method for showing the latest scores to the player(s)
+	 */
 	public void updateGameInfo(GameState state)
 	{
 

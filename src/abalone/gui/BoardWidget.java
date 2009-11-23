@@ -72,6 +72,9 @@ public class BoardWidget extends QGraphicsView
 		marLine = new MarbleLine();
 	}
 	
+	/**
+	 * updater method for showing the right board to the player(s)
+	 */
 	public void updateBoard(GameState state)
 	{
 		this.state = state;
@@ -184,6 +187,7 @@ public class BoardWidget extends QGraphicsView
 			}
 		}
 	}
+	
 	
 	public void arrowClicked(Direction direction)
 	{

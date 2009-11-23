@@ -82,7 +82,7 @@ public class Main
 
 	// The GameLogic in use. This constant is more or less a placeholder:
 	// In principle this can be just a config-option
-	private static Class<? extends GameLogic> logicClass = SmallAbaloneLogic.class;
+	private static Class<? extends GameLogic> logicClass = StandardAbaloneLogic.class;
 
 	/**
 	 * Slot for the signal that is sent when the user confirms the notification
@@ -128,10 +128,10 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		//players.add(new HumanPlayer("Pong"));
-		players.add(new BasicMinimaxAI(logic));
-		players.add(new BasicMinimaxAI(logic));
-		//players.add(new HumanPlayer("Ping"));
+		players.add(new HumanPlayer("Pong"));
+		//players.add(new BasicMinimaxAI(logic));
+		//players.add(new BasicMinimaxAI(logic));
+		players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 		
 		state.initHash();
@@ -146,6 +146,7 @@ public class Main
 		front.getBoardWidget().updated.connect(this, "boardUpdated()");
 		front.newGame.connect(this, "resetGame()");
 		front.saveGame.connect(this, "saveGame(String)");
+		front.loadGame.connect(this, "loadGame(String)");
 		
 		boardUpdated();
 		
@@ -227,6 +228,25 @@ public class Main
 			objects.writeObject(state);
 			objects.close();
 			stream.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void loadGame(String location)
+	{
+		try
+		{
+			FileInputStream stream = new FileInputStream(location);
+			ObjectInputStream ois = new ObjectInputStream(stream);
+			state = (GameState)ois.readObject();
+			ois.close();
+			stream.close();
+			
+			front.updateFront(state);
 		}
 		catch(Exception e)
 		{
