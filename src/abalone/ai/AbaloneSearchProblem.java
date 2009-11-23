@@ -92,7 +92,7 @@ class AbaloneSearchProblem implements MinimaxProblem {
 //		System.out.println("single moves: " + singleMarble.size());
 //		System.out.println("inline moves: " + inline.size());
 //		System.out.println("broadside moves: " + broadside.size());
-//		System.out.println("total moves: " + actions.size());
+		System.out.println("" + actions.size());
 
 		return actions;
 	}
@@ -105,7 +105,7 @@ class AbaloneSearchProblem implements MinimaxProblem {
 	}
 
 	private void generateBroadsideMoves(GameState state, Node node, Direction direction, Direction orientation, LinkedList<Action> result, int length, MarbleLine l) {
-		if (length > 3) {
+		if (length >= 3) {
 			return;
 		}
 		
