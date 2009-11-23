@@ -245,9 +245,18 @@ public class Main
 			state = (GameState)ois.readObject();
 			ois.close();
 			stream.close();
-			
-			front.updateFront(state);
-		}
+                        state.initHash();
+		front.close();
+		front = new AbaloneFront(state);
+		front.show();
+		front.getBoardWidget().move.connect(this, "moveDone(Move)");
+		front.getBoardWidget().updated.connect(this, "boardUpdated()");
+		front.newGame.connect(this, "resetGame()");
+		front.saveGame.connect(this, "saveGame(String)");
+		front.loadGame.connect(this, "loadGame(String)");
+
+		boardUpdated();
+                }
 		catch(Exception e)
 		{
 			e.printStackTrace();

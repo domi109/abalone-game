@@ -53,7 +53,7 @@ public class Statistic
 	 */
 	public void stat()
 	{
-		long state = statGen.getCurrentState()
+		long state = statGen.getCurrentState();
 		KeyValuePair<Long,Long> pair = new KeyValuePair<Long, Long>(new Long(step), new Long(state));
 		stats.add(pair);
 	}
