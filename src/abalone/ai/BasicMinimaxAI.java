@@ -1,10 +1,13 @@
 package abalone.ai;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import search.Action;
+import search.hashing.SymZobristHashable;
+import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
 import search.tree.games.minimax.MiniMaxNode;
 import search.tree.games.minimax.MinimaxSearch;
@@ -13,6 +16,7 @@ import search.tree.games.minimax.hashing.HashingMinimaxSearch;
 import search.tree.heuristic.Evaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
+import abalone.gamestate.ZobristHasher;
 import abalone.model.Move;
 
 public class BasicMinimaxAI extends Ai
@@ -20,7 +24,7 @@ public class BasicMinimaxAI extends Ai
 	private static final long serialVersionUID = -448667623469161736L;
 
 
-	private class AbaloneNode extends HashableMiniMaxNode
+	private class AbaloneNode extends HashableMiniMaxNode implements SymZobristHashable
 	{
 		private static final long serialVersionUID = -6277809797290009239L;
 
@@ -65,6 +69,12 @@ public class BasicMinimaxAI extends Ai
 
 			return successors;
 		}
+
+		@Override
+		public List<ByteBuffer> symmetryHashes()
+		{
+			return ZobristHasher.getSymmetries(((ZobristHashable) getState()).zobristHash());
+		}
 	}
 
 	private GameLogic logic;
@@ -80,10 +90,10 @@ public class BasicMinimaxAI extends Ai
 	{
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-		//Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
-		Evaluator<Double> evaluator = new SimpleEvaluator(state);
+		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
+		//Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 8;
+		int PlyLevels = 4;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
 //		System.out.println("My Options: ");
@@ -93,7 +103,7 @@ public class BasicMinimaxAI extends Ai
 //		}
 		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
-		System.out.println("[" + (System.currentTimeMillis() - time) + "ms] I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
+		System.out.println((System.currentTimeMillis() - time) + ", I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
 		return (Move) n.getAction();
 
 	}

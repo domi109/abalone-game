@@ -92,7 +92,7 @@ class AbaloneSearchProblem implements MinimaxProblem {
 //		System.out.println("single moves: " + singleMarble.size());
 //		System.out.println("inline moves: " + inline.size());
 //		System.out.println("broadside moves: " + broadside.size());
-		System.out.println("" + actions.size());
+//		System.out.println("" + actions.size());
 
 		return actions;
 	}

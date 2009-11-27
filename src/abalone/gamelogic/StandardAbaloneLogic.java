@@ -36,7 +36,7 @@ public class StandardAbaloneLogic implements GameLogic
 			b.addPath(createPathCW(b.getCentralNode(), d));
 		}
 		
-		for (Direction d : Direction.UPPER_LEFT)
+		for (Direction d : Direction.UPPER_RIGHT)
 		{
 			b.addPath(createPathCCW(b.getCentralNode(), d));
 		}

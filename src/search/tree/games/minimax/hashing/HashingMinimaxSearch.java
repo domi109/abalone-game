@@ -33,7 +33,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	{
 		super(t, evaluator, limit);
 
-		this.table = new MinimaxHashTable(200);
+		this.table = new MinimaxHashTable(300);
 	}
 
 	@Override
@@ -209,14 +209,13 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	{
 		Long hash = n.zobristHash().getLong(0);
 		table.put(hash, n.getValue(), this.depthLimit - n.getDepth());
-// TODO: uncomment once symmetry hashing works properly
-//		if(n instanceof SymZobristHashable)
-//		{
-//			SymZobristHashable s = (SymZobristHashable) n;
-//			for(ByteBuffer bb : s.symmetryHashes())
-//			{
-//				table.put(bb.getLong(0), n.getValue(), this.depthLimit-n.getDepth());
-//			}
-//		}
+		if(n instanceof SymZobristHashable)
+		{
+			SymZobristHashable s = (SymZobristHashable) n;
+			for(ByteBuffer bb : s.symmetryHashes())
+			{
+				table.put(bb.getLong(0), n.getValue(), this.depthLimit-n.getDepth());
+			}
+		}
 	}
 }

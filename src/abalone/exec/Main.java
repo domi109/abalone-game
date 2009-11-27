@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 
 import abalone.ai.Ai;
 import abalone.ai.BasicMinimaxAI;
+import abalone.ai.OptimizedLinearEvaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamelogic.SmallAbaloneLogic;
@@ -128,10 +129,10 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		players.add(new HumanPlayer("Pong"));
-		//players.add(new BasicMinimaxAI(logic));
-		//players.add(new BasicMinimaxAI(logic));
-		players.add(new HumanPlayer("Ping"));
+		//players.add(new HumanPlayer("Pong"));
+		players.add(new BasicMinimaxAI(logic));
+		players.add(new BasicMinimaxAI(logic));
+		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 		
 		state.initHash();
@@ -176,6 +177,12 @@ public class Main
 //			System.out.println();
 //		}
 //		System.out.println("--------------------------");
+		
+		// uncommend this to print eval results
+//		OptimizedLinearEvaluator eval = new OptimizedLinearEvaluator(state);
+//		eval.eval(state);
+//		System.out.println(" F1: "+eval.getF1()+" F2: "+eval.getF2()+" F3: "+eval.getF3()+" F4: "+eval.getF4()+" F5: "+eval.getF5()+" F6: "+eval.getF6());
+		
 		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state)==null)
 		{
 			decider.setAi((Ai)state.getCurrentPlayer());

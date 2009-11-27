@@ -78,4 +78,5 @@ public class Board implements Serializable
 		}
 		return node;
 	}
+
 }
