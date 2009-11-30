@@ -81,9 +81,6 @@ class AbaloneSearchProblem implements MinimaxProblem {
 				}
 			}
 		}
-
-		// TODO: check broadside moves!
-
 		actions.addAll(singleMarble);
 		actions.addAll(inline);
 		actions.addAll(broadside);
