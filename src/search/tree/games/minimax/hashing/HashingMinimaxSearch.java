@@ -20,7 +20,7 @@ import search.tree.heuristic.Evaluator;
 public class HashingMinimaxSearch extends MinimaxSearch
 {
 	private static final long serialVersionUID = 5354076006129704855L;
-
+	private int nodeCount = 0;
 	private MinimaxHashTable table;
 
 	public HashingMinimaxSearch(MinimaxProblem t, int limit)
@@ -39,7 +39,9 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	@Override
 	public SearchNode search(SearchNode node)
 	{
+		long time = System.currentTimeMillis();
 		SearchNode result = super.search(node);
+		System.out.println(nodeCount+","+table.size()+","+result.getAction()+","+(System.currentTimeMillis() - time));
 		return result;
 	}
 
@@ -185,6 +187,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	@Override
 	protected boolean testNode(MiniMaxNode node)
 	{
+		nodeCount++;
 		HashableMiniMaxNode n = (HashableMiniMaxNode) node;
 		MinimaxHashEntry e = table.get(n.zobristHash().getLong(0));
 		if (e != null)

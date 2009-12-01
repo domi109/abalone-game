@@ -103,7 +103,7 @@ public class BasicMinimaxAI extends Ai
 //		}
 		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
-		System.out.println((System.currentTimeMillis() - time) + ", I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
+		//System.out.println((System.currentTimeMillis() - time) + ", I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
 		return (Move) n.getAction();
 
 	}

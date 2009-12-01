@@ -10,31 +10,26 @@ public class MinimaxHashTable extends SearchHashTable<MinimaxHashEntry>
 {
 	private static final long serialVersionUID = 5363348033198176782L;
 
-	private int maxSize;
 	
-	public MinimaxHashTable(int maxSize)
+	public MinimaxHashTable()
 	{
 		super();
-		this.maxSize = maxSize;
 	}
 
-	public MinimaxHashTable(int maxSize, int initialCapacity, float loadFactor)
+	public MinimaxHashTable(int initialCapacity, float loadFactor)
 	{
 		super(initialCapacity, loadFactor);
-		this.maxSize = maxSize;
 	}
 
-	public MinimaxHashTable(int maxSize, int initialCapacity)
+	public MinimaxHashTable(int initialCapacity)
 	{
 		super(initialCapacity);
-		this.maxSize = maxSize;
 
 	}
 
-	public MinimaxHashTable(int maxSize, Map<? extends Long, ? extends MinimaxHashEntry> m)
+	public MinimaxHashTable(Map<? extends Long, ? extends MinimaxHashEntry> m)
 	{
 		super(m);
-		this.maxSize = maxSize;
 	}
 	
 	public MinimaxHashEntry put(Long hash, double value, int precision)
@@ -45,20 +40,12 @@ public class MinimaxHashTable extends SearchHashTable<MinimaxHashEntry>
 	@Override
 	public MinimaxHashEntry put(Long hash, MinimaxHashEntry value)
 	{
-		if(this.size()+1>maxSize)
-		{
-			return null;
-		}
 		return super.put(hash, value);
 	}
 	
 	@Override
 	public void putAll(Map<? extends Long, ? extends MinimaxHashEntry> m)
 	{
-		if(this.size()+m.size()>maxSize)
-		{
-			return;
-		}
 		super.putAll(m);
 	}
 	

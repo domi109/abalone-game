@@ -170,8 +170,8 @@ public class GameState implements ZobristHashableState, SymZobristHashable
 		this.marblePositions.get(player).add(node);
 		if (hash != null)
 		{
-			hash ^= ZobristHasher.get(node, player).getLong(0);
 			hash ^= ZobristHasher.get(node, null).getLong(0);
+			hash ^= ZobristHasher.get(node, player).getLong(0);
 		}
 	}
 
@@ -209,9 +209,7 @@ public class GameState implements ZobristHashableState, SymZobristHashable
 	@Override
 	public List<ByteBuffer> symmetryHashes()
 	{
-		ByteBuffer bb = ByteBuffer.allocate(8);
-		bb.putLong(0, hash);
-		return ZobristHasher.getSymmetries(bb);
+		return ZobristHasher.getSymmetries(zobristHash());
 	}
 
 }

@@ -16,16 +16,19 @@ public abstract class Player implements Serializable
 	private static final long serialVersionUID = 3580967490056683736L;
 	private static Random random = new Random();
 	
-	private long hash;
+	private byte hash;
 	
 	public Player()
 	{
-		hash = random.nextLong();
+		byte[] bytes = new byte[1];
+		                  
+		random.nextBytes(bytes);
+		hash = bytes[0];
 	}
 	
 	public abstract String getName();
 	
-	public long hash()
+	public byte hash()
 	{
 		return hash;
 	}

@@ -36,35 +36,35 @@ import com.trolltech.qt.gui.QMessageBox;
 public class Main
 {
 	private class Decider implements Runnable
-    {
-    	private Move decision;
-    	private Ai ai;
-    	
-    	public Decider()
-    	{
-    	}
-    	
-    	public void setAi(Ai ai)
-    	{
-    		this.ai = ai;
-    	}
-    	
-        @Override
-        public void run()
-        {
-        	decision = ai.decide(state);
+	{
+		private Move decision;
+		private Ai ai;
+
+		public Decider()
+		{
+		}
+
+		public void setAi(Ai ai)
+		{
+			this.ai = ai;
+		}
+
+		@Override
+		public void run()
+		{
+			decision = ai.decide(state);
 			if (!logic.isLegal(state, decision))
 			{
 				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
 			}
-        }
-        
-        public Move getDecision()
-        {
-        	return decision;
-        }
-    }
-    
+		}
+
+		public Move getDecision()
+		{
+			return decision;
+		}
+	}
+
 	// This is the object that represents the current GameLogic
 	private GameLogic logic;
 	// This is the board that is currently played on, is also
@@ -78,7 +78,7 @@ public class Main
 	private GameState state;
 	// The Qt-based abalone frontend
 	private AbaloneFront front;
-	
+
 	private Decider decider;
 
 	// The GameLogic in use. This constant is more or less a placeholder:
@@ -129,16 +129,16 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		//players.add(new HumanPlayer("Pong"));
+		// players.add(new HumanPlayer("Pong"));
 		players.add(new BasicMinimaxAI(logic));
 		players.add(new BasicMinimaxAI(logic));
-		//players.add(new HumanPlayer("Ping"));
+		// players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
-		
+
 		state.initHash();
-		
+
 		decider = new Decider();
-		
+
 		QApplication.initialize(args);
 
 		front = new AbaloneFront(state);
@@ -148,63 +148,64 @@ public class Main
 		front.newGame.connect(this, "resetGame()");
 		front.saveGame.connect(this, "saveGame(String)");
 		front.loadGame.connect(this, "loadGame(String)");
-		
+
 		boardUpdated();
-		
+
 		QApplication.exec();
 
 	}
 
 	/**
-	 * Slot for board updated signal.
-	 * Used to trigger an ai decission if ai is next
+	 * Slot for board updated signal. Used to trigger an ai decission if ai is
+	 * next
 	 */
 	private void boardUpdated()
 	{
 		// uncommend this to print board hashes
-//		for(int i = 0; i<8;i++)
-//		{
-//			System.out.print(" |"+(int)state.zobristHash().get(i)+"|");
-//		}
-//		System.out.println();
-//		System.out.println("Symmetries: --------------");
-//		for(ByteBuffer bb : state.symmetryHashes())
-//		{
-//			for(int i = 0; i<8;i++)
-//			{
-//				System.out.print(" |"+bb.get(i)+"|");
-//			}
-//			System.out.println();
-//		}
-//		System.out.println("--------------------------");
-		
+		// for(int i = 0; i<8;i++)
+		// {
+		// System.out.print(" |"+(int)state.zobristHash().get(i)+"|");
+		// }
+		// System.out.println();
+		// System.out.println("Symmetries: --------------");
+		// for(ByteBuffer bb : state.symmetryHashes())
+		// {
+		// for(int i = 0; i<8;i++)
+		// {
+		// System.out.print(" |"+bb.get(i)+"|");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println("--------------------------");
+		//		
 		// uncommend this to print eval results
-//		OptimizedLinearEvaluator eval = new OptimizedLinearEvaluator(state);
-//		eval.eval(state);
-//		System.out.println(" F1: "+eval.getF1()+" F2: "+eval.getF2()+" F3: "+eval.getF3()+" F4: "+eval.getF4()+" F5: "+eval.getF5()+" F6: "+eval.getF6());
-		
-		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state)==null)
-		{
-			decider.setAi((Ai)state.getCurrentPlayer());
-		    QThread runner = new QThread(decider);
-	        runner.finished.connect(this, "decisionDone()",ConnectionType.QueuedConnection);
+		// OptimizedLinearEvaluator eval = new OptimizedLinearEvaluator(state);
+		// eval.eval(state);
+		// System.out.println(" F1: "+eval.getF1()+" F2: "+eval.getF2()+" F3: "+
+		// eval
+		// .getF3()+" F4: "+eval.getF4()+" F5: "+eval.getF5()+" F6: "+eval.getF6
+		// ());
 
-	        
-		    runner.start();
+		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state) == null)
+		{
+			decider.setAi((Ai) state.getCurrentPlayer());
+			QThread runner = new QThread(decider);
+			runner.finished.connect(this, "decisionDone()", ConnectionType.QueuedConnection);
+
+			runner.start();
 		}
 	}
-	
+
 	/**
-	 * Slot for the signal that is emitted when the AI has taken
-	 * a decision.
+	 * Slot for the signal that is emitted when the AI has taken a decision.
 	 */
 	@SuppressWarnings("unused")
 	private void decisionDone()
 	{
-		
+
 		moveDone(decider.getDecision());
 	}
-	
+
 	private void moveDone(Move m)
 	{
 		if (!logic.isLegal(state, m))
@@ -216,18 +217,18 @@ public class Main
 		if (logic.getWinner(state) != null)
 		{
 			QMessageBox message = new QMessageBox();
-			message.setText(logic.getWinner(state).getName()+", You've won.");
+			message.setText(logic.getWinner(state).getName() + ", You've won.");
 			message.setWindowTitle("Winner!");
 			message.show();
 			message.buttonClicked.connect(this, "messageBoxClicked(QAbstractButton)");
 			return; // Game is over.
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void saveGame(String place)
 	{
-		//System.out.println(place);
+		// System.out.println(place);
 		try
 		{
 			FileOutputStream stream = new FileOutputStream(place);
@@ -236,12 +237,12 @@ public class Main
 			objects.close();
 			stream.close();
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void loadGame(String location)
 	{
@@ -249,22 +250,22 @@ public class Main
 		{
 			FileInputStream stream = new FileInputStream(location);
 			ObjectInputStream ois = new ObjectInputStream(stream);
-			state = (GameState)ois.readObject();
+			state = (GameState) ois.readObject();
 			ois.close();
 			stream.close();
-                        state.initHash();
-		front.close();
-		front = new AbaloneFront(state);
-		front.show();
-		front.getBoardWidget().move.connect(this, "moveDone(Move)");
-		front.getBoardWidget().updated.connect(this, "boardUpdated()");
-		front.newGame.connect(this, "resetGame()");
-		front.saveGame.connect(this, "saveGame(String)");
-		front.loadGame.connect(this, "loadGame(String)");
+			state.initHash();
+			front.close();
+			front = new AbaloneFront(state);
+			front.show();
+			front.getBoardWidget().move.connect(this, "moveDone(Move)");
+			front.getBoardWidget().updated.connect(this, "boardUpdated()");
+			front.newGame.connect(this, "resetGame()");
+			front.saveGame.connect(this, "saveGame(String)");
+			front.loadGame.connect(this, "loadGame(String)");
 
-		boardUpdated();
-                }
-		catch(Exception e)
+			boardUpdated();
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
