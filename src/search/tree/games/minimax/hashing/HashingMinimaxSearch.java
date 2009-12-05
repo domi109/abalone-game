@@ -72,7 +72,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 			if (!testNode(current))
 			{
-				table.put(current.zobristHash().getLong(0), MinimaxHashEntry.OPEN);
+				table.put(current.zobristHash(), MinimaxHashEntry.OPEN);
 				// Get minimal child node of this successor
 				MiniMaxNode min = minNode(current, alpha, beta);
 				if(min == null)
@@ -142,7 +142,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 			if (!testNode(current))
 			{
-				table.put(current.zobristHash().getLong(0), MinimaxHashEntry.OPEN);
+				table.put(current.zobristHash(), MinimaxHashEntry.OPEN);
 				// Get maximal child node of this successor
 				MiniMaxNode max = maxNode(current, alpha, beta);
 				if(max == null)
@@ -189,7 +189,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	{
 		nodeCount++;
 		HashableMiniMaxNode n = (HashableMiniMaxNode) node;
-		MinimaxHashEntry e = table.get(n.zobristHash().getLong(0));
+		MinimaxHashEntry e = table.get(n.zobristHash());
 		if (e != null)
 		{
 			if (e == MinimaxHashEntry.OPEN)
@@ -210,14 +210,14 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	
 	protected void putHash(HashableMiniMaxNode n)
 	{
-		Long hash = n.zobristHash().getLong(0);
+		Long hash = n.zobristHash();
 		table.put(hash, n.getValue(), this.depthLimit - n.getDepth());
 		if(n instanceof SymZobristHashable)
 		{
 			SymZobristHashable s = (SymZobristHashable) n;
-			for(ByteBuffer bb : s.symmetryHashes())
+			for(long l : s.symmetryHashes())
 			{
-				table.put(bb.getLong(0), n.getValue(), this.depthLimit-n.getDepth());
+				table.put(l, n.getValue(), this.depthLimit-n.getDepth());
 			}
 		}
 	}

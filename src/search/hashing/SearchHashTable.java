@@ -3,8 +3,6 @@ package search.hashing;
 import java.util.HashMap;
 import java.util.Map;
 
-import search.tree.SearchNode;
-
 public class SearchHashTable<V> extends HashMap<Long, V>
 {
 	private static final long serialVersionUID = 5567886885239514943L;

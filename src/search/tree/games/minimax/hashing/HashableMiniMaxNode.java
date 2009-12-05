@@ -1,8 +1,5 @@
 package search.tree.games.minimax.hashing;
 
-
-import java.nio.ByteBuffer;
-
 import search.Action;
 import search.hashing.ZobristHashable;
 import search.tree.ZobristHashableState;
@@ -24,7 +21,7 @@ public abstract class HashableMiniMaxNode extends MiniMaxNode implements Zobrist
 	}
 	
 	@Override
-	public ByteBuffer zobristHash()
+	public long zobristHash()
 	{
 		return ((ZobristHashableState)getState()).zobristHash();
 	}

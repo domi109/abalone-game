@@ -18,29 +18,31 @@ public class ZobristHasher
 {
 	private static HashMap<Node, Map<Player, ByteBuffer>> zobristTable;
 
-	public static ByteBuffer get(Node node, Player player)
+	public static long get(Node node, Player player)
 	{
-		return zobristTable.get(node).get(player);
+		return zobristTable.get(node).get(player).getLong(0);
 
 	}
 
-	public static List<ByteBuffer> getSymmetries(ByteBuffer hash)
+	public static long[] getSymmetries(long hash)
 	{
-		List<ByteBuffer> list = new ArrayList<ByteBuffer>();
+		ByteBuffer bb = ByteBuffer.allocate(8);
+		bb.putLong(hash);
+		long[] list = new long[11];
 		for (int i = 0; i < 2; i++)
 		{
 			for (int j = 0; j < 6; j++)
 			{
 				if ((i == 0) && (j == 0))
 				{
-					hash = alpha(hash);
+					bb = alpha(bb);
 					continue;
 				}
-				list.add(hash);
-				hash = alpha(hash);
+				list[i*6+j-1] = bb.getLong(0);
+				bb = alpha(bb);
 			}
 
-			hash = beta(hash);
+			bb = beta(bb);
 		}
 		return list;
 	}

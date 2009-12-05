@@ -34,25 +34,25 @@ public class GameNodeEllipse extends AbaloneEllipse
 
 		this.node = node;
 		
-		// --- Init tooltip --- //
-		String tt = "";
-		for(Player p : state.getPlayers())
-		{
-			ByteBuffer hash = ZobristHasher.get(node, p);
-			for(int i = 0; i<8;i++)
-			{
-				tt += " |"+hash.get(i)+"|";
-			}
-			tt+="\n";
-		}
-		ByteBuffer hash = ZobristHasher.get(node, null);
-		for(int i = 0; i<8;i++)
-		{
-			tt += " |"+hash.get(i)+"|";
-		}
-		tt+="\n";
-		this.setToolTip(tt);
-		// --- //
+//		// --- Init tooltip --- //
+//		String tt = "";
+//		for(Player p : state.getPlayers())
+//		{
+//			ByteBuffer hash = ZobristHasher.get(node, p);
+//			for(int i = 0; i<8;i++)
+//			{
+//				tt += " |"+hash.get(i)+"|";
+//			}
+//			tt+="\n";
+//		}
+//		ByteBuffer hash = ZobristHasher.get(node, null);
+//		for(int i = 0; i<8;i++)
+//		{
+//			tt += " |"+hash.get(i)+"|";
+//		}
+//		tt+="\n";
+//		this.setToolTip(tt);
+//		// --- //
 	}
 
 	public void activate()

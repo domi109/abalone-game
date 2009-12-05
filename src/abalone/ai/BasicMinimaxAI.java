@@ -71,7 +71,7 @@ public class BasicMinimaxAI extends Ai
 		}
 
 		@Override
-		public List<ByteBuffer> symmetryHashes()
+		public long[] symmetryHashes()
 		{
 			return ZobristHasher.getSymmetries(((ZobristHashable) getState()).zobristHash());
 		}
@@ -93,7 +93,7 @@ public class BasicMinimaxAI extends Ai
 		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
 		//Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 4;
+		int PlyLevels = 5;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
 //		System.out.println("My Options: ");
@@ -101,9 +101,7 @@ public class BasicMinimaxAI extends Ai
 //		{
 //			System.out.println(a);
 //		}
-		long time = System.currentTimeMillis();
 		SearchNode n = s.search(startNode);
-		//System.out.println((System.currentTimeMillis() - time) + ", I want to perform " + n.getAction() + " value: " + ((MiniMaxNode) n).getValue());
 		return (Move) n.getAction();
 
 	}
