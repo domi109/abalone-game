@@ -9,7 +9,7 @@ import search.Action;
 /**
  * If a class implements this interface, it can be part of a
  * {@link SearchProblem} which can - for example - be worked on by a
- * {@link TreeSearch}. A SearchState is usually referenced by a
+ * {@link IDTreeSearch}. A SearchState is usually referenced by a
  * {@link SearchNode}
  * 
  * Some ideas for this interface are taken from "Artificial Intelligence - A Modern Approach" (Russel, Norvig).

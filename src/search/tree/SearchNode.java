@@ -10,7 +10,7 @@ import search.Action;
 
 /**
  * A class that extends this abstract class can serve as a SearchNode in a
- * {@link TreeSearch}. The method expand that generates the successor nodes has
+ * {@link IDTreeSearch}. The method expand that generates the successor nodes has
  * to be implemented by the child class.
  * 
  * Some ideas for this class are taken from

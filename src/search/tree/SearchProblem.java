@@ -12,7 +12,7 @@ import search.Action;
  * this interface consists of a goal test, an abortion rule and a method to
  * generate possible actions in a state. This interface uses the
  * {@link SearchState} class and the {@link SearchNode} class. Classes
- * implementing this interface can be used within a {@link TreeSearch}.
+ * implementing this interface can be used within a {@link IDTreeSearch}.
  * 
  * Some ideas for this interface are taken from
  * "Artificial Intelligence - A Modern Approach" (Russel, Norvig)

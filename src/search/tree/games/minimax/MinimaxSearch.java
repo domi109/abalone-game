@@ -2,10 +2,10 @@ package search.tree.games.minimax;
 
 import java.util.Queue;
 
-import search.tree.DepthLimitedTreeSearch;
+import search.tree.DLTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
-import search.tree.TreeSearch;
+import search.tree.IDTreeSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.heuristic.Evaluator;
 
@@ -25,7 +25,7 @@ import search.tree.heuristic.Evaluator;
  * @author Daniel Mescheder
  * 
  */
-public class MinimaxSearch extends DepthLimitedTreeSearch
+public class MinimaxSearch extends DLTreeSearch
 {
 	private static final long serialVersionUID = -1027257254713156503L;
 

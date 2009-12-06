@@ -93,7 +93,7 @@ public class BasicMinimaxAI extends Ai
 		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
 		//Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 5;
+		int PlyLevels = 4;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
 //		System.out.println("My Options: ");
