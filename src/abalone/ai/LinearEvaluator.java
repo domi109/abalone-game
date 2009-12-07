@@ -2,7 +2,7 @@
  *  A linear, weighted evaluation function based on a paper 'Constructing an Abalone Game-Playing Agent'
  *  by N.P.P.M. Lemmens (18th June 2005).
  *
- *  The weights are NOT trained in this version.
+ *  The weights are NOT trained in this version, but can be adjusted.
  *
  */
 package abalone.ai;
@@ -59,12 +59,12 @@ public class LinearEvaluator implements Evaluator<Double> {
         f6 = 0;
 
         // Ensure weights are set back to default values.
-        w1 = .05;
+        w1 = .02;
         w2 = .01;
         w3 = .01;
         w4 = .01;
-        w5 = 1;
-        w6 = 1;
+        w5 = 4;
+        w6 = 2;
     }
 
     /**
@@ -146,6 +146,7 @@ public class LinearEvaluator implements Evaluator<Double> {
             eval = (w1 * f1) + (w2 * f2) + (w3 * f3) + (w4 * f4) + (w5 * f5) - (w6 * f6);
 
             // Scale between -1 and 1 (-1 being a lost game and 1 being a win game).
+            
 
             return eval;
         } else {
