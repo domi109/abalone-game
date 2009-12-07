@@ -57,6 +57,8 @@ public class Main
 			{
 				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
 			}
+			timeStatistic.step();
+			timeStatistic.stat();
 		}
 
 		public Move getDecision()
@@ -80,6 +82,8 @@ public class Main
 	private AbaloneFront front;
 
 	private Decider decider;
+	
+	private Statistic timeStatistic;
 
 	// The GameLogic in use. This constant is more or less a placeholder:
 	// In principle this can be just a config-option
@@ -130,7 +134,9 @@ public class Main
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
 		// players.add(new HumanPlayer("Pong"));
-		players.add(new BasicMinimaxAI(logic));
+		BasicMinimaxAI player1 = new BasicMinimaxAI(logic);
+		timeStatistic = new Statistic(player1);
+		players.add(player1);
 		players.add(new BasicMinimaxAI(logic));
 		// players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
@@ -152,6 +158,8 @@ public class Main
 		boardUpdated();
 
 		QApplication.exec();
+		
+		timeStatistic.save();
 
 	}
 

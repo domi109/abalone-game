@@ -49,6 +49,8 @@ public class Statistic
 		yAxisTitle = "y axis";
 		statName = "generic statistic";
 		subjectName = "some dude";
+		width = 500;
+		height = 400;
 	}
 	
 	/**

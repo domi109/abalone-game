@@ -2,6 +2,8 @@ package search.tree.games.minimax;
 
 import java.util.Queue;
 
+import abalone.exec.StatisticGenerator;
+
 import search.tree.DLTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
@@ -28,7 +30,6 @@ import search.tree.heuristic.Evaluator;
 public class MinimaxSearch extends DLTreeSearch
 {
 	private static final long serialVersionUID = -1027257254713156503L;
-
 	/**
 	 * A basic placeholder evaluator that always returns zero as an evaluation
 	 * and therefore does not help at all. BUT the search will at least be able

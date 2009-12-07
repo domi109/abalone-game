@@ -14,15 +14,16 @@ import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
 import search.tree.heuristic.Evaluator;
+import abalone.exec.StatisticGenerator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.gamestate.ZobristHasher;
 import abalone.model.Move;
 
-public class BasicMinimaxAI extends Ai
+public class BasicMinimaxAI extends Ai implements StatisticGenerator
 {
 	private static final long serialVersionUID = -448667623469161736L;
-
+	private long startTime;
 
 	private class AbaloneNode extends HashableMiniMaxNode implements SymZobristHashable
 	{
@@ -88,6 +89,7 @@ public class BasicMinimaxAI extends Ai
 	@Override
 	public Move decide(GameState state)
 	{
+		startTime = System.currentTimeMillis();
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
 		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
@@ -110,5 +112,11 @@ public class BasicMinimaxAI extends Ai
 	public String getName()
 	{
 		return "Basic Minimax";
+	}
+
+	@Override
+	public double getCurrentState()
+	{
+		return System.currentTimeMillis()-startTime;
 	}
 }
