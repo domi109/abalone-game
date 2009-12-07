@@ -22,19 +22,22 @@ import org.jCharts.test.TestDataGenerator;
 import org.jCharts.Chart;
 import org.jCharts.encoders.PNGEncoder;
 
+import com.trolltech.qt.core.QFile;
+
 public class Statistic 
 {
 	
-	private String xAxisTitle;
-	private String yAxisTitle;
-	private String statName;
-	private String subjectName;
+	private String xAxisTitle; // name printed on the x Axis
+	private String yAxisTitle; // name of the y axis
+	private String statName; // Title of the whole chart
+	private String subjectName; //  name of variable thats being mapped in the legend
 	private int width;
 	private int height;
-	private double step;
+	private double step; // steps along the x-axis
 	private StatisticGenerator statGen;
 	private ArrayList<Point2D.Double> stats;
-	private Properties props;
+	
+	private static int append = 1;
 	
 	/**
 	 * Create a new statistic of a certain object that implements
@@ -69,14 +72,28 @@ public class Statistic
 		yAxisTitle = name;
 	}
 	
+	/**
+	 * Sets the title of the whole statistic
+	 */
 	public void setStatName(String name)
 	{
 		statName = name;
 	}
 	
+	/**
+	 * Sets the name of the variable being plotted
+	 */
 	public void setSubjectName(String name)
 	{
 		subjectName = name;
+	}
+	
+	/**
+	 * Returns the name of the variable that is being plotted
+	 */
+	public String getSubjectName()
+	{
+		return subjectName;
 	}
 	
 	/**
@@ -87,11 +104,20 @@ public class Statistic
 		step++;
 	}
 	
+	/**
+	 * Setting the step value manualy
+	 * -Warning- A step can be set backwards, there are no checks!
+	 */
 	public void setStep(double i)
 	{
 		step = i;
 	}
 	
+	/**
+	 * Sets a custom size for picture file 
+	 * @param width the width in pixels
+	 * @param height the height in pixels 
+	 */
 	public void setSize(int width, int height)
 	{
 		this.width = width;
@@ -131,19 +157,70 @@ public class Statistic
 		ScatterPlotAxisChart scatterChart= new ScatterPlotAxisChart( dataSeries, chartProperties, axisProperties, legendProperties, width, height );
 		
 		//Now to print it all to a file
+		writer(scatterChart, statName);
+	}
+	
+	/**
+	 * Combines 2 different statistics and saves them to 1 file
+	 * -Note- The statName (Title of the statistic) of this statistic will be used (not "other")
+	 * -warning- There is NO check wether the 2 statistics are related!
+	 * @param a the other statistic you want to add
+	 * @param name the name the other variable will have in the chart-legend
+	 */
+	public void combineAndSave(Statistic otherStat)
+	{
+		Shape[] shapes= { PointChartProperties.SHAPE_DIAMOND, PointChartProperties.SHAPE_SQUARE };
+		Stroke[] strokes= { LineChartProperties.DEFAULT_LINE_STROKE, LineChartProperties.DEFAULT_LINE_STROKE};
+		
+		ScatterPlotProperties scatterPlotProperties = new ScatterPlotProperties(strokes, shapes);
+		ScatterPlotDataSet scatterPlotDataSet= new ScatterPlotDataSet( scatterPlotProperties);
+		Point2D.Double[] test = new Point2D.Double[1]; //For ArrayList to return actual Point2D.Double[] with .toArray it needs a proper example that is too small.
+		Point2D.Double[] data = stats.toArray(test);  //So I don't know the outcome if you have only 1 data stored (probably mayhem everywhere)
+		ArrayList<Point2D.Double> stats2 = otherStat.getData();
+		Point2D.Double[] data2 = stats2.toArray(test);
+		Paint paint[] = TestDataGenerator.getRandomPaints( 2 );
+		scatterPlotDataSet.addDataPoints(data, paint[0], subjectName);
+		scatterPlotDataSet.addDataPoints(data2, paint[1], otherStat.getSubjectName());
+		
+		ScatterPlotDataSeries dataSeries = new ScatterPlotDataSeries( scatterPlotDataSet, xAxisTitle, yAxisTitle, statName );
+		ChartProperties chartProperties= new ChartProperties();
+		AxisProperties axisProperties= new AxisProperties(new DataAxisProperties(),new DataAxisProperties());
+		LegendProperties legendProperties= new LegendProperties();
+		ScatterPlotAxisChart scatterChart= new ScatterPlotAxisChart( dataSeries, chartProperties, axisProperties, legendProperties, width, height );
+		
+		//Now to print it all to a file
+		writer(scatterChart, statName);
+	}
+	
+	private ArrayList<Point2D.Double> getData()
+	{
+		return stats;
+	}
+	
+	private void writer(Chart chart, String filename)
+	{
 		String extension= ".png";
 		FileOutputStream fileOutputStream;
-
-		try
+		
+		if(!QFile.exists(filename + append + extension)) // Static method of QFile which checks wether there already is such a file
 		{
-			fileOutputStream= new FileOutputStream( statName + extension );
-			PNGEncoder.encode( scatterChart, fileOutputStream );
-			fileOutputStream.flush();
-			fileOutputStream.close();
+			try
+			{
+				fileOutputStream= new FileOutputStream( filename + append + extension );
+				PNGEncoder.encode( chart, fileOutputStream );
+				fileOutputStream.flush();
+				fileOutputStream.close();
+			}
+			catch( Throwable throwable )
+			{
+				System.out.println("Statistic Error: Can't print *.png");
+				throwable.printStackTrace();
+			}
 		}
-		catch( Throwable throwable )
+		else
 		{
-			throwable.printStackTrace();
+			append++;
+			writer(chart, filename);
 		}
 	}
 }
