@@ -1,14 +1,25 @@
 package search.genetics;
 
+import abalone.ai.machinelearning.Weight;
+
 import java.util.ArrayList;
 
 
 public class Genotype extends ArrayList<Gene>
 {
 	private ArrayList<Gene> possibleValues;
+	
 	public Genotype(ArrayList<Gene> possibleValues)
 	{
 		this.possibleValues = possibleValues;
+	}
+
+	public Genotype(int length)
+	{
+		for (int i = 0; i < length; i++)
+		{
+			this.add(new Weight());
+		}
 	}
 	
 	public Genotype crossover(Genotype g2, int coPoint)
@@ -23,5 +34,17 @@ public class Genotype extends ArrayList<Gene>
 		Genotype newGenotype = new Genotype(possibleValues);
 		newGenotype.addAll(super.subList(firstGene,lastGene+1));
 		return newGenotype;
+	}
+
+	public String toString()
+	{
+		String str = "";
+
+		for (Gene g : this)
+		{
+			str += g.toString() + " ";
+		}
+
+		return str;
 	}
 }

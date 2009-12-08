@@ -9,6 +9,8 @@ public class GeneticSearch
 	private int generation;
 	private GeneticSelection s;
 	private ReproductionMethod r;
+	private FitnessEvaluator fitnessEval;
+
 	public int getSelectionSize()
 	{
 		return selectionSize;
@@ -21,17 +23,20 @@ public class GeneticSearch
 
 	private int selectionSize = 30;
 
-	public GeneticSearch(GeneticPopulation initialPop, GeneticSelection select, ReproductionMethod reproduce)
+	public GeneticSearch(GeneticPopulation initialPop, GeneticSelection select, ReproductionMethod reproduce, FitnessEvaluator fitnessEval)
 	{
 		this.pop = initialPop;
 		//System.out.println("Initial Generation: " + pop);
 		this.s = select;
 		this.r = reproduce;
+		this.fitnessEval = fitnessEval;
 	}
 	
 	public void spawnGeneration()
 	{
+		pop = fitnessEval.eval(pop);
 		//System.out.println("Spawning new generation...");
+		System.out.println(pop);
 		GeneticPopulation selection = s.select(pop, selectionSize);
 		//System.out.println("Selection: " + selection);
 		pop = selection.reproduce(r);

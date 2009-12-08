@@ -15,6 +15,7 @@ public class GeneticPopulation extends ArrayList<GeneticIndividual>
 		f = NumberFormat.getInstance();
 		f.setMaximumFractionDigits(2);
 	}
+	
 	public GeneticPopulation reproduce(ReproductionMethod r)
 	{
 		r.setPopulation(this);
@@ -45,5 +46,17 @@ public class GeneticPopulation extends ArrayList<GeneticIndividual>
 	public GeneticIndividual getFittest()
 	{
 		return Collections.max(this);
+	}
+
+	public String getResults()
+	{
+		String str = "";
+
+		for (GeneticIndividual ind : this)
+		{
+			str += ind.toString() + "\n";
+		}
+
+		return str;
 	}
 }

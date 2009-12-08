@@ -2,9 +2,25 @@ package abalone.ai.machinelearning;
 
 import search.genetics.Gene;
 
+import java.util.Random;
+
 public class Weight implements Gene<Double>
 {
     private Double value;
+
+	public Weight()
+	{
+		Random r = new Random();
+
+		value = r.nextDouble();
+	}
+
+	public Weight(int limit)
+	{
+		Random r = new Random();
+
+		value = r.nextDouble() * limit;
+	}
 
     public Weight(Double value)
     {
@@ -47,4 +63,9 @@ public class Weight implements Gene<Double>
 
         System.out.println(gene.equals(gene2));
     }
+
+	public String toString()
+	{
+		return value.toString();
+	}
 }
