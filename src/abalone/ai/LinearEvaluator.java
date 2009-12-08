@@ -43,23 +43,21 @@ public class LinearEvaluator implements Evaluator<Double> {
     private double w4;
     private double w5;
     private double w6;
-
     // Variables for scaling the functions.
-    private final int maximalPossibleValueForF1 = 46;
-    private final int minimalPossibleValueForF1 = -46;
-    private final int maximalPossibleValueForF2 = 56;
-    private final int minimalPossibleValueForF2 = -56;
-    private final int maximalPossibleValueForF3 = 11;
-    private final int minimalPossibleValueForF3 = -11;
-    private final int maximalPossibleValueForF4 = 0;
-    private final int minimalPossibleValueForF4 = 0;
-    private final int maximalPossibleValueForF5 = 6;
-    private final int minimalPossibleValueForf5 = 0;
-    private final int maximalPossibleValueForF6 = 6;
-    private final int minimalPossibleValueForF6 = 0;
-
-    private double worstCase;
-    private double bestCase;
+// private final int maximalPossibleValueForF1 = 46;
+// private final int minimalPossibleValueForF1 = -46;
+//    private final int maximalPossibleValueForF2 = 56;
+//    private final int minimalPossibleValueForF2 = -56;
+//    private final int maximalPossibleValueForF3 = 11;
+//    private final int minimalPossibleValueForF3 = -11;
+//    private final int maximalPossibleValueForF4 = 0;
+//    private final int minimalPossibleValueForF4 = 0;
+//    private final int maximalPossibleValueForF5 = 6;
+//    private final int minimalPossibleValueForf5 = 0;
+//    private final int maximalPossibleValueForF6 = 6;
+//    private final int minimalPossibleValueForF6 = 0;
+//    private double worstCase;
+//    private double bestCase;
 
     // Constructor for LinearEvaluator class.
     public LinearEvaluator(GameState initialState) {
@@ -80,7 +78,7 @@ public class LinearEvaluator implements Evaluator<Double> {
         w2 = .01;
         w3 = .01;
         w4 = .01;
-        w5 = 4;
+        w5 = 3;
         w6 = 2;
     }
 
@@ -163,8 +161,9 @@ public class LinearEvaluator implements Evaluator<Double> {
             eval = (w1 * f1) + (w2 * f2) + (w3 * f3) + (w4 * f4) + (w5 * f5) - (w6 * f6);
 
             // Scale between -1 and 1 (-1 being a lost game and 1 being a win game).
-            worstCase = (minimalPossibleValueForF1 + minimalPossibleValueForF2 + minimalPossibleValueForF3 + minimalPossibleValueForF4 + minimalPossibleValueForf5 -minimalPossibleValueForF6) / (w1 + w2 + w3 + w4 + w5 + w6);
-            bestCase = (maximalPossibleValueForF1 + maximalPossibleValueForF2 + maximalPossibleValueForF3 + maximalPossibleValueForF4 + maximalPossibleValueForF5 -maximalPossibleValueForF6) / (w1 + w2 + w3 + w4 + w5 + w6);
+            //worstCase = (minimalPossibleValueForF1 + minimalPossibleValueForF2 + minimalPossibleValueForF3 + minimalPossibleValueForF4 + minimalPossibleValueForf5 - maximalPossibleValueForF6) / (w1 + w2 + w3 + w4 + w5 + w6);
+            //bestCase = (maximalPossibleValueForF1 + maximalPossibleValueForF2 + maximalPossibleValueForF3 + maximalPossibleValueForF4 + maximalPossibleValueForF5 - minimalPossibleValueForF6) / (w1 + w2 + w3 + w4 + w5 + w6);
+
             return eval;
         } else {
             return 0d;
