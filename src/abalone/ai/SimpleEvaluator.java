@@ -1,9 +1,8 @@
 package abalone.ai;
 
-import abalone.gamelogic.GameLogic;
-import abalone.gamestate.GameState;
 import search.tree.SearchState;
 import search.tree.heuristic.Evaluator;
+import abalone.gamestate.GameState;
 
 public class SimpleEvaluator implements Evaluator<Double>
 {

@@ -1,25 +1,24 @@
 package abalone.ai.machinelearning;
 
-import abalone.gamestate.GameState;
-import abalone.model.Direction;
-import abalone.model.Node;
-import abalone.model.Player;
-import search.genetics.Gene;
-import search.genetics.GeneticIndividual;
-import search.genetics.Genotype;
-import search.tree.SearchState;
-import search.tree.heuristic.Evaluator;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import search.genetics.Gene;
+import search.genetics.GeneticIndividual;
+import search.genetics.Genotype;
+import search.tree.SearchState;
+import search.tree.heuristic.Evaluator;
+import abalone.gamestate.GameState;
+import abalone.model.Direction;
+import abalone.model.Node;
+import abalone.model.Player;
+
 public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 {
 	private double fitness;
     private Genotype phenotype;
-	private Evaluator heuristic;
 	private GameState initialState;
 
     /* The mutation rate is the expected percentage of genes that will be mutated. The actual percentage might vary,
@@ -30,10 +29,9 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
     public final double mutationRate = 0.1;
     public final double mutationFactor = 0.3;
 
-    public AbaloneIndividual(Genotype phenotype, Evaluator evaluator)
+    public AbaloneIndividual(Genotype phenotype)
     {
         this.phenotype = phenotype;
-	    this.heuristic = evaluator;
     }
 
 	/*public AbaloneIndividual(Evaluator evaluator, int size)
@@ -196,7 +194,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 		    }
 	    }
 
-        return new AbaloneIndividual(newPhenotype, this.heuristic);
+        return new AbaloneIndividual(newPhenotype);
     }
 
     public void mutate()
@@ -208,7 +206,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
             if (r.nextDouble() < mutationRate)
             {
                 double value = (Double) phenotype.get(i).getValue();
-                value *= ((1 - mutationFactor) + (2 * mutationFactor + r.nextDouble()));
+                value += ((2 * mutationFactor * r.nextDouble())-mutationFactor);
                 phenotype.get(i).setValue(value);
             }
         }

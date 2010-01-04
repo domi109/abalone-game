@@ -1,21 +1,21 @@
 package abalone.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
-import java.util.Map;
-
-import abalone.gamelogic.GameLogic;
-import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
-import abalone.model.Board;
-import abalone.model.HumanPlayer;
-import abalone.model.Player;
 
-import com.trolltech.qt.QVariant;
-import com.trolltech.qt.core.*;
-import com.trolltech.qt.gui.*;
-import com.trolltech.qt.webkit.*;
+import com.trolltech.qt.core.QDir;
+import com.trolltech.qt.core.QFileInfo;
+import com.trolltech.qt.core.QUrl;
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QFileDialog;
+import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QKeySequence;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QMenuBar;
+import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.webkit.QWebView;
 
 public class AbaloneFront extends QMainWindow
 {

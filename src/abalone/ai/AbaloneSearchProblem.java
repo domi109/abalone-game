@@ -81,7 +81,7 @@ class AbaloneSearchProblem implements MinimaxProblem
 						l.add(n);
 						l.setOrientation(d);
 						Move m = new Move();
-						m.setType(MoveType.INLINE);
+						m.setType(MoveType.SINGLE);
 						m.setMarbleLine(l);
 						m.setDirection(d);
 						singleMarble.add(m);

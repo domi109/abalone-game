@@ -1,14 +1,11 @@
 package abalone.gamestate;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Map.Entry;
 
-import abalone.adt.KeyValuePair;
 import abalone.model.Board;
 import abalone.model.Direction;
 import abalone.model.Node;
@@ -49,10 +46,15 @@ public class ZobristHasher
 
 	public static void generateZobristTable(Board board, List<Player> assignments)
 	{
-		Random rand = new Random();
 		zobristTable = new HashMap<Node, Map<Player, ByteBuffer>>(board.getNodes().size());
 
 		//generateUnsymmetricZobristTable(board, assignments);
+		generateSymmetricZobrist(board, assignments);
+	}
+
+	private static void generateSymmetricZobrist(Board board, List<Player> assignments)
+	{
+		Random rand = new Random();
 
 		// first we look at the symmetry axes:
 		//     + - - - +

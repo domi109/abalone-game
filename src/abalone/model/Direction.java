@@ -1,8 +1,8 @@
 package abalone.model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.io.Serializable;
 
 public enum Direction implements Iterable<Direction>,Serializable
 {

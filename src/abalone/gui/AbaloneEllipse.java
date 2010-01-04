@@ -2,7 +2,6 @@ package abalone.gui;
 
 import java.util.Map;
 
-import abalone.model.Node;
 import abalone.model.Player;
 
 import com.trolltech.qt.core.Qt.MouseButton;
@@ -15,8 +14,6 @@ import com.trolltech.qt.gui.QGraphicsSceneHoverEvent;
 import com.trolltech.qt.gui.QGraphicsSceneMouseEvent;
 import com.trolltech.qt.gui.QPen;
 import com.trolltech.qt.gui.QRadialGradient;
-import com.trolltech.qt.gui.QStyleOptionGraphicsItem;
-import com.trolltech.qt.gui.QWidget;
 
 public class AbaloneEllipse extends QGraphicsEllipseItem
 {

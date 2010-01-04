@@ -3,10 +3,6 @@ package abalone.model;
 import java.io.Serializable;
 import java.util.Random;
 
-import search.hashing.ZobristHashable;
-
-import com.trolltech.qt.gui.QWidget;
-
 /**
  * An interface for a Player of the game of abalone
  *

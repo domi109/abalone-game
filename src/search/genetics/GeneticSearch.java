@@ -36,7 +36,7 @@ public class GeneticSearch
 	{
 		pop = fitnessEval.eval(pop);
 		//System.out.println("Spawning new generation...");
-		System.out.println(pop);
+		System.out.println(pop.getFittest());
 		GeneticPopulation selection = s.select(pop, selectionSize);
 		//System.out.println("Selection: " + selection);
 		pop = selection.reproduce(r);

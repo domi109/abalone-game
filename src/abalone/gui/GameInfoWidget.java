@@ -6,9 +6,12 @@ import java.util.List;
 import abalone.gamestate.GameState;
 import abalone.model.Player;
 
-import com.trolltech.qt.core.*;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QFont;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QWidget;
 
 public class GameInfoWidget extends QWidget
 {

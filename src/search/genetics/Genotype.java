@@ -1,8 +1,8 @@
 package search.genetics;
 
-import abalone.ai.machinelearning.Weight;
-
 import java.util.ArrayList;
+
+import abalone.ai.machinelearning.Weight;
 
 
 public class Genotype extends ArrayList<Gene>

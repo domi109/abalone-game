@@ -1,34 +1,31 @@
 package abalone.ai.machinelearning;
 
-import abalone.gamelogic.StandardAbaloneLogic;
-import search.genetics.GeneticPopulation;
-import search.genetics.GeneticSearch;
-import search.genetics.reproduction.CrossReproduction;
-import search.genetics.selection.ElitistSelection;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import search.genetics.GeneticPopulation;
+import search.genetics.GeneticSearch;
+import search.genetics.reproduction.CrossReproduction;
+import search.genetics.reproduction.KeepBestPairwiseReproduction;
+import search.genetics.selection.ElitistSelection;
+import abalone.gamelogic.StandardAbaloneLogic;
+
 public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(30, 6), new ElitistSelection(), new CrossReproduction(), new Tournament(new StandardAbaloneLogic()));
+		GeneticSearch search = new GeneticSearch(generatePop(30, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(4,2), new Tournament(new StandardAbaloneLogic()));
 		search.setSelectionSize(10);
 
-		int numberOfGenerations = 3;
+		int numberOfGenerations = 20;
 
 		while(search.getGeneration() < numberOfGenerations)
 		{
 			search.spawnGeneration();
-
-			if(search.getGeneration() == numberOfGenerations)
-			{
-				printPop(search.getPopulation());
-			}
 		}
+		//printPop(search.getPopulation());
 	}
 
 	private static GeneticPopulation generatePop(int popSize, int genotypeSize)

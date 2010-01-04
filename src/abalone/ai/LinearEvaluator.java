@@ -11,17 +11,12 @@ package abalone.ai;
 import java.util.Map;
 import java.util.Set;
 
-// Imports from Model library.
-import abalone.model.Player;
-import abalone.model.Node;
-import abalone.model.Direction;
-
-// Import from Search library.
-import search.tree.heuristic.Evaluator;
 import search.tree.SearchState;
-
-// Imports from Gamestate library.
+import search.tree.heuristic.Evaluator;
 import abalone.gamestate.GameState;
+import abalone.model.Direction;
+import abalone.model.Node;
+import abalone.model.Player;
 
 public class LinearEvaluator implements Evaluator<Double> {
 

@@ -1,6 +1,5 @@
 package abalone.ai;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -9,7 +8,6 @@ import search.Action;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
-import search.tree.games.minimax.MiniMaxNode;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
@@ -95,7 +93,7 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
 		//Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 4;
+		int PlyLevels = 2;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
 //		System.out.println("My Options: ");

@@ -1,7 +1,6 @@
 package search.genetics.reproduction;
 
 import java.util.Collections;
-import java.util.Random;
 
 import search.genetics.GeneticIndividual;
 import search.genetics.GeneticPopulation;

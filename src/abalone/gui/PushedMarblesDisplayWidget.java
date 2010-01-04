@@ -3,8 +3,9 @@ package abalone.gui;
 import abalone.gamestate.GameState;
 import abalone.model.Player;
 
-import com.trolltech.qt.core.*;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QGraphicsScene;
+import com.trolltech.qt.gui.QGraphicsView;
 
 public class PushedMarblesDisplayWidget extends QGraphicsView
 {

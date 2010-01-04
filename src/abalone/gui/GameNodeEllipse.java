@@ -1,26 +1,10 @@
 package abalone.gui;
 
-import java.nio.ByteBuffer;
-import java.util.Map;
-
 import abalone.gamestate.GameState;
-import abalone.gamestate.ZobristHasher;
 import abalone.model.Node;
-import abalone.model.Player;
 
-import com.trolltech.qt.core.Qt.MouseButton;
-import com.trolltech.qt.core.Qt.MouseButtons;
-import com.trolltech.qt.gui.QBrush;
 import com.trolltech.qt.gui.QColor;
-import com.trolltech.qt.gui.QGradient;
-import com.trolltech.qt.gui.QGraphicsEllipseItem;
-import com.trolltech.qt.gui.QGraphicsSceneHoverEvent;
-import com.trolltech.qt.gui.QGraphicsSceneMouseEvent;
-import com.trolltech.qt.gui.QPainter;
 import com.trolltech.qt.gui.QPen;
-import com.trolltech.qt.gui.QRadialGradient;
-import com.trolltech.qt.gui.QStyleOptionGraphicsItem;
-import com.trolltech.qt.gui.QWidget;
 
 public class GameNodeEllipse extends AbaloneEllipse
 {

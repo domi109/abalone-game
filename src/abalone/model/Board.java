@@ -1,11 +1,9 @@
 package abalone.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.io.Serializable;
-
-import search.hashing.ZobristHashable;
 
 import abalone.adt.KeyValuePair;
 

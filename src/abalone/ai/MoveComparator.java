@@ -10,18 +10,6 @@ import abalone.model.Move.MoveType;
 
 class MoveComparator implements Comparator<SearchNode>
 {
-	private Map<MoveType,Integer> moveRating;
-	
-	public MoveComparator()
-	{
-		moveRating = new HashMap<MoveType, Integer>(5);
-		moveRating.put(MoveType.BROADSIDE, 1);
-		moveRating.put(MoveType.INLINE, 2);
-		moveRating.put(MoveType.PUSHOFF, 4);
-		moveRating.put(MoveType.SUMITO, 3);
-		moveRating.put(MoveType.UNKNOWN, 0);
-
-	}
 	
 	@Override
 	public int compare(SearchNode o1, SearchNode o2)
@@ -29,9 +17,9 @@ class MoveComparator implements Comparator<SearchNode>
 		Move m1 = (Move) o1.getAction();
 		Move m2 = (Move) o2.getAction();
 		
-		if(m1.getType() != m2.getType())
+		if(m1.getType().getValue() != m2.getType().getValue())
 		{
-			return (moveRating.get(m1.getType()) > moveRating.get(m2.getType()))?-1:1;
+			return (m1.getType().getValue() > m2.getType().getValue())?-1:1;
 		}
 		else
 		{

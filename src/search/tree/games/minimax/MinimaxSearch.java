@@ -1,14 +1,8 @@
 package search.tree.games.minimax;
 
-import java.util.Queue;
-
-import abalone.exec.StatisticGenerator;
-
 import search.tree.DLTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
-import search.tree.IDTreeSearch;
-import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.heuristic.Evaluator;
 
 /**
@@ -29,6 +23,8 @@ import search.tree.heuristic.Evaluator;
  */
 public class MinimaxSearch extends DLTreeSearch
 {
+	private int nodeCount = 0;
+
 	private static final long serialVersionUID = -1027257254713156503L;
 	/**
 	 * A basic placeholder evaluator that always returns zero as an evaluation
@@ -84,9 +80,11 @@ public class MinimaxSearch extends DLTreeSearch
 	@Override
 	public SearchNode search(SearchNode node)
 	{
+		long time = System.currentTimeMillis();
 		// We assume that max executes the search.
 		// Therefore we're interested in finding the max node from here on.
 		SearchNode n = maxNode((MiniMaxNode) node, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+		//System.out.println(nodeCount+","+(System.currentTimeMillis() - time));
 
 		return n;
 	}
@@ -113,7 +111,7 @@ public class MinimaxSearch extends DLTreeSearch
 		{
 			// For every successor node
 
-			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
+			MiniMaxNode current = (MiniMaxNode) n;
 
 			if (!testNode(current))
 			{
@@ -170,7 +168,7 @@ public class MinimaxSearch extends DLTreeSearch
 		MiniMaxNode v = null;
 		for (SearchNode n : node.expand())
 		{
-			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
+			MiniMaxNode current = (MiniMaxNode) n;
 			// For every successor node
 
 			if (!testNode(current))
@@ -215,6 +213,7 @@ public class MinimaxSearch extends DLTreeSearch
 	 */
 	protected boolean testNode(MiniMaxNode node)
 	{
+		nodeCount++;
 		MinimaxProblem problem = (MinimaxProblem) getProblem();
 		if (this.breakTest(node))
 		{

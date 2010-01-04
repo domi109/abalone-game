@@ -1,5 +1,14 @@
 package abalone.ai.machinelearning;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
+
+import search.genetics.FitnessEvaluator;
+import search.genetics.GeneticIndividual;
+import search.genetics.GeneticPopulation;
+import search.tree.heuristic.Evaluator;
 import abalone.ai.SimpleAI;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
@@ -7,19 +16,12 @@ import abalone.gamestate.GameState;
 import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
-import search.genetics.FitnessEvaluator;
-import search.genetics.GeneticIndividual;
-import search.genetics.GeneticPopulation;
-import search.tree.heuristic.Evaluator;
-
-import java.util.*;
 
 public class Tournament implements FitnessEvaluator
 {
 	private GameLogic logic;
 	private Tournament tournament;
-	HashMap<AbaloneIndividual, ArrayList<MatchStats>> statsMap;
-	ArrayList<GeneticIndividual> contestants;
+	private ArrayList<GeneticIndividual> contestants;
 	private GeneticPopulation pop;
 
 	public Tournament(Tournament tournament, GameLogic logic)
@@ -42,11 +44,6 @@ public class Tournament implements FitnessEvaluator
 		// statistics are stored in a map. After all matches have been played, the fitness
 		// of each individual is calculated using these stats.
 		this.pop = aPop;
-		statsMap = new HashMap(pop.size());
-		for (GeneticIndividual individual : pop)
-		{
-			statsMap.put((AbaloneIndividual) individual, new ArrayList<MatchStats>());
-		}
 
 		// 5 random matches for each Individual - just for testing purposes
 		Random r = new Random();
@@ -63,11 +60,10 @@ public class Tournament implements FitnessEvaluator
 			contestants.clear();
 		}
 
-		assignFitness();
-
 		return pop;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void match()
 	{
 		logic = new StandardAbaloneLogic();
@@ -79,98 +75,51 @@ public class Tournament implements FitnessEvaluator
 
 		boolean finished = false;
 		int numberOfPlies = 0;
-		int playersTurn = 0;
 
 		System.out.println("Match started");
 
 		while(!finished)
 		{
-			SimpleAI pl = (SimpleAI) players.getFirst();
-			Move move = pl.decide(state);
+			SimpleAI current = (SimpleAI) state.getCurrentPlayer();
+			SimpleAI opponent = (SimpleAI) state.getOpponentPlayer();
+			Move move = current.decide(state);
 			logic.applyMove(state, move);
 
 			if (logic.getWinner(state) != null)
 			{
 				finished = true;
 
-				// update statistics of winner
-				Map<Player, Integer> lostMarbles = state.getMarblesRemoved();
-				int pushed = lostMarbles.get((SimpleAI) players.getLast());
-				int lost = lostMarbles.get(pl);
-				//ArrayList<MatchStats> statWinner = statsMap.get((AbaloneIndividual) pl.getEvaluator());
-				//statWinner.add(new MatchStats(true, pushed, lost, numberOfPlies));
-				statsMap.get((AbaloneIndividual) pl.getEvaluator()).add(new MatchStats(true, pushed, lost, numberOfPlies));
-
+				//update statistics for winner
+				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() + 1;
+				((AbaloneIndividual)current.getEvaluator()).setFitness(wFit);
+				
 				// update statistics for loser
-				SimpleAI loser = (SimpleAI) players.getLast();
-				//ArrayList<MatchStats> statLoser = statsMap.get((AbaloneIndividual) loser.getEvaluator());
-				//statLoser.add(new MatchStats(false, lost, pushed, numberOfPlies));
-				statsMap.get((AbaloneIndividual) loser.getEvaluator()).add(new MatchStats(false, lost, pushed, numberOfPlies));
+				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() - 1;
+				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
 
 				System.out.println("Surprise, somebody WON!");
 			}
-
-			if (numberOfPlies == 80 && (logic.getWinner(state) == null))
+			else if (numberOfPlies == 80)
 			{
 				finished = true;
 
-				// update statistics of winner
 				Map<Player, Integer> lostMarbles = state.getMarblesRemoved();
-				int pushed = lostMarbles.get((SimpleAI) players.getLast());
-				int lost = lostMarbles.get(pl);
-				//ArrayList<MatchStats> statWinner = statsMap.get((AbaloneIndividual) pl.getEvaluator());
-				//statWinner.add(new MatchStats(false, pushed, lost, numberOfPlies));
-				statsMap.get((AbaloneIndividual) pl.getEvaluator()).add(new MatchStats(false, pushed, lost, numberOfPlies));
+				int pushed = lostMarbles.get(opponent);
+				int lost = lostMarbles.get(current);
+				
+				// update statistics for current player
+				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() +  .5*pushed - .1*lost;
+				((AbaloneIndividual)current.getEvaluator()).setFitness(wFit);
+				
 
-
-
-				// update statistics for loser
-				SimpleAI loser = (SimpleAI) players.getLast();
-				//ArrayList<MatchStats> statLoser = statsMap.get((AbaloneIndividual) loser.getEvaluator());
-				//statLoser.add(new MatchStats(false, lost, pushed, numberOfPlies));
-				statsMap.get((AbaloneIndividual) loser.getEvaluator()).add(new MatchStats(false, lost, pushed, numberOfPlies));
+				// update statistics for opponent
+				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() -  .1*pushed + .5*lost;
+				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
 
 			}
-
-			// switch active player
-			players.addLast(players.removeFirst());
 			numberOfPlies++;
 		}
 
 		System.out.println("Match finished");
-	}
-
-	private void assignFitness()
-	{
-		for (GeneticIndividual x : pop)
-		{
-			AbaloneIndividual ind = (AbaloneIndividual) x;
-
-			ind.setFitness(calculateFitness(statsMap.get(x)));
-		}
-
-		for (GeneticIndividual x : pop)
-		{
-			AbaloneIndividual ind = (AbaloneIndividual) x;
-			
-			System.out.println(x.getPhenotype());
-		}
-	}
-
-	private double calculateFitness(ArrayList<MatchStats> stats)
-	{
-		double fitness = 0;
-
-		for (MatchStats stat : stats)
-		{
-			// TODO: Think of a fitness function that makes sense. This is just random
-			//fitness += stat.isWinner() ? 1 : -.9;
-			fitness += stat.getPushedMarbles() * 1.5;
-			fitness += stat.getLostMarbles() * -0.5;
-		}
-
-		System.out.println("Fitness: " + fitness);
-
-		return fitness;
 	}
 }

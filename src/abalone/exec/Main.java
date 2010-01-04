@@ -1,27 +1,24 @@
 package abalone.exec;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
-import java.nio.ByteBuffer;
 
 import abalone.ai.Ai;
 import abalone.ai.BasicMinimaxAI;
-import abalone.ai.OptimizedLinearEvaluator;
+import abalone.ai.TrainedAI;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
-import abalone.gamelogic.SmallAbaloneLogic;
-import abalone.gamelogic.TinyAbaloneLogic;
 import abalone.gamestate.GameState;
 import abalone.gui.AbaloneFront;
 import abalone.model.Board;
-import abalone.model.HumanPlayer;
 import abalone.model.Move;
 import abalone.model.Player;
 
 import com.trolltech.qt.QThread;
-import com.trolltech.qt.core.QRunnable;
-import com.trolltech.qt.core.QThreadPool;
 import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QAbstractButton;
 import com.trolltech.qt.gui.QApplication;
@@ -133,12 +130,13 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		// players.add(new HumanPlayer("Pong"));
-		BasicMinimaxAI player1 = new BasicMinimaxAI(logic);
+		//players.add(new HumanPlayer("Pong"));
+		TrainedAI player1 = new TrainedAI(logic);
 		timeStatistic = new Statistic(player1);
 		players.add(player1);
-		players.add(new BasicMinimaxAI(logic));
-		// players.add(new HumanPlayer("Ping"));
+		BasicMinimaxAI player2 = new BasicMinimaxAI(logic);
+		players.add(player2);
+		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
 
 		state.initHash();
@@ -159,7 +157,7 @@ public class Main
 
 		QApplication.exec();
 		
-		timeStatistic.save();
+		//timeStatistic.save();
 
 	}
 
@@ -170,21 +168,13 @@ public class Main
 	private void boardUpdated()
 	{
 		// uncommend this to print board hashes
-		// for(int i = 0; i<8;i++)
-		// {
-		// System.out.print(" |"+(int)state.zobristHash().get(i)+"|");
-		// }
-		// System.out.println();
-		// System.out.println("Symmetries: --------------");
-		// for(ByteBuffer bb : state.symmetryHashes())
-		// {
-		// for(int i = 0; i<8;i++)
-		// {
-		// System.out.print(" |"+bb.get(i)+"|");
-		// }
-		// System.out.println();
-		// }
-		// System.out.println("--------------------------");
+//		ByteBuffer bb = ByteBuffer.allocateDirect(8);
+//		bb.putLong(0,state.zobristHash());
+//		 for(int i = 0; i<8;i++)
+//		 {
+//		 System.out.print(" |"+(int)bb.get(i)+"|");
+//		 }
+//		 System.out.println();
 		//		
 		// uncommend this to print eval results
 		// OptimizedLinearEvaluator eval = new OptimizedLinearEvaluator(state);

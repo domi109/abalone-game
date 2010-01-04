@@ -1,8 +1,8 @@
 package abalone.ai.machinelearning;
 
-import search.genetics.Gene;
-
 import java.util.Random;
+
+import search.genetics.Gene;
 
 public class Weight implements Gene<Double>
 {

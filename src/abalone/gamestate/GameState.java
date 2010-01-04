@@ -1,24 +1,17 @@
 package abalone.gamestate;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.io.Serializable;
-import java.nio.ByteBuffer;
 
-import search.Action;
 import search.hashing.SymZobristHashable;
-import search.tree.ZobristHashableState;
 import search.tree.SearchState;
-
-import abalone.adt.KeyValuePair;
+import search.tree.ZobristHashableState;
 import abalone.model.Board;
-import abalone.model.Direction;
 import abalone.model.Node;
 import abalone.model.Player;
 

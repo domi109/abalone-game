@@ -1,7 +1,5 @@
 package abalone.model;
 
-import java.util.List;
-
 import search.Action;
 
 
@@ -9,16 +7,29 @@ public class Move extends Action
 {
 	public enum MoveType
 	{
-		UNKNOWN,
-		SUMITO, // pushing an opponents marble, includes INLINE
-		INLINE, // moving inline
-		BROADSIDE, // moving broadside
-		PUSHOFF; // pushing an opponents marble off the board, includes SUMITO
+		UNKNOWN(0),
+		SUMITO(3), // pushing an opponents marble, includes INLINE
+		INLINE(2), // moving inline
+		BROADSIDE(2), // moving broadside
+		PUSHOFF(4),
+		SINGLE(1); // pushing an opponents marble off the board, includes SUMITO
+		
+		private int value;
+		MoveType(int value)
+		{
+			this.value = value;
+		}
+		
+		public int getValue()
+		{
+			return value;
+		}
 	}
 	
 	private MarbleLine line;
 	private Direction direction;
-	private MoveType type;
+	private MoveType type;	
+	
 	
 	public MoveType getType()
 	{

@@ -5,9 +5,6 @@ import java.util.List;
 
 import abalone.model.Direction;
 
-import com.trolltech.qt.QSignalEmitter.Signal1;
-import com.trolltech.qt.core.QObject;
-import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QPointF;
 import com.trolltech.qt.core.Qt.MouseButton;
 import com.trolltech.qt.core.Qt.MouseButtons;

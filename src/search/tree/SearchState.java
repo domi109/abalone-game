@@ -1,10 +1,6 @@
 package search.tree;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Queue;
-
-import search.Action;
 
 /**
  * If a class implements this interface, it can be part of a

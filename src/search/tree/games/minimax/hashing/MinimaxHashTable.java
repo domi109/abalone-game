@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import search.hashing.SearchHashTable;
-import search.tree.SearchNode;
 
 public class MinimaxHashTable extends SearchHashTable<MinimaxHashEntry>
 {

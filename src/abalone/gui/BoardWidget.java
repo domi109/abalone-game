@@ -5,11 +5,14 @@ import java.util.List;
 
 import abalone.adt.KeyValuePair;
 import abalone.gamestate.GameState;
-import abalone.model.*;
-
+import abalone.model.Board;
+import abalone.model.Direction;
+import abalone.model.MarbleLine;
+import abalone.model.Move;
+import abalone.model.Node;
+import abalone.model.Player;
 
 import com.trolltech.qt.core.QPointF;
-import com.trolltech.qt.core.QRectF;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QBrush;
 import com.trolltech.qt.gui.QColor;

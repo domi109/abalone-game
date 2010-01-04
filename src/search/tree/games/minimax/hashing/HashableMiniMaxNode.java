@@ -2,8 +2,8 @@ package search.tree.games.minimax.hashing;
 
 import search.Action;
 import search.hashing.ZobristHashable;
-import search.tree.ZobristHashableState;
 import search.tree.SearchState;
+import search.tree.ZobristHashableState;
 import search.tree.games.minimax.MiniMaxNode;
 
 public abstract class HashableMiniMaxNode extends MiniMaxNode implements ZobristHashable

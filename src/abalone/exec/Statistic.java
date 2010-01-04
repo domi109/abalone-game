@@ -1,26 +1,25 @@
 package abalone.exec;
 
-import abalone.adt.KeyValuePair;
-import java.util.ArrayList;
-import java.lang.Long;
-import java.util.Properties;
-
-import java.awt.*;
-import java.awt.geom.Point2D.Double;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
-
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import org.jCharts.chartData.*;
-import org.jCharts.properties.*;
-import org.jCharts.properties.ScatterPlotProperties;
-import org.jCharts.axisChart.*;
-import org.jCharts.types.ChartType;
-import org.jCharts.chartData.*;
-import org.jCharts.test.TestDataGenerator;
 import org.jCharts.Chart;
+import org.jCharts.axisChart.ScatterPlotAxisChart;
+import org.jCharts.chartData.ScatterPlotDataSeries;
+import org.jCharts.chartData.ScatterPlotDataSet;
 import org.jCharts.encoders.PNGEncoder;
+import org.jCharts.properties.AxisProperties;
+import org.jCharts.properties.ChartProperties;
+import org.jCharts.properties.DataAxisProperties;
+import org.jCharts.properties.LegendProperties;
+import org.jCharts.properties.LineChartProperties;
+import org.jCharts.properties.PointChartProperties;
+import org.jCharts.properties.ScatterPlotProperties;
+import org.jCharts.test.TestDataGenerator;
 
 import com.trolltech.qt.core.QFile;
 
