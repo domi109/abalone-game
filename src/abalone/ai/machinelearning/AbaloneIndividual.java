@@ -148,6 +148,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
         return fitness;
     }
 
+    @Override
     public void setFitness(double value)
     {
         fitness = value;
@@ -221,6 +222,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
         return Double.compare(fitness, genInd.getFitness());
     }
 
+	@Override
 	public String toString()
 	{
 		String str = "";

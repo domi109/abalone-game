@@ -1,6 +1,5 @@
 package abalone.ai.machinelearning;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
@@ -20,21 +19,15 @@ import abalone.model.Player;
 public class Tournament implements FitnessEvaluator
 {
 	private GameLogic logic;
-	private Tournament tournament;
-	private ArrayList<GeneticIndividual> contestants;
+	private Board board;
 	private GeneticPopulation pop;
+	private Random random;
 
-	public Tournament(Tournament tournament, GameLogic logic)
+	public Tournament()
 	{
-		this.tournament = tournament;
-		logic = this.logic;
-		contestants = new ArrayList<GeneticIndividual>();
-	}
-
-	public Tournament(GameLogic logic)
-	{
-		this.logic = logic;
-		contestants = new ArrayList<GeneticIndividual>();
+		this.logic = new StandardAbaloneLogic();
+		this.board = logic.initBoard();
+		random = new Random();
 	}
 
 	@Override
@@ -46,37 +39,28 @@ public class Tournament implements FitnessEvaluator
 		this.pop = aPop;
 
 		// 5 random matches for each Individual - just for testing purposes
-		Random r = new Random();
 
 		for (int i = 0; i < pop.size(); i++)
 		{
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 10; j++)
 			{
-				contestants.add(pop.get(r.nextInt(pop.size())));
-				contestants.add(pop.get(i));
-				match();
+				match(pop.get(i),pop.get(random.nextInt(pop.size())));
 			}
-
-			contestants.clear();
 		}
 
 		return pop;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void match()
+	private void match(GeneticIndividual p1, GeneticIndividual p2)
 	{
-		logic = new StandardAbaloneLogic();
-		Board board = logic.initBoard();
 		LinkedList<Player> players = new LinkedList<Player>();
-		players.add(new SimpleAI(logic, (Evaluator) contestants.get(0)));
-		players.add(new SimpleAI(logic, (Evaluator) contestants.get(1)));
+		players.add(new SimpleAI(logic, (Evaluator) p1));
+		players.add(new SimpleAI(logic, (Evaluator) p2));
 		GameState state = logic.initState(board, players);
 
 		boolean finished = false;
 		int numberOfPlies = 0;
-
-		System.out.println("Match started");
 
 		while(!finished)
 		{
@@ -97,7 +81,6 @@ public class Tournament implements FitnessEvaluator
 				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() - 1;
 				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
 
-				System.out.println("Surprise, somebody WON!");
 			}
 			else if (numberOfPlies == 80)
 			{
@@ -108,18 +91,16 @@ public class Tournament implements FitnessEvaluator
 				int lost = lostMarbles.get(current);
 				
 				// update statistics for current player
-				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() +  .5*pushed - .1*lost;
+				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() +  .1*pushed - .1*lost;
 				((AbaloneIndividual)current.getEvaluator()).setFitness(wFit);
 				
 
 				// update statistics for opponent
-				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() -  .1*pushed + .5*lost;
+				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() -  .1*pushed + .1*lost;
 				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
 
 			}
 			numberOfPlies++;
 		}
-
-		System.out.println("Match finished");
 	}
 }

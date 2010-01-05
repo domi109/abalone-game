@@ -7,6 +7,7 @@ public interface GeneticIndividual extends Comparable<GeneticIndividual>
 	 * @return fitness
 	 */
 	public double getFitness();
+	public void setFitness(double fitness);
 	public Genotype getPhenotype();
 	public boolean equalsGenetic(GeneticIndividual j);
 	public GeneticIndividual reproduceWith(GeneticIndividual j);

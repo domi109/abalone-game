@@ -86,12 +86,12 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	{
 		this.logic = logic;
 		Genotype weights = new Genotype(6);
-		weights.set(0,new Weight(0.35558295490928754));
-		weights.set(1,new Weight(-0.0217512589523981));
-		weights.set(2,new Weight(0.8190715884434893));
-		weights.set(3,new Weight(1.0692990627153482));
-		weights.set(4,new Weight(1.7579849671598846));
-		weights.set(5,new Weight(0.10085557135894282));
+		weights.set(0,new Weight(0.20230658557890616));
+		weights.set(1,new Weight(0.18528713352813264));
+		weights.set(2,new Weight(0.18607164870721676));
+		weights.set(3,new Weight(0.06962323524294511));
+		weights.set(4,new Weight(0.1951026179294804));
+		weights.set(5,new Weight(0.16160877901331897));
 		
 		evaluator = new AbaloneIndividual(weights);
 	}
@@ -105,11 +105,16 @@ public class TrainedAI extends Ai implements StatisticGenerator
 		
 		evaluator.setInitialState(state);
 		
-		int PlyLevels = 2;
+		int PlyLevels = 3;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
-		SearchNode n = s.search(startNode);
-		return (Move) n.getAction();
+		Queue<SearchNode> q = s.getChildren(startNode);
+		if (Math.random() < .9)
+		{
+			return (Move) q.remove().getAction();
+		}
+		q.remove();
+		return (Move) q.remove().getAction();
 
 	}
 

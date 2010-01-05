@@ -1,5 +1,8 @@
 package search.tree.games.minimax;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 import search.tree.DLTreeSearch;
 import search.tree.SearchNode;
 import search.tree.SearchState;
@@ -80,13 +83,39 @@ public class MinimaxSearch extends DLTreeSearch
 	@Override
 	public SearchNode search(SearchNode node)
 	{
-		long time = System.currentTimeMillis();
 		// We assume that max executes the search.
 		// Therefore we're interested in finding the max node from here on.
 		SearchNode n = maxNode((MiniMaxNode) node, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
-		//System.out.println(nodeCount+","+(System.currentTimeMillis() - time));
 
 		return n;
+	}
+	
+	
+	public Queue<SearchNode> getChildren(SearchNode node)
+	{
+		Queue<SearchNode> q = new PriorityQueue<SearchNode>(20,new MinimaxNodeComparator());
+		
+		double alpha = Double.NEGATIVE_INFINITY;
+		double beta = Double.POSITIVE_INFINITY;
+		
+		for (SearchNode n : node.expand())
+		{
+			// For every successor node
+
+			MiniMaxNode current = (MiniMaxNode) n;
+
+			if (!testNode(current))
+			{
+				// Get minimal child node of this successor
+				MiniMaxNode min = minNode(current, alpha, beta);
+				current.setValue(min.getValue());
+			}
+
+			q.add(current);
+
+			alpha = Math.max(alpha, ((MiniMaxNode)q.peek()).getValue());
+		}
+		return q;
 	}
 
 	/**

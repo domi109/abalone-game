@@ -28,6 +28,7 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 			// Take the fittest into next generation without mutation
 			GeneticIndividual max = pop.getFittest();
 			pop.remove(max);
+			max.setFitness(0);
 			newGeneration.add(max);
 		}
 		if (pop.size() % 2 != 0)
@@ -37,6 +38,7 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 			GeneticIndividual max = pop.getFittest();
 			pop.remove(max);
 			max.mutate();
+			max.setFitness(0);
 			newGeneration.add(max);
 		}
 		for (int t = 0; t < multiplicator; t++)

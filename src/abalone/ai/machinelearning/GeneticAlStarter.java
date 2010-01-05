@@ -16,10 +16,10 @@ public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(30, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(4,2), new Tournament(new StandardAbaloneLogic()));
+		GeneticSearch search = new GeneticSearch(generatePop(20, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(2,2), new Tournament());
 		search.setSelectionSize(10);
 
-		int numberOfGenerations = 20;
+		int numberOfGenerations = 50;
 
 		while(search.getGeneration() < numberOfGenerations)
 		{

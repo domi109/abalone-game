@@ -91,18 +91,23 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
 		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
-		//Evaluator<Double> evaluator = new SimpleEvaluator(state);
+		// Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 2;
+		int PlyLevels = 3;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
-//		System.out.println("My Options: ");
-//		for (Action a : problem.generateActions(state))
-//		{
-//			System.out.println(a);
-//		}
-		SearchNode n = s.search(startNode);
-		return (Move) n.getAction();
+		// System.out.println("My Options: ");
+		// for (Action a : problem.generateActions(state))
+		// {
+		// System.out.println(a);
+		// }
+		Queue<SearchNode> q = s.getChildren(startNode);
+		if (Math.random() < .9)
+		{
+			return (Move) q.remove().getAction();
+		}
+		q.remove();
+		return (Move) q.remove().getAction();
 
 	}
 
@@ -115,6 +120,6 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 	@Override
 	public double getCurrentState()
 	{
-		return System.currentTimeMillis()-startTime;
+		return System.currentTimeMillis() - startTime;
 	}
 }

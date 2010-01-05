@@ -100,8 +100,13 @@ public class SimpleAI extends Ai
 
 		MinimaxSearch s = new MinimaxSearch(problem, evaluator, PlyLevels);
 
-		SearchNode n = s.search(startNode);
-		return (Move) n.getAction();
+		Queue<SearchNode> q = s.getChildren(startNode);
+		if (Math.random() < .9)
+		{
+			return (Move) q.remove().getAction();
+		}
+		q.remove();
+		return (Move) q.remove().getAction();
 	}
 
 	@Override
