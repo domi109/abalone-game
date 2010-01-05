@@ -27,7 +27,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
        value v will be in the interval [v * (1 - mutationFactor); v * (1 + mutationFactor)]
     */
     public final double mutationRate = 0.1;
-    public final double mutationFactor = 0.3;
+    public final double mutationFactor = 0.03;
 
     public AbaloneIndividual(Genotype phenotype)
     {
@@ -47,6 +47,8 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 	public AbaloneIndividual(int size)
 	{
 		phenotype = new Genotype(size);
+
+		scalePhenotype();
 	}
 
 
@@ -210,6 +212,8 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
                 phenotype.get(i).setValue(value);
             }
         }
+
+	    scalePhenotype();
     }
 
     public int compareTo(GeneticIndividual genInd)
@@ -227,5 +231,21 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 		}
 
 		return str;
+	}
+
+	private void scalePhenotype()
+	{
+		double totalSum = 0;
+
+		for(Gene weight : phenotype)
+		{
+			totalSum += Math.abs((Double) weight.getValue());
+		}
+
+		for(Gene weight : phenotype)
+		{
+			double scaledValue = ((Double) weight.getValue()) / totalSum;
+			weight.setValue(scaledValue);
+		}
 	}
 }
