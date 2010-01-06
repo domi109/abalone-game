@@ -1,10 +1,12 @@
 package abalone.ai;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import search.Action;
+import search.genetics.Gene;
 import search.genetics.Genotype;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
@@ -85,13 +87,13 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	public TrainedAI(GameLogic logic)
 	{
 		this.logic = logic;
-		Genotype weights = new Genotype(6);
-		weights.set(0,new Weight(0.0907534226780221));
-		weights.set(1,new Weight(0.04251848904318671));
-		weights.set(2,new Weight(0.2568248333198419));
-		weights.set(3,new Weight(0.04402719597729515));
-		weights.set(4,new Weight(0.46903936646178107));
-		weights.set(5,new Weight(0.09683669251987305));
+		Genotype weights = new Genotype();
+		weights.add(0,new Weight(0.37588279040058));
+		weights.add(1,new Weight(0.1019650923704891));
+		weights.add(2,new Weight(0.0230749110410881));
+		weights.add(3,new Weight(0.0251705697187887));
+		weights.add(4,new Weight(0.37475564250835874));
+		weights.add(5,new Weight(-0.09915099396069534));
 		
 		evaluator = new LinearEvaluator(weights);
 	}

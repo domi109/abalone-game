@@ -5,14 +5,17 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import search.Action;
+import search.genetics.Genotype;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
+import search.tree.SearchState;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
 import search.tree.heuristic.Evaluator;
 import abalone.ai.evaluation.LinearEvaluator;
+import abalone.ai.machinelearning.Weight;
 import abalone.exec.StatisticGenerator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
@@ -91,7 +94,14 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 		startTime = System.currentTimeMillis();
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-		LinearEvaluator evaluator = new LinearEvaluator();
+		Genotype weights = new Genotype();
+		weights.add(0,new Weight(0.05));
+		weights.add(1,new Weight(0.05));
+		weights.add(2,new Weight(0.1));
+		weights.add(3,new Weight(0.1));
+		weights.add(4,new Weight(0.1));
+		weights.add(5,new Weight(-0.1));
+		LinearEvaluator evaluator = new LinearEvaluator(weights);
 		evaluator.setInitialState(state);
 		// Evaluator<Double> evaluator = new SimpleEvaluator(state);
 

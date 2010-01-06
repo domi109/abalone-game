@@ -12,14 +12,7 @@ public class Weight implements Gene<Double>
 	{
 		Random r = new Random();
 
-		value = r.nextDouble();
-	}
-
-	public Weight(int limit)
-	{
-		Random r = new Random();
-
-		value = r.nextDouble() * limit;
+		value = 2*r.nextDouble()-1;
 	}
 
     public Weight(Double value)
