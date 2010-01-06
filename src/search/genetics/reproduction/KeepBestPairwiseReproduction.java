@@ -1,6 +1,7 @@
 package search.genetics.reproduction;
 
 import java.util.Collections;
+import java.util.Random;
 
 import search.genetics.GeneticIndividual;
 import search.genetics.GeneticPopulation;
@@ -22,12 +23,11 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 	{
 
 		GeneticPopulation newGeneration = new GeneticPopulation();
-
+		Random random = new Random();
 		for (int i = 0; i<keep;i++)
 		{
 			// Take the fittest into next generation without mutation
 			GeneticIndividual max = pop.getFittest();
-			pop.remove(max);
 			max.setFitness(0);
 			newGeneration.add(max);
 		}
@@ -43,11 +43,11 @@ public class KeepBestPairwiseReproduction implements ReproductionMethod
 		}
 		for (int t = 0; t < multiplicator; t++)
 		{
-			Collections.shuffle(pop);
-			for (int i = 0; i < pop.size(); i += 2)
+			for (int i = 0; i < pop.size(); i += 1)
 			{
+				
 				GeneticIndividual newGI = pop.get(i).reproduceWith(
-						pop.get(i + 1));
+						pop.get(random.nextInt(pop.size())));
 				newGI.mutate();
 				newGeneration.add(newGI);
 			}

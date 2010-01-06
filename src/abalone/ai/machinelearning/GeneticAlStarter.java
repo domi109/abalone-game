@@ -9,6 +9,7 @@ import search.genetics.GeneticPopulation;
 import search.genetics.GeneticSearch;
 import search.genetics.reproduction.CrossReproduction;
 import search.genetics.reproduction.KeepBestPairwiseReproduction;
+import search.genetics.reproduction.NoCrossoverReproduction;
 import search.genetics.selection.ElitistSelection;
 import abalone.gamelogic.StandardAbaloneLogic;
 
@@ -16,8 +17,8 @@ public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(20, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(2,2), new Tournament());
-		search.setSelectionSize(10);
+		GeneticSearch search = new GeneticSearch(generatePop(16, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new Tournament());
+		search.setSelectionSize(8);
 
 		int numberOfGenerations = 50;
 

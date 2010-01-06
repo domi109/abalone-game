@@ -44,26 +44,14 @@ public class Weight implements Gene<Double>
         return (value.compareTo(w.getValue()) == 0);
     }
 
-    public Gene clone()
+    @Override
+	public Gene<Double> clone()
     {
         Weight tTemp = new Weight(value);
         return tTemp;
     }
 
-    // Simple test of the class
-
-    public static void main(String[] args)
-    {
-        Weight gene = new Weight(0.0);
-        Weight gene2 = new Weight(0.000001);
-        Weight gene3 = new Weight(2d);
-        Weight gene4 = new Weight(3d);
-
-        //gene.setValue(1d);
-
-        System.out.println(gene.equals(gene2));
-    }
-
+	@Override
 	public String toString()
 	{
 		return value.toString();

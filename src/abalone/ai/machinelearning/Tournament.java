@@ -33,18 +33,29 @@ public class Tournament implements FitnessEvaluator
 	@Override
 	public GeneticPopulation eval(GeneticPopulation aPop)
 	{
-		// The individuals will probably play multiple matches. Therefore, the gathered
-		// statistics are stored in a map. After all matches have been played, the fitness
+		// The individuals will probably play multiple matches. Therefore, the
+		// gathered
+		// statistics are stored in a map. After all matches have been played,
+		// the fitness
 		// of each individual is calculated using these stats.
 		this.pop = aPop;
 
-		// 5 random matches for each Individual - just for testing purposes
+		// random matches for each Individual - just for testing purposes
 
 		for (int i = 0; i < pop.size(); i++)
 		{
-			for (int j = 0; j < 10; j++)
+//			for (int j = 0; j < 5; j++)
+//			{
+//				int opponent;
+//				do
+//				{
+//					opponent = random.nextInt(pop.size());
+//				} while (opponent == i);
+//				match(pop.get(i), pop.get(opponent));
+//			}
+			for(int j = i+1; j<pop.size();j++)
 			{
-				match(pop.get(i),pop.get(random.nextInt(pop.size())));
+				match(pop.get(i),pop.get(j));
 			}
 		}
 
@@ -62,7 +73,7 @@ public class Tournament implements FitnessEvaluator
 		boolean finished = false;
 		int numberOfPlies = 0;
 
-		while(!finished)
+		while (!finished)
 		{
 			SimpleAI current = (SimpleAI) state.getCurrentPlayer();
 			SimpleAI opponent = (SimpleAI) state.getOpponentPlayer();
@@ -73,13 +84,13 @@ public class Tournament implements FitnessEvaluator
 			{
 				finished = true;
 
-				//update statistics for winner
-				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() + 1;
-				((AbaloneIndividual)current.getEvaluator()).setFitness(wFit);
-				
+				// update statistics for winner
+				double wFit = ((AbaloneIndividual) current.getEvaluator()).getFitness() + 1;
+				((AbaloneIndividual) current.getEvaluator()).setFitness(wFit);
+
 				// update statistics for loser
-				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() - 1;
-				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
+				double lFit = ((AbaloneIndividual) opponent.getEvaluator()).getFitness() - 1;
+				((AbaloneIndividual) opponent.getEvaluator()).setFitness(lFit);
 
 			}
 			else if (numberOfPlies == 80)
@@ -89,15 +100,14 @@ public class Tournament implements FitnessEvaluator
 				Map<Player, Integer> lostMarbles = state.getMarblesRemoved();
 				int pushed = lostMarbles.get(opponent);
 				int lost = lostMarbles.get(current);
-				
+
 				// update statistics for current player
-				double wFit = ((AbaloneIndividual)current.getEvaluator()).getFitness() +  .1*pushed - .1*lost;
-				((AbaloneIndividual)current.getEvaluator()).setFitness(wFit);
-				
+				double wFit = ((AbaloneIndividual) current.getEvaluator()).getFitness() + .1 * pushed - .1 * lost;
+				((AbaloneIndividual) current.getEvaluator()).setFitness(wFit);
 
 				// update statistics for opponent
-				double lFit = ((AbaloneIndividual)opponent.getEvaluator()).getFitness() -  .1*pushed + .1*lost;
-				((AbaloneIndividual)opponent.getEvaluator()).setFitness(lFit);
+				double lFit = ((AbaloneIndividual) opponent.getEvaluator()).getFitness() - .1 * pushed + .1 * lost;
+				((AbaloneIndividual) opponent.getEvaluator()).setFitness(lFit);
 
 			}
 			numberOfPlies++;

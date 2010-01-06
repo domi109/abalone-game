@@ -37,11 +37,11 @@ public class GeneticSearch
 		pop = fitnessEval.eval(pop);
 		//System.out.println("Spawning new generation...");
 		GeneticIndividual fittest = pop.getFittest();
-		//System.out.println(pop.getAverageFitness() + " " + fittest.getFitness() + " "+ fittest);
+		System.out.println(pop.getAverageFitness() + " " + fittest.getFitness() + " "+ fittest);
 		GeneticPopulation selection = s.select(pop, selectionSize);
 		//System.out.println("Selection: " + selection);
 		pop = selection.reproduce(r);
-		System.out.println("New Generation: " + pop);
+		//System.out.println("New Generation: " + pop);
 
 		generation++;
 	}
