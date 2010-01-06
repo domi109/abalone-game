@@ -12,7 +12,7 @@ import search.tree.SearchNode;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.heuristic.Evaluator;
-import abalone.ai.machinelearning.AbaloneIndividual;
+import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.gamestate.ZobristHasher;
@@ -75,12 +75,12 @@ public class SimpleAI extends Ai
 
 	private GameLogic logic;
 	private AbaloneSearchProblem problem;
-	private AbaloneIndividual evaluator;
+	private LinearEvaluator evaluator;
 
-	public SimpleAI(GameLogic logic, Evaluator evaluator)
+	public SimpleAI(GameLogic logic, Evaluator<Double> evaluator)
 	{
 		this.logic = logic;
-		this.evaluator = (AbaloneIndividual) evaluator;
+		this.evaluator = (LinearEvaluator) evaluator;
 	}
 
 	public SimpleAI(GameLogic logic)

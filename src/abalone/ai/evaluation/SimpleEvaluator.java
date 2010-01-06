@@ -1,4 +1,4 @@
-package abalone.ai;
+package abalone.ai.evaluation;
 
 import search.tree.SearchState;
 import search.tree.heuristic.Evaluator;

@@ -12,7 +12,7 @@ import search.tree.SearchNode;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
-import abalone.ai.machinelearning.AbaloneIndividual;
+import abalone.ai.evaluation.LinearEvaluator;
 import abalone.ai.machinelearning.Weight;
 import abalone.exec.StatisticGenerator;
 import abalone.gamelogic.GameLogic;
@@ -24,7 +24,7 @@ public class TrainedAI extends Ai implements StatisticGenerator
 {
 	private static final long serialVersionUID = -448667623469161736L;
 	private long startTime;
-	private AbaloneIndividual evaluator;
+	private LinearEvaluator evaluator;
 
 	private class AbaloneNode extends HashableMiniMaxNode implements SymZobristHashable
 	{
@@ -86,14 +86,14 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	{
 		this.logic = logic;
 		Genotype weights = new Genotype(6);
-		weights.set(0,new Weight(0.20230658557890616));
-		weights.set(1,new Weight(0.18528713352813264));
-		weights.set(2,new Weight(0.18607164870721676));
-		weights.set(3,new Weight(0.06962323524294511));
-		weights.set(4,new Weight(0.1951026179294804));
-		weights.set(5,new Weight(0.16160877901331897));
+		weights.set(0,new Weight(0.0907534226780221));
+		weights.set(1,new Weight(0.04251848904318671));
+		weights.set(2,new Weight(0.2568248333198419));
+		weights.set(3,new Weight(0.04402719597729515));
+		weights.set(4,new Weight(0.46903936646178107));
+		weights.set(5,new Weight(0.09683669251987305));
 		
-		evaluator = new AbaloneIndividual(weights);
+		evaluator = new LinearEvaluator(weights);
 	}
 
 	@Override

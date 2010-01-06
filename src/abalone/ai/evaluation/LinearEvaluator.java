@@ -1,6 +1,14 @@
-package abalone.ai.machinelearning;
+/*
+ *  A linear, weighted evaluation function based on a paper 'Constructing an Abalone Game-Playing Agent'
+ *  by N.P.P.M. Lemmens (18th June 2005).
+ *
+ *  The weights are NOT trained in this version, but can be adjusted.
+ *
+ */
+package abalone.ai.evaluation;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -15,7 +23,7 @@ import abalone.model.Direction;
 import abalone.model.Node;
 import abalone.model.Player;
 
-public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
+public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 {
 	private double fitness;
 	private Genotype phenotype;
@@ -29,12 +37,30 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 	 * weight with value v will be in the interval [v * (1 - mutationFactor); v
 	 * * (1 + mutationFactor)]
 	 */
-	//public final double mutationRate = 0.1;
+	public final double mutationRate = 0.2;
 	public final double mutationFactor = 0.03;
 
-	public AbaloneIndividual(Genotype phenotype)
+	// Variables for scaling the functions.
+	private List<Integer> max = new ArrayList<Integer>(6);
+	private List<Integer> min = new ArrayList<Integer>(6);
+
+	public LinearEvaluator(Genotype phenotype)
 	{
 		this.phenotype = phenotype;
+		max.add(0, 46);
+		max.add(1, 56);
+		max.add(2, 11);
+		max.add(3, 84);
+		max.add(4, 6);
+		max.add(5, 6);
+
+		min.add(0, -46);
+		min.add(1, -56);
+		min.add(2, -11);
+		min.add(3, -84);
+		min.add(4, 0);
+		min.add(5, 0);
+
 	}
 
 	/*
@@ -44,9 +70,9 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 	 * for (int i = 0; i < size; i++) { phenotype.add(new Weight()); } }
 	 */
 
-	public AbaloneIndividual(int size)
+	public LinearEvaluator()
 	{
-		phenotype = new Genotype(size);
+		this(new Genotype(6));
 
 		scalePhenotype();
 	}
@@ -129,7 +155,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 					}
 				}
 			}
-
+			// TODO scaling
 			// Calculation of individual functions
 			ArrayList<Integer> functionResults = new ArrayList<Integer>();
 			functionResults.add(opponentPlayerManhattanDistanceCount - currentPlayerManhattanDistanceCount);
@@ -145,7 +171,7 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 			for (int i = 0; i < functionResults.size(); i++)
 			{
 				double weight = (Double) phenotype.get(i).getValue();
-				eval += weight * functionResults.get(i);
+				eval += weight * ((functionResults.get(i) - min.get(i)) / ((double) (max.get(i) - min.get(i))));
 			}
 			return eval;
 		}
@@ -202,22 +228,27 @@ public class AbaloneIndividual implements GeneticIndividual, Evaluator<Double>
 		{
 			newPhenotype.add(this.getPhenotype().get(i).clone());
 		}
-		for(int i = splitPoint; i < phenotype.size();i++)
+		for (int i = splitPoint; i < phenotype.size(); i++)
 		{
 			newPhenotype.add(j.getPhenotype().get(i).clone());
 		}
 
-		return new AbaloneIndividual(newPhenotype);
+		return new LinearEvaluator(newPhenotype);
 	}
 
 	public void mutate()
 	{
 		Random r = new Random();
 
-		int i = r.nextInt(phenotype.size());
-		double value = (Double) phenotype.get(i).getValue();
-		value += ((2 * mutationFactor * r.nextDouble()) - mutationFactor);
-		phenotype.get(i).setValue(value);
+		for (int i = 0; i < phenotype.size(); i++)
+		{
+			if (r.nextDouble() < mutationRate)
+			{
+				double value = (Double) phenotype.get(i).getValue();
+				value += ((2 * mutationFactor * r.nextDouble()) - mutationFactor);
+				phenotype.get(i).setValue(value);
+			}
+		}
 
 		scalePhenotype();
 	}

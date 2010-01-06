@@ -11,13 +11,14 @@ import search.genetics.reproduction.CrossReproduction;
 import search.genetics.reproduction.KeepBestPairwiseReproduction;
 import search.genetics.reproduction.NoCrossoverReproduction;
 import search.genetics.selection.ElitistSelection;
+import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.StandardAbaloneLogic;
 
 public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(16, 6), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new Tournament());
+		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new Tournament());
 		search.setSelectionSize(8);
 
 		int numberOfGenerations = 50;
@@ -29,13 +30,13 @@ public class GeneticAlStarter
 		//printPop(search.getPopulation());
 	}
 
-	private static GeneticPopulation generatePop(int popSize, int genotypeSize)
+	private static GeneticPopulation generatePop(int popSize)
 	{
 		GeneticPopulation pop = new GeneticPopulation();
 
 		for (int i = 0; i < popSize; i++)
 		{
-			pop.add(new AbaloneIndividual(genotypeSize));
+			pop.add(new LinearEvaluator());
 		}
 
 		return pop;

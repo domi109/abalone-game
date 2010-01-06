@@ -12,6 +12,7 @@ import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
 import search.tree.heuristic.Evaluator;
+import abalone.ai.evaluation.LinearEvaluator;
 import abalone.exec.StatisticGenerator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
@@ -90,17 +91,14 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 		startTime = System.currentTimeMillis();
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-		Evaluator<Double> evaluator = new OptimizedLinearEvaluator(state);
+		LinearEvaluator evaluator = new LinearEvaluator();
+		evaluator.setInitialState(state);
 		// Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
 		int PlyLevels = 3;
 
 		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
-		// System.out.println("My Options: ");
-		// for (Action a : problem.generateActions(state))
-		// {
-		// System.out.println(a);
-		// }
+		
 		Queue<SearchNode> q = s.getChildren(startNode);
 		if (Math.random() < .9)
 		{

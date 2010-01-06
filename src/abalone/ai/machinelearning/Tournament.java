@@ -9,6 +9,7 @@ import search.genetics.GeneticIndividual;
 import search.genetics.GeneticPopulation;
 import search.tree.heuristic.Evaluator;
 import abalone.ai.SimpleAI;
+import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
@@ -85,12 +86,12 @@ public class Tournament implements FitnessEvaluator
 				finished = true;
 
 				// update statistics for winner
-				double wFit = ((AbaloneIndividual) current.getEvaluator()).getFitness() + 1;
-				((AbaloneIndividual) current.getEvaluator()).setFitness(wFit);
+				double wFit = ((LinearEvaluator) current.getEvaluator()).getFitness() + 1;
+				((LinearEvaluator) current.getEvaluator()).setFitness(wFit);
 
 				// update statistics for loser
-				double lFit = ((AbaloneIndividual) opponent.getEvaluator()).getFitness() - 1;
-				((AbaloneIndividual) opponent.getEvaluator()).setFitness(lFit);
+				double lFit = ((LinearEvaluator) opponent.getEvaluator()).getFitness() - 1;
+				((LinearEvaluator) opponent.getEvaluator()).setFitness(lFit);
 
 			}
 			else if (numberOfPlies == 80)
@@ -102,12 +103,12 @@ public class Tournament implements FitnessEvaluator
 				int lost = lostMarbles.get(current);
 
 				// update statistics for current player
-				double wFit = ((AbaloneIndividual) current.getEvaluator()).getFitness() + .1 * pushed - .1 * lost;
-				((AbaloneIndividual) current.getEvaluator()).setFitness(wFit);
+				double wFit = ((LinearEvaluator) current.getEvaluator()).getFitness() + .1 * pushed - .1 * lost;
+				((LinearEvaluator) current.getEvaluator()).setFitness(wFit);
 
 				// update statistics for opponent
-				double lFit = ((AbaloneIndividual) opponent.getEvaluator()).getFitness() - .1 * pushed + .1 * lost;
-				((AbaloneIndividual) opponent.getEvaluator()).setFitness(lFit);
+				double lFit = ((LinearEvaluator) opponent.getEvaluator()).getFitness() - .1 * pushed + .1 * lost;
+				((LinearEvaluator) opponent.getEvaluator()).setFitness(lFit);
 
 			}
 			numberOfPlies++;
