@@ -158,12 +158,12 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			// TODO scaling
 			// Calculation of individual functions
 			ArrayList<Integer> functionResults = new ArrayList<Integer>();
-			functionResults.add(opponentPlayerManhattanDistanceCount - currentPlayerManhattanDistanceCount);
-			functionResults.add(currentPlayerTeammatesCount - opponentPlayerTeammatesCount);
-			functionResults.add(currentPlayerBreakStrongGroupStrategyCount - opponentPlayerBreakStrongGroupStrategyCount);
-			functionResults.add(currentPlayerStrengthenGroupStrategyCount - opponentPlayerStrengthenGroupStrategyCount);
-			functionResults.add(lostMarbles.get(opponentPlayer));
-			functionResults.add(lostMarbles.get(currentPlayer));
+			functionResults.add(0,opponentPlayerManhattanDistanceCount - currentPlayerManhattanDistanceCount);
+			functionResults.add(1,currentPlayerTeammatesCount - opponentPlayerTeammatesCount);
+			functionResults.add(2,currentPlayerBreakStrongGroupStrategyCount - opponentPlayerBreakStrongGroupStrategyCount);
+			functionResults.add(3,currentPlayerStrengthenGroupStrategyCount - opponentPlayerStrengthenGroupStrategyCount);
+			functionResults.add(4,lostMarbles.get(opponentPlayer));
+			functionResults.add(5,lostMarbles.get(currentPlayer));
 
 			// Evaluation.
 			double eval = 0;
@@ -171,7 +171,9 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			for (int i = 0; i < functionResults.size(); i++)
 			{
 				double weight = (Double) phenotype.get(i).getValue();
-				eval += weight * ((functionResults.get(i) - min.get(i)) / ((double) (max.get(i) - min.get(i))));
+				Integer m = (functionResults.get(i)<0) ? min.get(i) : max.get(i);
+				
+				eval += weight * (functionResults.get(i) / ((double) (max.get(i) - min.get(i))));
 			}
 			return eval;
 		}
