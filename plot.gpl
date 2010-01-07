@@ -1,0 +1,50 @@
+set title  "Abalone Trained Weights"
+set macro
+set xlabel "Number of Generations"
+set ylabel "Weighting"
+set key out vert
+set style fill pattern 1.0 border
+set yrange [0:1]
+
+pos(x) = (x>0) ? x:0
+neg(x) = (x<0) ? abs(x):0
+
+posf1 = "(pos($3))"
+posf2 = "(abs($3)+pos($4))"
+posf3 = "(abs($3)+abs($4)+pos($5))"
+posf4 = "(abs($3)+abs($4)+abs($5)+pos($6))"
+posf5 = "(abs($3)+abs($4)+abs($5)+abs($6)+pos($7))"
+posf6 = "(abs($3)+abs($4)+abs($5)+abs($6)+abs($7)+pos($8))"
+
+absf1 = "(abs($3))"
+absf2 = "(abs($3)+abs($4))"
+absf3 = "(abs($3)+abs($4)+abs($5))"
+absf4 = "(abs($3)+abs($4)+abs($5)+abs($6))"
+absf5 = "(abs($3)+abs($4)+abs($5)+abs($6)+abs($7))"
+absf6 = "(abs($3)+abs($4)+abs($5)+abs($6)+abs($7)+abs($8))"
+
+negf1 = "(neg($3))"
+negf2 = "(abs($3)+neg($4))"
+negf3 = "(abs($3)+abs($4)+neg($5))"
+negf4 = "(abs($3)+abs($4)+abs($5)+neg($6))"
+negf5 = "(abs($3)+abs($4)+abs($5)+abs($6)+neg($7))"
+negf6 = "(abs($3)+abs($4)+abs($5)+abs($6)+abs($7)+neg($8))"
+
+plot 'output.txt' using :@absf1:(0)    with filledcurves title "Manhattan Distance" fs pattern 1 linetype rgbcolor "green",\
+               '' using :@absf2:@absf1 with filledcurves title "Teammates"          fs pattern 2 linetype rgbcolor "green",\
+               '' using :@absf3:@absf2 with filledcurves title "Break Group"        fs pattern 3 linetype rgbcolor "green",\
+               '' using :@absf4:@absf3 with filledcurves title "Strengthen Group"   fs pattern 4 linetype rgbcolor "green",\
+               '' using :@absf5:@absf4 with filledcurves title "Pushed Marbles"     fs pattern 5 linetype rgbcolor "green",\
+               '' using :@absf6:@absf5 with filledcurves title "Lost Marbles"       fs pattern 6 linetype rgbcolor "green",\
+               '' using :@negf1:(0)    with filledcurves title ""  fs pattern 1 linetype rgbcolor "red",\
+               '' using :@negf2:@absf1 with filledcurves title ""  fs pattern 2 linetype rgbcolor "red",\
+               '' using :@negf3:@absf2 with filledcurves title ""  fs pattern 3 linetype rgbcolor "red",\
+               '' using :@negf4:@absf3 with filledcurves title ""  fs pattern 4 linetype rgbcolor "red",\
+               '' using :@negf5:@absf4 with filledcurves title ""  fs pattern 5 linetype rgbcolor "red",\
+               '' using :@negf6:@absf5 with filledcurves title ""  fs pattern 6 linetype rgbcolor "red",\
+               '' using @absf1         with lines        title ""   linetype rgbcolor "black",\
+               '' using @absf2         with lines        title ""   linetype rgbcolor "black",\
+               '' using @absf3         with lines        title ""   linetype rgbcolor "black",\
+               '' using @absf4         with lines        title ""   linetype rgbcolor "black",\
+               '' using @absf5         with lines        title ""   linetype rgbcolor "black",\
+               '' using @absf6         with lines        title ""   linetype rgbcolor "black"
