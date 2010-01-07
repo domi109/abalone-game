@@ -36,7 +36,7 @@ public abstract class MinimaxSearch implements TreeSearch
 	private int depthLimit;
 	private long timeLimit;
 	private long startingTime;
-	protected boolean outOfTime;
+	private boolean outOfTime;
 
 	
 	private static final long serialVersionUID = -1027257254713156503L;
@@ -293,5 +293,13 @@ public abstract class MinimaxSearch implements TreeSearch
 
 	public void setDepthLimit(int limit) {
 		depthLimit = limit;
+	}
+	
+	public boolean outOfTime(){
+		return outOfTime;
+	}
+	
+	public void setOutOfTimeFalse(){
+		outOfTime = false;
 	}
 }

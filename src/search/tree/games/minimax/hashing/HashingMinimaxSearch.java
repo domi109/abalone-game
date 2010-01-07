@@ -20,34 +20,14 @@ import search.tree.heuristic.Evaluator;
  * @author Daniel Mescheder
  * 
  */
-public class HashingMinimaxSearch extends MinimaxSearch implements DepthLimitedSearch
+public abstract class HashingMinimaxSearch extends MinimaxSearch
 {
 	private static final long serialVersionUID = 5354076006129704855L;
 	private int nodeCount = 0;
 	private MinimaxHashTable table;
-		private MinimaxProblem t;
+	private boolean outOfTime;
 
-	public HashingMinimaxSearch(MinimaxProblem t, int limit)
-	{
-		this(t, new DummyEvaluator(),  limit);
-		this.table = new MinimaxHashTable(200);
-	}
-
-	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int depthLimit)
-	{
-		this.t = t;
-		super.setEvaluator(evaluator);
-		setDepthLimit(depthLimit);
-		this.table = new MinimaxHashTable(300);
-	}
-
-	// test constructor, depth has to be set manually
-	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator)
-	{
-		this.t = t;
-		super.setEvaluator(evaluator);
-		this.table = new MinimaxHashTable(300);
-	}
+	
 
 	@Override
 	public SearchNode search(SearchNode node)
@@ -234,10 +214,8 @@ public class HashingMinimaxSearch extends MinimaxSearch implements DepthLimitedS
 			}
 		}
 	}
-
-
-	@Override
-	public SearchProblem getProblem() {
-		return t;
+	
+	protected void setTable(MinimaxHashTable table){
+		this.table = table;
 	}
 }
