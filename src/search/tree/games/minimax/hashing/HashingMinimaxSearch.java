@@ -41,6 +41,14 @@ public class HashingMinimaxSearch extends MinimaxSearch implements DepthLimitedS
 		this.table = new MinimaxHashTable(300);
 	}
 
+	// test constructor, depth has to be set manually
+	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator)
+	{
+		this.t = t;
+		super.setEvaluator(evaluator);
+		this.table = new MinimaxHashTable(300);
+	}
+
 	@Override
 	public SearchNode search(SearchNode node)
 	{

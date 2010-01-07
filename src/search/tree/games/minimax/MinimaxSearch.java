@@ -102,12 +102,13 @@ public abstract class MinimaxSearch implements TreeSearch
 		
 		double alpha = Double.NEGATIVE_INFINITY;
 		double beta = Double.POSITIVE_INFINITY;
+		MiniMaxNode current;
 		
 		for (SearchNode n : node.expand())
 		{
 			// For every successor node
 
-			MiniMaxNode current = (MiniMaxNode) n;
+			current = (MiniMaxNode) n;
 
 			if (!testNode(current))
 			{

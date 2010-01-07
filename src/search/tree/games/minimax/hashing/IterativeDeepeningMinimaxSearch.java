@@ -16,6 +16,7 @@ public class IterativeDeepeningMinimaxSearch extends MinimaxSearch implements It
 	private MinimaxProblem t;
 	private long startingTime;
 	private long timeLastIteration;
+	HashingMinimaxSearch hashing;
 
 	public IterativeDeepeningMinimaxSearch(MinimaxProblem t, long timeLimit)
 	{
@@ -26,6 +27,7 @@ public class IterativeDeepeningMinimaxSearch extends MinimaxSearch implements It
 
 	public IterativeDeepeningMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, long timeLimit)
 	{
+		//hashing = new HashingMinimaxSearch(t, evaluator);
 		super.setEvaluator(evaluator);
 		this.t = t;
 		this.timeLimit = timeLimit;
@@ -40,14 +42,20 @@ public class IterativeDeepeningMinimaxSearch extends MinimaxSearch implements It
 		int depth = 0;
 		timeLastIteration = 0;
 		outOfTime = false;
+//		boolean oot = outOfTime();
 		
 		while(!outOfTime()){
 			depth++;
 			prevResult = result;
 			timeLastIteration = System.currentTimeMillis();
+			
 			System.out.println("Current Depth: " + depth);
+			
 			setDepthLimit(depth);
 			result = super.search(node, timeLimit, startingTime);
+			//result = hashing.search(node, timeLimit, startingTime);
+			
+			
 			timeLastIteration -= System.currentTimeMillis();
 		}
 		if(outOfTime) {
@@ -59,10 +67,6 @@ public class IterativeDeepeningMinimaxSearch extends MinimaxSearch implements It
 			return result;
 		}
 	}
-	
-/*	public boolean outOfTime() {
-		return timeLastIteration > (timeLimit / 2) ;
-	}*/
 	
 	public boolean outOfTime() {
 		return System.currentTimeMillis() - startingTime > timeLimit;
