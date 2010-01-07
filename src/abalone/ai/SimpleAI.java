@@ -11,6 +11,7 @@ import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
+import search.tree.games.minimax.hashing.IterativeDeepeningMinimaxSearch;
 import search.tree.heuristic.Evaluator;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
@@ -98,7 +99,7 @@ public class SimpleAI extends Ai
 
 		int PlyLevels = 1;
 
-		MinimaxSearch s = new MinimaxSearch(problem, evaluator, PlyLevels);
+		MinimaxSearch s = new IterativeDeepeningMinimaxSearch(problem, evaluator, 15000);
 
 		Queue<SearchNode> q = s.getChildren(startNode);
 		if (Math.random() < .9)
