@@ -36,6 +36,7 @@ public abstract class MinimaxSearch implements TreeSearch
 	private int depthLimit;
 	private long timeLimit;
 	private long startingTime;
+	protected boolean outOfTime;
 
 	
 	private static final long serialVersionUID = -1027257254713156503L;
@@ -270,7 +271,7 @@ public abstract class MinimaxSearch implements TreeSearch
 	}
 	
 	public boolean breakTest(SearchNode node) {
-		return (/*timeBreakTest() || */node.getDepth() >= depthLimit);
+		return (timeBreakTest() || node.getDepth() >= depthLimit);
 	}
 	
 /*	public boolean timeBreakTest() {
@@ -279,7 +280,7 @@ public abstract class MinimaxSearch implements TreeSearch
 	
 	public boolean timeBreakTest() {
 		if(System.currentTimeMillis() - startingTime > timeLimit){
-			System.out.println("out of time: " +  (System.currentTimeMillis() - startingTime));
+			outOfTime = true;
 			return true;
 		}
 		else return false;

@@ -36,27 +36,37 @@ public class IterativeDeepeningMinimaxSearch extends MinimaxSearch implements It
 	{
 		startingTime = System.currentTimeMillis();
 		SearchNode result = node;
-		int depth = 1;
+		SearchNode prevResult = result; 
+		int depth = 0;
 		timeLastIteration = 0;
-
+		outOfTime = false;
+		
 		while(!outOfTime()){
+			depth++;
+			prevResult = result;
 			timeLastIteration = System.currentTimeMillis();
 			System.out.println("Current Depth: " + depth);
 			setDepthLimit(depth);
 			result = super.search(node, timeLimit, startingTime);
-			depth++;
 			timeLastIteration -= System.currentTimeMillis();
 		}
-		return result;
-	}
-	
-	public boolean outOfTime() {
-		return timeLastIteration > (timeLimit / 2) ;
+		if(outOfTime) {
+			System.out.println("took result of depth " + (depth-1));
+			return prevResult;
+		}
+		else{
+			System.out.println("took result of depth " + depth);
+			return result;
+		}
 	}
 	
 /*	public boolean outOfTime() {
-		return System.currentTimeMillis() - startingTime > timeLimit;
+		return timeLastIteration > (timeLimit / 2) ;
 	}*/
+	
+	public boolean outOfTime() {
+		return System.currentTimeMillis() - startingTime > timeLimit;
+	}
 
 	@Override
 	public SearchProblem getProblem() {
