@@ -11,6 +11,7 @@ import search.genetics.Genotype;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
+import search.tree.games.minimax.DepthLimitedMinimaxSearch;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
@@ -109,7 +110,7 @@ public class TrainedAI extends Ai implements StatisticGenerator
 		
 		int PlyLevels = 3;
 
-		MinimaxSearch s = new HashingMinimaxSearch(problem, evaluator, PlyLevels);
+		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator, problem);
 		Queue<SearchNode> q = s.getChildren(startNode);
 		if (Math.random() < .9)
 		{
