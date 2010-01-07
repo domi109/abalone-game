@@ -67,7 +67,7 @@ public class DLTreeSearch implements DepthLimitedSearch
 		return problem;
 	}
 	
-	protected boolean breakTest(SearchNode node)
+	public boolean breakTest(SearchNode node)
 	{
 		return node.getDepth() >= depthLimit;
 	}

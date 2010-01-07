@@ -75,7 +75,7 @@ public class IDTreeSearch implements IterativeDeepeningSearch
 		return problem;
 	}
 
-	protected boolean breakTest(SearchNode node)
+	public boolean breakTest(SearchNode node)
 	{
 		return node.getDepth() >= depthLimit;
 	}

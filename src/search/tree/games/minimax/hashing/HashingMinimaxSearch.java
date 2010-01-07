@@ -1,12 +1,15 @@
 package search.tree.games.minimax.hashing;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.nio.ByteBuffer;
 
 import search.hashing.SymZobristHashable;
+import search.hashing.ZobristHashable;
+import search.tree.DLTreeSearch;
+import search.tree.DepthLimitedSearch;
 import search.tree.SearchNode;
+import search.tree.SearchProblem;
+import search.tree.ZobristHashableState;
 import search.tree.games.minimax.MiniMaxNode;
-import search.tree.games.minimax.MinimaxNodeComparator;
 import search.tree.games.minimax.MinimaxProblem;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.heuristic.Evaluator;
@@ -17,67 +20,34 @@ import search.tree.heuristic.Evaluator;
  * @author Daniel Mescheder
  * 
  */
-public class HashingMinimaxSearch extends MinimaxSearch
+public class HashingMinimaxSearch extends MinimaxSearch implements DepthLimitedSearch
 {
 	private static final long serialVersionUID = 5354076006129704855L;
+	private int nodeCount = 0;
 	private MinimaxHashTable table;
+		private MinimaxProblem t;
 
 	public HashingMinimaxSearch(MinimaxProblem t, int limit)
 	{
-		super(t, limit);
+		this(t, new DummyEvaluator(),  limit);
 		this.table = new MinimaxHashTable(200);
 	}
 
-	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int limit)
+	public HashingMinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int depthLimit)
 	{
-		super(t, evaluator, limit);
-
+		this.t = t;
+		super.setEvaluator(evaluator);
+		setDepthLimit(depthLimit);
 		this.table = new MinimaxHashTable(300);
 	}
 
 	@Override
 	public SearchNode search(SearchNode node)
 	{
+		long time = System.currentTimeMillis();
 		SearchNode result = super.search(node);
+		System.out.println(nodeCount+","+table.size()+","+result.getAction()+","+(System.currentTimeMillis() - time));
 		return result;
-	}
-
-	@Override
-	public Queue<SearchNode> getChildren(SearchNode node)
-	{
-		Queue<SearchNode> q = new PriorityQueue<SearchNode>(20, new MinimaxNodeComparator());
-
-		double alpha = Double.NEGATIVE_INFINITY;
-		double beta = Double.POSITIVE_INFINITY;
-
-		for (SearchNode n : node.expand())
-		{
-			// For every successor node
-
-			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
-
-			if (!testNode(current))
-			{
-				table.put(current.zobristHash(), MinimaxHashEntry.OPEN);
-				// Get minimal child node of this successor
-				MiniMaxNode min = minNode(current, alpha, beta);
-				if (min == null)
-				{
-					current.setValue(-1); // TODO magic number
-				}
-				else
-				{
-					current.setValue(min.getValue());
-				}
-				putHash(current);
-			}
-
-			q.add(current);
-
-			alpha = Math.max(alpha, ((MiniMaxNode) q.peek()).getValue());
-		}
-
-		return q;
 	}
 
 	/**
@@ -110,17 +80,18 @@ public class HashingMinimaxSearch extends MinimaxSearch
 				table.put(current.zobristHash(), MinimaxHashEntry.OPEN);
 				// Get minimal child node of this successor
 				MiniMaxNode min = minNode(current, alpha, beta);
-				if (min == null)
+				if(min == null)
 				{
 					current.setValue(-1); // TODO magic number
 				}
 				else
 				{
-					current.setValue(min.getValue());
-				}
+				current.setValue(min.getValue());
+				}				
 				putHash(current);
 
 			}
+
 
 			if (v == null || v.getValue() < current.getValue())
 			{
@@ -179,16 +150,17 @@ public class HashingMinimaxSearch extends MinimaxSearch
 				table.put(current.zobristHash(), MinimaxHashEntry.OPEN);
 				// Get maximal child node of this successor
 				MiniMaxNode max = maxNode(current, alpha, beta);
-				if (max == null)
+				if(max == null)
 				{
-					current.setValue(1); // TODO magic number
+					current.setValue(-1); // TODO magic number
 				}
 				else
 				{
-					current.setValue(max.getValue());
+				current.setValue(max.getValue());
 				}
 				putHash(current);
 			}
+
 
 			if (v == null || v.getValue() > current.getValue())
 			{
@@ -220,14 +192,8 @@ public class HashingMinimaxSearch extends MinimaxSearch
 	@Override
 	protected boolean testNode(MiniMaxNode node)
 	{
-
+		nodeCount++;
 		HashableMiniMaxNode n = (HashableMiniMaxNode) node;
-
-		if (super.testNode(n))
-		{
-			return true;
-		}
-
 		MinimaxHashEntry e = table.get(n.zobristHash());
 		if (e != null)
 		{
@@ -236,7 +202,7 @@ public class HashingMinimaxSearch extends MinimaxSearch
 				node.setValue(((MinimaxProblem) getProblem()).repetitionValue());
 				return true;
 			}
-			else if (e.getPrecision() >= (this.depthLimit - node.getDepth()))
+			else if (e.getPrecision() >= (getDepthLimit() - node.getDepth()))
 			{
 				node.setValue(e.getValue());
 				return true;
@@ -244,20 +210,26 @@ public class HashingMinimaxSearch extends MinimaxSearch
 
 		}
 
-		return false;
+		return super.testNode(node);
 	}
-
+	
 	protected void putHash(HashableMiniMaxNode n)
 	{
 		Long hash = n.zobristHash();
-		table.put(hash, n.getValue(), this.depthLimit - n.getDepth());
-		if (n instanceof SymZobristHashable)
+		table.put(hash, n.getValue(), getDepthLimit() - n.getDepth());
+		if(n instanceof SymZobristHashable)
 		{
 			SymZobristHashable s = (SymZobristHashable) n;
-			for (long l : s.symmetryHashes())
+			for(long l : s.symmetryHashes())
 			{
-				table.put(l, n.getValue(), this.depthLimit - n.getDepth());
+				table.put(l, n.getValue(), getDepthLimit() - n.getDepth());
 			}
 		}
+	}
+
+
+	@Override
+	public SearchProblem getProblem() {
+		return t;
 	}
 }

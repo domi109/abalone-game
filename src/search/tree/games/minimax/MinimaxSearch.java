@@ -2,10 +2,16 @@ package search.tree.games.minimax;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
-
+import abalone.exec.StatisticGenerator;
 import search.tree.DLTreeSearch;
+import search.tree.DepthLimitedSearch;
+import search.tree.IterativeDeepeningSearch;
 import search.tree.SearchNode;
+import search.tree.SearchProblem;
 import search.tree.SearchState;
+import search.tree.IDTreeSearch;
+import search.tree.TreeSearch;
+import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.heuristic.Evaluator;
 
 /**
@@ -24,18 +30,21 @@ import search.tree.heuristic.Evaluator;
  * @author Daniel Mescheder
  * 
  */
-public class MinimaxSearch extends DLTreeSearch
+public abstract class MinimaxSearch implements TreeSearch
 {
-	private int nodeCount = 0;
+	private Evaluator<Double> evaluator;
+	private int depthLimit;
+	private long timeLimit;
+	private long startingTime;
 
+	
 	private static final long serialVersionUID = -1027257254713156503L;
 	/**
 	 * A basic placeholder evaluator that always returns zero as an evaluation
 	 * and therefore does not help at all. BUT the search will at least be able
 	 * to run.
-	 * 
 	 */
-	private static class DummyEvaluator implements Evaluator<Double>
+	public static class DummyEvaluator implements Evaluator<Double>
 	{
 
 		/**
@@ -49,29 +58,11 @@ public class MinimaxSearch extends DLTreeSearch
 			return 0d;
 		}
 	}
-
-	private Evaluator<Double> evaluator;
-
-	/**
-	 * Construct a new minimax search given a minimax search problem. The search
-	 * problem describes the settings of the search.
-	 * 
-	 * Run "search" to actually run the search.
-	 * 
-	 * @param t
-	 *            the minimax search problem that contains the search settings
-	 */
-	public MinimaxSearch(MinimaxProblem t, int limit)
-	{
-		this(t, new DummyEvaluator(), limit);
-	}
-
-	public MinimaxSearch(MinimaxProblem t, Evaluator<Double> evaluator, int limit)
-	{
-		super(t, limit);
+	
+	protected void setEvaluator(Evaluator<Double> evaluator){
 		this.evaluator = evaluator;
 	}
-
+	
 	/**
 	 * Executes the search starting from a given start node
 	 * 
@@ -80,17 +71,30 @@ public class MinimaxSearch extends DLTreeSearch
 	 * @return the node of the next level for which max should decide in order
 	 *         to win the game
 	 */
-	@Override
+	
 	public SearchNode search(SearchNode node)
 	{
 		// We assume that max executes the search.
 		// Therefore we're interested in finding the max node from here on.
+		timeLimit = (long) Double.POSITIVE_INFINITY;
+		startingTime = System.currentTimeMillis();
 		SearchNode n = maxNode((MiniMaxNode) node, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
 
 		return n;
 	}
 	
-	
+	public SearchNode search(SearchNode node, long timeLimit, long startingTime)
+	{
+		// We assume that max executes the search.
+		// Therefore we're interested in finding the max node from here on.
+		this.timeLimit = timeLimit;
+		this.startingTime = startingTime;
+		
+		SearchNode n = maxNode((MiniMaxNode) node, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+		return n;
+	}
+
 	public Queue<SearchNode> getChildren(SearchNode node)
 	{
 		Queue<SearchNode> q = new PriorityQueue<SearchNode>(20,new MinimaxNodeComparator());
@@ -118,6 +122,7 @@ public class MinimaxSearch extends DLTreeSearch
 		return q;
 	}
 
+	
 	/**
 	 * Recursively finds the maximal child of the passed node
 	 * 
@@ -140,7 +145,7 @@ public class MinimaxSearch extends DLTreeSearch
 		{
 			// For every successor node
 
-			MiniMaxNode current = (MiniMaxNode) n;
+			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 
 			if (!testNode(current))
 			{
@@ -197,7 +202,7 @@ public class MinimaxSearch extends DLTreeSearch
 		MiniMaxNode v = null;
 		for (SearchNode n : node.expand())
 		{
-			MiniMaxNode current = (MiniMaxNode) n;
+			HashableMiniMaxNode current = (HashableMiniMaxNode) n;
 			// For every successor node
 
 			if (!testNode(current))
@@ -242,7 +247,6 @@ public class MinimaxSearch extends DLTreeSearch
 	 */
 	protected boolean testNode(MiniMaxNode node)
 	{
-		nodeCount++;
 		MinimaxProblem problem = (MinimaxProblem) getProblem();
 		if (this.breakTest(node))
 		{
@@ -264,5 +268,28 @@ public class MinimaxSearch extends DLTreeSearch
 
 		return false;
 	}
+	
+	public boolean breakTest(SearchNode node) {
+		return (/*timeBreakTest() || */node.getDepth() >= depthLimit);
+	}
+	
+/*	public boolean timeBreakTest() {
+		return System.currentTimeMillis() - startingTime > timeLimit;
+	}*/
+	
+	public boolean timeBreakTest() {
+		if(System.currentTimeMillis() - startingTime > timeLimit){
+			System.out.println("out of time: " +  (System.currentTimeMillis() - startingTime));
+			return true;
+		}
+		else return false;
+	}
+	
+	public int getDepthLimit() {
+		return depthLimit;
+	}
 
+	public void setDepthLimit(int limit) {
+		depthLimit = limit;
+	}
 }

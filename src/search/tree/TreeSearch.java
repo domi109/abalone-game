@@ -16,4 +16,6 @@ package search.tree;
 public interface TreeSearch
 {
 	public SearchNode search(SearchNode initial);
+	public SearchProblem getProblem();
+	boolean breakTest(SearchNode node);
 }
