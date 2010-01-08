@@ -1,12 +1,10 @@
 package abalone.ai;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import search.Action;
-import search.genetics.Gene;
 import search.genetics.Genotype;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
@@ -89,13 +87,13 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	{
 		this.logic = logic;
 		Genotype weights = new Genotype();
-		weights.add(0,new Weight(0.37588279040058));
-		weights.add(1,new Weight(0.1019650923704891));
-		weights.add(2,new Weight(0.0230749110410881));
-		weights.add(3,new Weight(0.0251705697187887));
-		weights.add(4,new Weight(0.37475564250835874));
-		weights.add(5,new Weight(-0.09915099396069534));
-		
+		weights.add(0, new Weight(0.2539843191779305));
+		weights.add(1, new Weight(0.0742744140171492));
+		weights.add(2, new Weight(0.013942534940270314));
+		weights.add(3, new Weight(0.0750486033854891));
+		weights.add(4, new Weight(0.1933802758945122));
+		weights.add(5, new Weight(-0.3893698525846486));
+
 		evaluator = new LinearEvaluator(weights);
 	}
 
@@ -105,19 +103,25 @@ public class TrainedAI extends Ai implements StatisticGenerator
 		startTime = System.currentTimeMillis();
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-		
+
 		evaluator.setInitialState(state);
-		
-		int PlyLevels = 3;
+
+		int PlyLevels = 4;
 
 		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator, problem);
-		Queue<SearchNode> q = s.getChildren(startNode);
-		if (Math.random() < .9)
-		{
-			return (Move) q.remove().getAction();
-		}
-		q.remove();
-		return (Move) q.remove().getAction();
+		// Queue<SearchNode> q = s.getChildren(startNode);
+		// if (Math.random() < .9)
+		// {
+		// return (Move) q.remove().getAction();
+		// }
+		// q.remove();
+		// return (Move) q.remove().getAction();
+
+		SearchNode n = s.search(startNode);
+
+		System.out.println("Eval: " + evaluator.eval(n.getState()) + "  Details: " + evaluator.getFunctionResults());
+
+		return (Move) n.getAction();
 
 	}
 
@@ -130,6 +134,6 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	@Override
 	public double getCurrentState()
 	{
-		return System.currentTimeMillis()-startTime;
+		return System.currentTimeMillis() - startTime;
 	}
 }

@@ -24,7 +24,7 @@ import abalone.model.Direction;
 import abalone.model.Node;
 import abalone.model.Player;
 
-public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
+public class SplitLinearEvaluator implements GeneticIndividual, Evaluator<Double>
 {
 	private double fitness;
 	private Genotype phenotype;
@@ -43,57 +43,41 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 
 	// Variables for scaling the functions.
 	private List<Integer> max = new ArrayList<Integer>(6);
-	private List<Integer> min = new ArrayList<Integer>(6);
 	private List<Integer> functionResults;
 
 	
 	private static Genotype generatePhenotype()
 	{
 		Genotype phenotype = new Genotype();
-		for(int i = 0; i < 6;i++)
+		for(int i = 0; i < 10;i++)
 		{
 			phenotype.add(new Weight());
 		}
 		return phenotype;
 	}
 	
-	public LinearEvaluator(Genotype phenotype)
+	public SplitLinearEvaluator(Genotype phenotype)
 	{
 		this.phenotype = phenotype;
 		max.add(0, 46);
-		max.add(1, 56);
-		max.add(2, 11);
-		max.add(3, 84);
-		max.add(4, 6);
-		max.add(5, 6);
-
-		min.add(0, -46);
-		min.add(1, -56);
-		min.add(2, -11);
-		min.add(3, -84);
-		min.add(4, 0);
-		min.add(5, 0);
-
+		max.add(1, 46);
+		max.add(2, 56);
+		max.add(3, 56);
+		max.add(4, 11);
+		max.add(5, 11);
+		max.add(6, 84);
+		max.add(7, 84);
+		max.add(8, 6);
+		max.add(9, 6);
 	}
 
-	/*
-	 * public AbaloneIndividual(Evaluator evaluator, int size) { this.heuristic
-	 * = evaluator;
-	 * 
-	 * for (int i = 0; i < size; i++) { phenotype.add(new Weight()); } }
-	 */
 
-	public LinearEvaluator()
+	public SplitLinearEvaluator()
 	{
 		this(generatePhenotype());
 
 		scalePhenotype();
 	}
-
-	/*
-	 * public Double eval(SearchState aState) { return (Double)
-	 * heuristic.eval(aState); }
-	 */
 
 	public void setInitialState(SearchState state)
 	{
@@ -170,12 +154,16 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			}
 			// Calculation of individual functions
 			functionResults = new ArrayList<Integer>();
-			functionResults.add(0,opponentPlayerManhattanDistanceCount - currentPlayerManhattanDistanceCount);
-			functionResults.add(1,currentPlayerTeammatesCount - opponentPlayerTeammatesCount);
-			functionResults.add(2,currentPlayerBreakStrongGroupStrategyCount - opponentPlayerBreakStrongGroupStrategyCount);
-			functionResults.add(3,currentPlayerStrengthenGroupStrategyCount - opponentPlayerStrengthenGroupStrategyCount);
-			functionResults.add(4,lostMarbles.get(opponentPlayer));
-			functionResults.add(5,lostMarbles.get(currentPlayer));
+			functionResults.add(0,opponentPlayerManhattanDistanceCount);
+			functionResults.add(1,currentPlayerManhattanDistanceCount);
+			functionResults.add(2,currentPlayerTeammatesCount);
+			functionResults.add(3,opponentPlayerTeammatesCount);
+			functionResults.add(4,currentPlayerBreakStrongGroupStrategyCount);
+			functionResults.add(5,opponentPlayerBreakStrongGroupStrategyCount);
+			functionResults.add(6,currentPlayerStrengthenGroupStrategyCount);
+			functionResults.add(7,opponentPlayerStrengthenGroupStrategyCount);
+			functionResults.add(8,lostMarbles.get(opponentPlayer));
+			functionResults.add(9,lostMarbles.get(currentPlayer));
 
 			// Evaluation.
 			double eval = 0;
@@ -183,7 +171,7 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			for (int i = 0; i < functionResults.size(); i++)
 			{
 				double weight = (Double) phenotype.get(i).getValue();				
-				eval += weight * (functionResults.get(i) / ((double) (max.get(i) - min.get(i))));
+				eval += weight * (functionResults.get(i) / ((double) max.get(i)));
 			}
 			return eval;
 		}
@@ -246,7 +234,7 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			newPhenotype.add(j.getPhenotype().get(i).clone());
 		}
 
-		return new LinearEvaluator(newPhenotype);
+		return new SplitLinearEvaluator(newPhenotype);
 	}
 
 	public void mutate()

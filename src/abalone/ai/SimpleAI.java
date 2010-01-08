@@ -9,9 +9,11 @@ import search.Action;
 import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
-import search.tree.games.minimax.IterativeDeepeningMinimaxSearch;
+import search.tree.games.minimax.DepthLimitedMinimaxSearch;
 import search.tree.games.minimax.MinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
+import search.tree.games.minimax.hashing.HashingMinimaxSearch;
+import search.tree.games.minimax.hashing.IterativeDeepeningMinimaxSearch;
 import search.tree.heuristic.Evaluator;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
@@ -94,20 +96,23 @@ public class SimpleAI extends Ai
 	{
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
-
 		evaluator.setInitialState(state);
 
-		int PlyLevels = 1;
+		int PlyLevels = 2;
 
-		MinimaxSearch s = new IterativeDeepeningMinimaxSearch(problem, evaluator, 15000);
+		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator,problem);
 
-		Queue<SearchNode> q = s.getChildren(startNode);
-		if (Math.random() < .9)
-		{
-			return (Move) q.remove().getAction();
-		}
-		q.remove();
-		return (Move) q.remove().getAction();
+//		Queue<SearchNode> q = s.getChildren(startNode);
+//		if (Math.random() < .9)
+//		{
+//			return (Move) q.remove().getAction();
+//		}
+//		q.remove();
+//		return (Move) q.remove().getAction();
+		
+		SearchNode n = s.search(startNode);
+		
+		return (Move) n.getAction();
 	}
 
 	@Override

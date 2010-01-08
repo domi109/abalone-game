@@ -41,13 +41,13 @@ public class KOTournament implements FitnessEvaluator
 
 		int numberOfRounds = (int) ((Math.log(pop.size()))/(Math.log(2)));
 
-		Collections.shuffle(pop);
 		GeneticPopulation contestants;
 		GeneticPopulation winners = new GeneticPopulation();
 
 		for (int i = 0; i < numberOfTournaments; i++)
 		{
 			contestants = pop;
+			Collections.shuffle(contestants);
 
 			for (currentRound = 1; currentRound <= numberOfRounds; currentRound++)
 			{

@@ -10,13 +10,10 @@ import search.hashing.SymZobristHashable;
 import search.hashing.ZobristHashable;
 import search.tree.SearchNode;
 import search.tree.SearchState;
-import search.tree.games.minimax.DepthLimitedMinimaxSearch;
-import search.tree.games.minimax.IterativeDeepeningMinimaxSearch;
 import search.tree.games.minimax.MinimaxSearch;
-import search.tree.games.minimax.hashing.DepthLimitedHashingMinimaxSearch;
 import search.tree.games.minimax.hashing.HashableMiniMaxNode;
 import search.tree.games.minimax.hashing.HashingMinimaxSearch;
-import search.tree.games.minimax.hashing.IterativeDeepeningHashingMiniMaxSearch;
+import search.tree.games.minimax.hashing.IterativeDeepeningMinimaxSearch;
 import search.tree.heuristic.Evaluator;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.ai.machinelearning.Weight;
@@ -99,34 +96,34 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
 		Genotype weights = new Genotype();
-		weights.add(0,new Weight(0.05));
-		weights.add(1,new Weight(0.05));
-		weights.add(2,new Weight(0.1));
-		weights.add(3,new Weight(0.1));
-		weights.add(4,new Weight(0.1));
-		weights.add(5,new Weight(-0.1));
+//		weights.add(0,new Weight(0.05));
+//		weights.add(1,new Weight(0.05));
+//		weights.add(2,new Weight(0.1));
+//		weights.add(3,new Weight(0.1));
+//		weights.add(4,new Weight(0.1));
+//		weights.add(5,new Weight(-0.1));
+		weights.add(0,new Weight(0.37588279040058));
+		weights.add(1,new Weight(0.1019650923704891));
+		weights.add(2,new Weight(0.0230749110410881));
+		weights.add(3,new Weight(0.0251705697187887));
+		weights.add(4,new Weight(0.37475564250835874));
+		weights.add(5,new Weight(-0.09915099396069534));
 		LinearEvaluator evaluator = new LinearEvaluator(weights);
 		evaluator.setInitialState(state);
-		// Evaluator<Double> evaluator = new SimpleEvaluator(state);
 
-		int PlyLevels = 4;
-
-//		MinimaxSearch s = new IterativeDeepeningMinimaxSearch(problem, evaluator, 10000);
-		MinimaxSearch s = new IterativeDeepeningHashingMiniMaxSearch(problem, evaluator, 10000);
-//		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator, problem);
-//		MinimaxSearch s = new DepthLimitedHashingMinimaxSearch(problem, evaluator, PlyLevels);
+		MinimaxSearch s = new IterativeDeepeningMinimaxSearch(problem, evaluator, 1500000);
+		
+//		Queue<SearchNode> q = s.getChildren(startNode);
+//		if (Math.random() < .9)
+//		{
+//			return (Move) q.remove().getAction();
+//		}
+//		q.remove();
+//		return (Move) q.remove().getAction();
 		
 		SearchNode n = s.search(startNode);
 		
 		return (Move) n.getAction();
-		
-/*		Queue<SearchNode> q = s.getChildren(startNode);
-		if (Math.random() < .9)
-		{
-			return (Move) q.remove().getAction();
-		}
-		q.remove();
-		return (Move) q.remove().getAction();*/
 
 	}
 

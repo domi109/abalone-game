@@ -1,4 +1,4 @@
-package abalone.ai.machinelearning;
+package abalone.ai.machinelearning.TournamentModes;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -17,14 +17,14 @@ import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
 
-public class Tournament implements FitnessEvaluator
+public class CrossTournament implements FitnessEvaluator
 {
 	private GameLogic logic;
 	private Board board;
 	private GeneticPopulation pop;
 	private Random random;
 
-	public Tournament()
+	public CrossTournament()
 	{
 		this.logic = new StandardAbaloneLogic();
 		this.board = logic.initBoard();

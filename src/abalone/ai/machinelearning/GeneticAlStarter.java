@@ -12,13 +12,15 @@ import search.genetics.reproduction.KeepBestPairwiseReproduction;
 import search.genetics.reproduction.NoCrossoverReproduction;
 import search.genetics.selection.ElitistSelection;
 import abalone.ai.evaluation.LinearEvaluator;
+import abalone.ai.machinelearning.TournamentModes.CrossTournament;
+import abalone.ai.machinelearning.TournamentModes.KOTournament;
 import abalone.gamelogic.StandardAbaloneLogic;
 
 public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new Tournament());
+		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new KOTournament(4));
 		search.setSelectionSize(8);
 
 		int numberOfGenerations = 50;
