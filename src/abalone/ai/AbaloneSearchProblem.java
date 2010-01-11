@@ -3,9 +3,9 @@ package abalone.ai;
 import java.util.LinkedList;
 import java.util.List;
 
-import search.Action;
-import search.tree.SearchState;
-import search.tree.games.minimax.MinimaxProblem;
+import nl.maastrichtuniversity.dke.libreason.def.Action;
+import nl.maastrichtuniversity.dke.libreason.def.SearchState;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.MinimaxProblem;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.model.Direction;

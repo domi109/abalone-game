@@ -8,9 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import search.hashing.SymZobristHashable;
-import search.tree.SearchState;
-import search.tree.ZobristHashableState;
+import nl.maastrichtuniversity.dke.libreason.def.SearchState;
+import nl.maastrichtuniversity.dke.libreason.def.hashing.SymmetryHashable;
 import abalone.model.Board;
 import abalone.model.Node;
 import abalone.model.Player;
@@ -20,7 +19,7 @@ import abalone.model.Player;
  * 
  * @author rutger
  */
-public class GameState implements ZobristHashableState, SymZobristHashable
+public class GameState implements SearchState, SymmetryHashable
 {
 
 	private static final long serialVersionUID = 8517713366992214920L;
@@ -125,7 +124,7 @@ public class GameState implements ZobristHashableState, SymZobristHashable
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone()
+	public GameState clone()
 	{
 		GameState s2 = new GameState();
 
@@ -192,15 +191,15 @@ public class GameState implements ZobristHashableState, SymZobristHashable
 	}
 
 	@Override
-	public long zobristHash()
+	public long[] getSymmetryHashes()
 	{
-		return hash;
+		return ZobristHasher.getSymmetries(getHash());
 	}
 
 	@Override
-	public long[] symmetryHashes()
+	public long getHash()
 	{
-		return ZobristHasher.getSymmetries(zobristHash());
+		return hash;
 	}
 
 }

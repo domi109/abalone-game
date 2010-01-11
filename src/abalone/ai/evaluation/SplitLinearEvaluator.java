@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import search.genetics.Gene;
-import search.genetics.GeneticIndividual;
-import search.genetics.Genotype;
-import search.tree.SearchState;
-import search.tree.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.def.SearchState;
+import nl.maastrichtuniversity.dke.libreason.def.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.genetics.Gene;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticIndividual;
+import nl.maastrichtuniversity.dke.libreason.genetics.Genotype;
 import abalone.ai.machinelearning.Weight;
 import abalone.gamestate.GameState;
 import abalone.model.Direction;

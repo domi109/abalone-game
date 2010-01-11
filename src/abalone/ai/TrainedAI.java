@@ -4,22 +4,24 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import search.Action;
-import search.genetics.Genotype;
-import search.hashing.SymZobristHashable;
-import search.hashing.ZobristHashable;
-import search.tree.SearchNode;
-import search.tree.games.minimax.DepthLimitedMinimaxSearch;
-import search.tree.games.minimax.MinimaxSearch;
-import search.tree.games.minimax.hashing.HashableMiniMaxNode;
-import search.tree.games.minimax.hashing.HashingMinimaxSearch;
+import nl.maastrichtuniversity.dke.libreason.def.Action;
+import nl.maastrichtuniversity.dke.libreason.def.hashing.Hashable;
+import nl.maastrichtuniversity.dke.libreason.def.hashing.SymmetryHashable;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.IterativeDeepeningSearch;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.SearchNode;
+import nl.maastrichtuniversity.dke.libreason.genetics.Genotype;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.AbstractMinimaxNode;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.AlphaBetaSearch;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.DLMinimax;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.IDTreeSearch;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.SymmetricHashingMinimaxSearch;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.ai.machinelearning.Weight;
-import abalone.exec.StatisticGenerator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
 import abalone.gamestate.ZobristHasher;
 import abalone.model.Move;
+import abalone.statistics.StatisticGenerator;
 
 public class TrainedAI extends Ai implements StatisticGenerator
 {
@@ -27,7 +29,7 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	private long startTime;
 	private LinearEvaluator evaluator;
 
-	private class AbaloneNode extends HashableMiniMaxNode implements SymZobristHashable
+	private class AbaloneNode extends AbstractMinimaxNode implements SymmetryHashable
 	{
 		private static final long serialVersionUID = -6277809797290009239L;
 
@@ -74,9 +76,15 @@ public class TrainedAI extends Ai implements StatisticGenerator
 		}
 
 		@Override
-		public long[] symmetryHashes()
+		public long[] getSymmetryHashes()
 		{
-			return ZobristHasher.getSymmetries(((ZobristHashable) getState()).zobristHash());
+			return ZobristHasher.getSymmetries(((Hashable) getState()).getHash());
+		}
+
+		@Override
+		public long getHash()
+		{
+			return ((Hashable) getState()).getHash();
 		}
 	}
 
@@ -98,7 +106,7 @@ public class TrainedAI extends Ai implements StatisticGenerator
 	}
 
 	@Override
-	public Move decide(GameState state)
+	public Move decide(GameState state) throws InterruptedException
 	{
 		startTime = System.currentTimeMillis();
 		problem = new AbaloneSearchProblem(state, logic);
@@ -106,23 +114,12 @@ public class TrainedAI extends Ai implements StatisticGenerator
 
 		evaluator.setInitialState(state);
 
-		int PlyLevels = 4;
-
-		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator, problem);
-		// Queue<SearchNode> q = s.getChildren(startNode);
-		// if (Math.random() < .9)
-		// {
-		// return (Move) q.remove().getAction();
-		// }
-		// q.remove();
-		// return (Move) q.remove().getAction();
+		IterativeDeepeningSearch<AbaloneNode> s = new IDTreeSearch<AbaloneNode>(new SymmetricHashingMinimaxSearch<AbaloneNode>(
+				new AlphaBetaSearch<AbaloneNode>(new DLMinimax<AbaloneNode>(problem, evaluator, 1))), 2000);
 
 		SearchNode n = s.search(startNode);
 
-		System.out.println("Eval: " + evaluator.eval(n.getState()) + "  Details: " + evaluator.getFunctionResults());
-
 		return (Move) n.getAction();
-
 	}
 
 	@Override

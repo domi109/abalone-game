@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
-import search.genetics.FitnessEvaluator;
-import search.genetics.GeneticIndividual;
-import search.genetics.GeneticPopulation;
-import search.tree.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.def.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.genetics.FitnessEvaluator;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticIndividual;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticPopulation;
 import abalone.ai.SimpleAI;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
@@ -32,7 +32,7 @@ public class CrossTournament implements FitnessEvaluator
 	}
 
 	@Override
-	public GeneticPopulation eval(GeneticPopulation aPop)
+	public GeneticPopulation eval(GeneticPopulation aPop) throws InterruptedException
 	{
 		// The individuals will probably play multiple matches. Therefore, the
 		// gathered
@@ -64,7 +64,7 @@ public class CrossTournament implements FitnessEvaluator
 	}
 
 	@SuppressWarnings("unchecked")
-	private void match(GeneticIndividual p1, GeneticIndividual p2)
+	private void match(GeneticIndividual p1, GeneticIndividual p2) throws InterruptedException
 	{
 		LinkedList<Player> players = new LinkedList<Player>();
 		players.add(new SimpleAI(logic, (Evaluator) p1));

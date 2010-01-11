@@ -1,12 +1,9 @@
 package abalone.ai;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
-import search.tree.SearchNode;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.SearchNode;
 import abalone.model.Move;
-import abalone.model.Move.MoveType;
 
 class MoveComparator implements Comparator<SearchNode>
 {

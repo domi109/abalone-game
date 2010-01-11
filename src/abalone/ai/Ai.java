@@ -11,6 +11,6 @@ import abalone.model.Player;
 
 
 public abstract class Ai extends Player {
-    public abstract Move decide(GameState state);
+    public abstract Move decide(GameState state) throws InterruptedException;
    
 }

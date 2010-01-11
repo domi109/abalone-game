@@ -1,10 +1,13 @@
 package abalone.model;
 
-import search.Action;
+import nl.maastrichtuniversity.dke.libreason.def.Action;
+
 
 
 public class Move extends Action
 {
+	private static final long serialVersionUID = -1407703599546226823L;
+
 	public enum MoveType
 	{
 		UNKNOWN(0),

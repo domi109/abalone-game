@@ -2,19 +2,17 @@ package abalone.ai;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
-import search.Action;
-import search.hashing.SymZobristHashable;
-import search.hashing.ZobristHashable;
-import search.tree.SearchNode;
-import search.tree.games.minimax.DepthLimitedMinimaxSearch;
-import search.tree.games.minimax.MinimaxSearch;
-import search.tree.games.minimax.hashing.HashableMiniMaxNode;
-import search.tree.games.minimax.hashing.HashingMinimaxSearch;
-import search.tree.games.minimax.hashing.IterativeDeepeningMinimaxSearch;
-import search.tree.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.def.Action;
+import nl.maastrichtuniversity.dke.libreason.def.hashing.Hashable;
+import nl.maastrichtuniversity.dke.libreason.def.hashing.SymmetryHashable;
+import nl.maastrichtuniversity.dke.libreason.def.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.AbstractMinimaxSearch;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.SearchNode;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.AbstractMinimaxNode;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.AlphaBetaSearch;
+import nl.maastrichtuniversity.dke.libreason.impl.treesearch.DLMinimax;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
 import abalone.gamestate.GameState;
@@ -23,7 +21,7 @@ import abalone.model.Move;
 
 public class SimpleAI extends Ai
 {
-	private class AbaloneNode extends HashableMiniMaxNode implements SymZobristHashable
+	private class AbaloneNode extends AbstractMinimaxNode implements SymmetryHashable
 	{
 		private static final long serialVersionUID = -6277809797290009239L;
 
@@ -70,9 +68,15 @@ public class SimpleAI extends Ai
 		}
 
 		@Override
-		public long[] symmetryHashes()
+		public long[] getSymmetryHashes()
 		{
-			return ZobristHasher.getSymmetries(((ZobristHashable) getState()).zobristHash());
+			return ZobristHasher.getSymmetries(((Hashable) getState()).getHash());
+		}
+
+		@Override
+		public long getHash()
+		{
+			return ((Hashable) getState()).getHash();
 		}
 	}
 
@@ -92,23 +96,15 @@ public class SimpleAI extends Ai
 	}
 
 	@Override
-	public Move decide(GameState state)
+	public Move decide(GameState state) throws InterruptedException
 	{
 		problem = new AbaloneSearchProblem(state, logic);
 		AbaloneNode startNode = new AbaloneNode(state);
 		evaluator.setInitialState(state);
 
-		int PlyLevels = 2;
+		int plyLevels = 2;
 
-		MinimaxSearch s = new DepthLimitedMinimaxSearch(PlyLevels, evaluator,problem);
-
-//		Queue<SearchNode> q = s.getChildren(startNode);
-//		if (Math.random() < .9)
-//		{
-//			return (Move) q.remove().getAction();
-//		}
-//		q.remove();
-//		return (Move) q.remove().getAction();
+		AbstractMinimaxSearch<AbaloneNode> s = new AlphaBetaSearch<AbaloneNode>(new DLMinimax<AbaloneNode>(problem,evaluator,plyLevels));
 		
 		SearchNode n = s.search(startNode);
 		

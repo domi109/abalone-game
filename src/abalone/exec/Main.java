@@ -49,7 +49,14 @@ public class Main
 		@Override
 		public void run()
 		{
-			decision = ai.decide(state);
+			try
+			{
+				decision = ai.decide(state);
+			}
+			catch (InterruptedException e)
+			{
+				throw new RuntimeException("AI interrupted unexpectedly");
+			}
 			if (!logic.isLegal(state, decision))
 			{
 				throw new RuntimeException("illegal move chosen by ai: " + decision.toString());
@@ -126,10 +133,10 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-		//players.add(new HumanPlayer("Pong"));
+//		players.add(new HumanPlayer("Pong"));
 		Player player1 = new BasicMinimaxAI(logic);
 		players.add(player1);
-		Player player2 = new TrainedAI(logic);
+		Player player2 = new BasicMinimaxAI(logic);
 		players.add(player2);
 		//players.add(new HumanPlayer("Ping"));
 		state = logic.initState(board, players);
@@ -161,23 +168,6 @@ public class Main
 	 */
 	private void boardUpdated()
 	{
-		// uncommend this to print board hashes
-//		ByteBuffer bb = ByteBuffer.allocateDirect(8);
-//		bb.putLong(0,state.zobristHash());
-//		 for(int i = 0; i<8;i++)
-//		 {
-//		 System.out.print(" |"+(int)bb.get(i)+"|");
-//		 }
-//		 System.out.println();
-		//		
-		// uncommend this to print eval results
-		// OptimizedLinearEvaluator eval = new OptimizedLinearEvaluator(state);
-		// eval.eval(state);
-		// System.out.println(" F1: "+eval.getF1()+" F2: "+eval.getF2()+" F3: "+
-		// eval
-		// .getF3()+" F4: "+eval.getF4()+" F5: "+eval.getF5()+" F6: "+eval.getF6
-		// ());
-
 		if ((state.getCurrentPlayer() instanceof Ai) && logic.getWinner(state) == null)
 		{
 			decider.setAi((Ai) state.getCurrentPlayer());

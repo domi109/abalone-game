@@ -2,7 +2,7 @@ package abalone.ai;
 
 import java.util.Comparator;
 
-import search.tree.SearchNode;
+import nl.maastrichtuniversity.dke.libreason.def.treesearch.SearchNode;
 import abalone.model.Move;
 
 class SimpleMoveComparator implements Comparator<SearchNode>

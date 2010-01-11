@@ -1,4 +1,4 @@
-package abalone.exec;
+package abalone.statistics;
 
 public interface StatisticGenerator 
 {

@@ -1,5 +1,14 @@
 package abalone.ai.machinelearning.TournamentModes;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
+
+import nl.maastrichtuniversity.dke.libreason.def.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.genetics.FitnessEvaluator;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticIndividual;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticPopulation;
 import abalone.ai.SimpleAI;
 import abalone.ai.evaluation.LinearEvaluator;
 import abalone.gamelogic.GameLogic;
@@ -8,12 +17,6 @@ import abalone.gamestate.GameState;
 import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
-import search.genetics.FitnessEvaluator;
-import search.genetics.GeneticIndividual;
-import search.genetics.GeneticPopulation;
-import search.tree.heuristic.Evaluator;
-
-import java.util.*;
 
 public class KOTournament implements FitnessEvaluator
 {
@@ -33,7 +36,7 @@ public class KOTournament implements FitnessEvaluator
 	}
 
 	@Override
-	public GeneticPopulation eval(GeneticPopulation pop)
+	public GeneticPopulation eval(GeneticPopulation pop) throws InterruptedException
 	{
 		// TODO: pop size must be a power of 2; check / correct that
 
@@ -68,7 +71,7 @@ public class KOTournament implements FitnessEvaluator
 		return pop;
 	}
 
-	private GeneticIndividual match(GeneticIndividual ind1, GeneticIndividual ind2)
+	private GeneticIndividual match(GeneticIndividual ind1, GeneticIndividual ind2) throws InterruptedException
 	{
 		LinkedList<Player> players = new LinkedList<Player>();
 		players.add(new SimpleAI(logic, (Evaluator) ind1));
@@ -84,7 +87,8 @@ public class KOTournament implements FitnessEvaluator
 		{
 			SimpleAI current = (SimpleAI) state.getCurrentPlayer();
 			SimpleAI opponent = (SimpleAI) state.getOpponentPlayer();
-			Move move = current.decide(state);
+			Move move;
+			move = current.decide(state);
 			logic.applyMove(state, move);
 
 			if (logic.getWinner(state) != null)

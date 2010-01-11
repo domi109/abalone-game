@@ -1,4 +1,4 @@
-package abalone.exec;
+package abalone.statistics;
 
 import java.awt.Paint;
 import java.awt.Shape;

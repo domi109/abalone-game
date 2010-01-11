@@ -1,7 +1,7 @@
 package abalone.ai.evaluation;
 
-import search.tree.SearchState;
-import search.tree.heuristic.Evaluator;
+import nl.maastrichtuniversity.dke.libreason.def.SearchState;
+import nl.maastrichtuniversity.dke.libreason.def.heuristic.Evaluator;
 import abalone.gamestate.GameState;
 
 public class SimpleEvaluator implements Evaluator<Double>

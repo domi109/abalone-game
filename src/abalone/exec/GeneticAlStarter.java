@@ -1,35 +1,38 @@
-package abalone.ai.machinelearning;
+package abalone.exec;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import search.genetics.GeneticPopulation;
-import search.genetics.GeneticSearch;
-import search.genetics.reproduction.CrossReproduction;
-import search.genetics.reproduction.KeepBestPairwiseReproduction;
-import search.genetics.reproduction.NoCrossoverReproduction;
-import search.genetics.selection.ElitistSelection;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticPopulation;
+import nl.maastrichtuniversity.dke.libreason.genetics.GeneticSearch;
+import nl.maastrichtuniversity.dke.libreason.genetics.reproduction.KeepBestPairwiseReproduction;
+import nl.maastrichtuniversity.dke.libreason.genetics.selection.ElitistSelection;
 import abalone.ai.evaluation.LinearEvaluator;
-import abalone.ai.machinelearning.TournamentModes.CrossTournament;
+import abalone.ai.machinelearning.TournamentModes.CrossTournamentMultiThreaded;
 import abalone.ai.machinelearning.TournamentModes.KOTournament;
-import abalone.gamelogic.StandardAbaloneLogic;
 
 public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new KOTournament(4));
+		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new CrossTournamentMultiThreaded());
 		search.setSelectionSize(8);
 
 		int numberOfGenerations = 50;
 
+		try
+		{
 		while(search.getGeneration() < numberOfGenerations)
 		{
 			search.spawnGeneration();
 		}
-		//printPop(search.getPopulation());
+		}
+		catch (InterruptedException e)
+		{
+			throw new RuntimeException("Unexpected Interrupt");
+		}
 	}
 
 	private static GeneticPopulation generatePop(int popSize)
