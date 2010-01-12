@@ -14,13 +14,13 @@ import abalone.adt.KeyValuePair;
  */
 public class Board implements Serializable
 {
+	private static final long serialVersionUID = 7173572857895732987L;
 	/**
 	 * The central node of the board.
 	 */
 	private Node centralNode;
 	private List<Node> nodes;
 	private List<List<KeyValuePair<Direction, Node>>> equiPaths;
-	private long hash;
 	
 	public List<List<KeyValuePair<Direction,Node>>> getEquiPaths()
 	{

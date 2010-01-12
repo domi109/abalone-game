@@ -71,11 +71,12 @@ public class KOTournament implements FitnessEvaluator
 		return pop;
 	}
 
+	@SuppressWarnings("unchecked")
 	private GeneticIndividual match(GeneticIndividual ind1, GeneticIndividual ind2) throws InterruptedException
 	{
 		LinkedList<Player> players = new LinkedList<Player>();
-		players.add(new SimpleAI(logic, (Evaluator) ind1));
-		players.add(new SimpleAI(logic, (Evaluator) ind2));
+		players.add(new SimpleAI(logic, (Evaluator<Double>) ind1));
+		players.add(new SimpleAI(logic, (Evaluator<Double>) ind2));
 		GameState state = logic.initState(board, players);
 
 		boolean finished = false;

@@ -7,6 +7,7 @@
  */
 package abalone.ai.evaluation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,9 @@ import abalone.model.Direction;
 import abalone.model.Node;
 import abalone.model.Player;
 
-public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
+public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>, Serializable
 {
+	private static final long serialVersionUID = 1875360571407017164L;
 	private double fitness;
 	private Genotype phenotype;
 	private GameState initialState;
@@ -39,7 +41,7 @@ public class LinearEvaluator implements GeneticIndividual, Evaluator<Double>
 	 * * (1 + mutationFactor)]
 	 */
 	public final double mutationRate = 0.2;
-	public final double mutationFactor = 1;
+	public final double mutationFactor = 2;
 
 	// Variables for scaling the functions.
 	private List<Integer> max = new ArrayList<Integer>(6);

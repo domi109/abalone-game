@@ -32,8 +32,6 @@ public class BoardWidget extends QGraphicsView
 
 	// The game state that is being watched
 	private GameState state;
-	// The count of activated marbles
-	private int activeCount = 0;
 	// The marble radius
 	private final static double r = 15;
 	

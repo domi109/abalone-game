@@ -17,16 +17,19 @@ import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
 
-public class CrossTournament implements FitnessEvaluator
+public class RandomMatchTournament implements FitnessEvaluator
 {
 	private GameLogic logic;
 	private Board board;
 	private GeneticPopulation pop;
+	private int matches;
+	private Random rand = new Random();
 
-	public CrossTournament()
+	public RandomMatchTournament(int matches)
 	{
 		this.logic = new StandardAbaloneLogic();
 		this.board = logic.initBoard();
+		this.matches = matches;
 	}
 
 	@Override
@@ -39,13 +42,12 @@ public class CrossTournament implements FitnessEvaluator
 		// of each individual is calculated using these stats.
 		this.pop = aPop;
 
-		// random matches for each Individual - just for testing purposes
 
 		for (int i = 0; i < pop.size(); i++)
 		{
-			for(int j = i+1; j<pop.size();j++)
+			for(int j =0; j<matches;j++)
 			{
-				match(pop.get(i),pop.get(j));
+				match(pop.get(i),pop.get(rand.nextInt(pop.size())));
 			}
 		}
 
@@ -55,6 +57,10 @@ public class CrossTournament implements FitnessEvaluator
 	@SuppressWarnings("unchecked")
 	private void match(GeneticIndividual p1, GeneticIndividual p2) throws InterruptedException
 	{
+		if(p1 == p2)
+		{
+			return;
+		}
 		LinkedList<Player> players = new LinkedList<Player>();
 		players.add(new SimpleAI(logic, (Evaluator) p1));
 		players.add(new SimpleAI(logic, (Evaluator) p2));
@@ -81,10 +87,9 @@ public class CrossTournament implements FitnessEvaluator
 				// update statistics for loser
 				double lFit = ((LinearEvaluator) opponent.getEvaluator()).getFitness() - 1;
 				((LinearEvaluator) opponent.getEvaluator()).setFitness(lFit);
-				System.out.println("win");
 
 			}
-			else if (numberOfPlies == 20)
+			else if (numberOfPlies == 200)
 			{
 				finished = true;
 
@@ -99,7 +104,6 @@ public class CrossTournament implements FitnessEvaluator
 				// update statistics for opponent
 				double lFit = ((LinearEvaluator) opponent.getEvaluator()).getFitness() - .1 * pushed + .1 * lost;
 				((LinearEvaluator) opponent.getEvaluator()).setFitness(lFit);
-				System.out.println("timeout " + lost + " vs. "+pushed);
 
 			}
 			numberOfPlies++;

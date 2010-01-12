@@ -179,8 +179,8 @@ public class CrossTournamentMultiThreaded implements FitnessEvaluator
 		public void run()
 		{
 			LinkedList<Player> players = new LinkedList<Player>();
-			players.add(new SimpleAI(logic, (Evaluator) p1));
-			players.add(new SimpleAI(logic, (Evaluator) p2));
+			players.add(new SimpleAI(logic, (Evaluator<Double>) p1));
+			players.add(new SimpleAI(logic, (Evaluator<Double>) p2));
 			Board boardT = logic.initBoard();
 			GameState state = logic.initState(boardT, players);
 

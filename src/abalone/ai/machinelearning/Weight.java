@@ -1,12 +1,14 @@
 package abalone.ai.machinelearning;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import nl.maastrichtuniversity.dke.libreason.genetics.Gene;
 
-public class Weight implements Gene<Double>
+public class Weight implements Gene<Double>, Serializable
 {
-    private Double value;
+	private static final long serialVersionUID = -4743508790181457310L;
+	private Double value;
 
 	public Weight()
 	{

@@ -119,7 +119,7 @@ public class BasicMinimaxAI extends Ai implements StatisticGenerator
 			new IDTreeSearch<AbaloneNode>(
 					new SymmetricHashingMinimaxSearch<AbaloneNode>(
 						new AlphaBetaSearch<AbaloneNode>(
-							new DLMinimax<AbaloneNode>(problem, evaluator, 1))),5000);
+							new DLMinimax<AbaloneNode>(problem, evaluator, 1))),1000);
 
 		
 		long time = System.currentTimeMillis();
