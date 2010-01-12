@@ -1,3 +1,7 @@
+/*
+ *  A simple evaluator, which compares moves based upon if a marble is lost or not.
+ *
+ */
 package abalone.ai.evaluation;
 
 import nl.maastrichtuniversity.dke.libreason.def.SearchState;
@@ -12,6 +16,7 @@ public class SimpleEvaluator implements Evaluator<Double>
 	{
 		this.initialState = initialState;
 	}
+
 	@Override
 	public Double eval(SearchState state)
 	{
@@ -20,5 +25,4 @@ public class SimpleEvaluator implements Evaluator<Double>
 		int opponentLoss = s.getMarblesRemoved().get(initialState.getOpponentPlayer());
 		return (opponentLoss-ownLoss)/(double)s.getMarblesToWin();
 	}
-
 }
