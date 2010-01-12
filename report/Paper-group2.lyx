@@ -1,0 +1,533 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding latin9
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Abalone
+\end_layout
+
+\begin_layout Author
+Daniel Mescheder, Frans van den Heuvel, Achim Leydecker,
+\begin_inset Newline newline
+\end_inset
+
+ Rutger van Driel, and Joren Vandelaer
+\end_layout
+
+\begin_layout Address
+\align center
+Department of Knowledge Engineering, Maastricht University
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Abstract
+\end_layout
+
+\begin_layout Standard
+Abstract will go here.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Introduction
+\end_layout
+
+\begin_layout Section*
+Background Information
+\end_layout
+
+\begin_layout Standard
+Testing the references.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Abalearn1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Abalearn2"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Abla1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Oswin1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Benson1"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MonteCarlo1,MonteCarlo2"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+The Game of Abalone
+\end_layout
+
+\begin_layout Standard
+Abalone is a two-person zero-sum board game, with perfect information.
+ The goal of the game is to remove 6 opponent marbles from the hexagonal
+ board.
+ 
+\end_layout
+
+\begin_layout Section*
+Research Questions
+\end_layout
+
+\begin_layout Standard
+The following are possible research questions:
+\end_layout
+
+\begin_layout Enumerate
+Is it possible for an AI agent to play Abalone on a professional level?
+\end_layout
+
+\begin_layout Enumerate
+Which heuristics are suited best for this problem?
+\end_layout
+
+\begin_layout Enumerate
+Which machine learning techniques are best used to optimize the performance
+ of the AI agent?
+\end_layout
+
+\begin_layout Enumerate
+Which type of opponent modeling will improve the performance?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Complexity of Abalone
+\end_layout
+
+\begin_layout Section*
+State-Space Complexity
+\end_layout
+
+\begin_layout Standard
+Approximation of an upper bound for the number of possible game positions:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\backslash
+sum_{k=8}^{14}
+\backslash
+sum_{m=9}^{14}
+\backslash
+frac{61!}{k!(61-k)!}
+\backslash
+times
+\backslash
+frac{(61-k)!}{m!((61-k)-m)!}
+\backslash
+] 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The number 14 represents the amount of marbles which each player starts
+ with.
+\end_layout
+
+\begin_layout Itemize
+The number 61 represents the slots on the board.
+ 
+\end_layout
+
+\begin_layout Itemize
+k = 8 is for the opposite player the minimum when it looses.
+ 
+\end_layout
+
+\begin_layout Itemize
+m = 9 is for the player, to ensure it does not loose.
+\end_layout
+
+\begin_layout Standard
+Overall a relatively low state-space complexity.
+\end_layout
+
+\begin_layout Section*
+Game-Tree Complexity
+\end_layout
+
+\begin_layout Standard
+From research it was discovered that the branching factor of Abalone to
+ be around 60 – 65.
+ The average game length for humans is around 87 ply humans and around 130
+ ply for computers.
+ 
+\end_layout
+
+\begin_layout Standard
+Lower bound: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[60^{87}=5.0
+\backslash
+times10^{154}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Upper bound: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[65^{130}=4.77
+\backslash
+times10^{235}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Overall a high game-tree complexity.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+General Tree Searching Techniques
+\end_layout
+
+\begin_layout Section*
+Tree Search
+\end_layout
+
+\begin_layout Subsection*
+Tree Search Strategies
+\end_layout
+
+\begin_layout Subsubsection*
+Depth-Limited Search
+\end_layout
+
+\begin_layout Subsubsection*
+Iterative Deepening Search
+\end_layout
+
+\begin_layout Subsubsection*
+Tree Searching Algorithms
+\end_layout
+
+\begin_layout Subsubsection*
+Minimax Algorithm
+\end_layout
+
+\begin_layout Subsubsection*
+Alpha-Beta Pruning
+\end_layout
+
+\begin_layout Section*
+Tree Search Optimizations
+\end_layout
+
+\begin_layout Subsection*
+Transposition Tables
+\end_layout
+
+\begin_layout Subsubsection*
+Zorbist Hashing
+\end_layout
+
+\begin_layout Subsubsection*
+Symmetry Aware Hashing
+\end_layout
+
+\begin_layout Subsection*
+Heuristics
+\end_layout
+
+\begin_layout Subsubsection*
+Move-Ordering
+\end_layout
+
+\begin_layout Subsubsection*
+Killer-Moves
+\end_layout
+
+\begin_layout Section*
+Evaluation Functions
+\end_layout
+
+\begin_layout Subsection*
+Linear Evaluation Functions
+\end_layout
+
+\begin_layout Subsubsection*
+Simple Evaluator
+\end_layout
+
+\begin_layout Subsubsection*
+Lemmen's Evaluator
+\end_layout
+
+\begin_layout Subsection*
+Non-Linear Evaluation Functions
+\end_layout
+
+\begin_layout Subsubsection*
+Non-Linear Evaluator
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Genetic Algorithm
+\end_layout
+
+\begin_layout Section*
+Design
+\end_layout
+
+\begin_layout Section*
+Implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Opponent Modeling
+\end_layout
+
+\begin_layout Section*
+Design
+\end_layout
+
+\begin_layout Section*
+Implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Experiments
+\end_layout
+
+\begin_layout Section*
+Experimental Setup
+\end_layout
+
+\begin_layout Enumerate
+Our AI vs ABA-PRO*
+\end_layout
+
+\begin_layout Enumerate
+Our AI vs Random Software Abalone*
+\end_layout
+
+\begin_layout Enumerate
+Out AI vs NetAbalone* 
+\end_layout
+
+\begin_layout Enumerate
+Compare with and without board-hashing
+\end_layout
+
+\begin_layout Enumerate
+Cutoff at a certain depth vs iterative deepening
+\end_layout
+
+\begin_layout Enumerate
+If GA weights are (much) better than hand picked
+\end_layout
+
+\begin_layout Enumerate
+Evolution of the weights (in a nice graph)
+\end_layout
+
+\begin_layout Section*
+Results
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Conclusions
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Further Research
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "bibliography"
+options "bibtotoc,plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
