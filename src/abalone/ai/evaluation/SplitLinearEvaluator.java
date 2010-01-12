@@ -2,8 +2,8 @@
  *  A linear, weighted evaluation function based on a paper 'Constructing an Abalone Game-Playing Agent'
  *  by N.P.P.M. Lemmens (18th June 2005).
  *
- *  The weights are NOT trained in this version, but can be adjusted.
- *
+ *  The weights are trained in this version, and can also be adjusted. Each function has been split into
+ *  opponent and own player parts.
  */
 package abalone.ai.evaluation;
 
