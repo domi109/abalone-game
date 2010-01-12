@@ -61,19 +61,10 @@ public class NonLinearEvaluator implements GeneticIndividual, Evaluator<Double>
 	{
 		this.phenotype = phenotype;
 		max.add(0, 46);
-		max.add(1, 56);
-		max.add(2, 11);
-		max.add(3, 84);
-		max.add(4, 6);
-		max.add(5, 6);
+                max.add(1, 56);
 
 		min.add(0, -46);
-		min.add(1, -56);
-		min.add(2, -11);
-		min.add(3, -84);
-		min.add(4, 0);
-		min.add(5, 0);
-
+                min.add(1, -56);
 	}
 
 	/*
@@ -118,64 +109,36 @@ public class NonLinearEvaluator implements GeneticIndividual, Evaluator<Double>
 			Set<Node> opponentPlayerMarbles = s.getMarbles(opponentPlayer);
 			// Get the lost marbles per player.
 			Map<Player, Integer> lostMarbles = s.getMarblesRemoved();
+                        final int EXPONENTIAL_CONSTANT = 1;
 
 			// Calculations for current player.
 			int currentPlayerManhattanDistanceCount = 0;
 			int currentPlayerTeammatesCount = 0;
-			int currentPlayerBreakStrongGroupStrategyCount = 0;
-			int currentPlayerStrengthenGroupStrategyCount = 0;
-			for (Node node : currentPlayerMarbles)
-			{
-				currentPlayerManhattanDistanceCount += node.getManhDist();
-				for (Direction d : Direction.UPPER_LEFT)
-				{
-					if (s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node))
-					{
-						currentPlayerTeammatesCount++;
-					}
-					if (s.getMarbleOwner(node.getNeighbour(d)) == opponentPlayer && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == opponentPlayer)
-					{
-						currentPlayerBreakStrongGroupStrategyCount++;
-					}
-					if (s.getMarbleOwner(node.getNeighbour(d)) == opponentPlayer && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == currentPlayer)
-					{
-						currentPlayerStrengthenGroupStrategyCount++;
-					}
-				}
+			for (Node node : currentPlayerMarbles){
+                            currentPlayerManhattanDistanceCount += node.getManhDist();
+                            for (Direction d : Direction.UPPER_LEFT){
+                                if (s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node)){
+                                    currentPlayerTeammatesCount++;
+                                }
+                            }
 			}
 
 			// Calculations for opponent player.
 			int opponentPlayerManhattanDistanceCount = 0;
 			int opponentPlayerTeammatesCount = 0;
-			int opponentPlayerBreakStrongGroupStrategyCount = 0;
-			int opponentPlayerStrengthenGroupStrategyCount = 0;
-			for (Node node : opponentPlayerMarbles)
-			{
-				opponentPlayerManhattanDistanceCount += node.getManhDist();
-				for (Direction d : Direction.UPPER_LEFT)
-				{
-					if (s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node))
-					{
-						opponentPlayerTeammatesCount++;
-					}
-					if (s.getMarbleOwner(node.getNeighbour(d)) == currentPlayer && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == currentPlayer)
-					{
-						opponentPlayerBreakStrongGroupStrategyCount++;
-					}
-					if (s.getMarbleOwner(node.getNeighbour(d)) == currentPlayer && s.getMarbleOwner(node.getNeighbour(d.getOpposite())) == opponentPlayer)
-					{
-						opponentPlayerStrengthenGroupStrategyCount++;
-					}
-				}
-			}
+			for (Node node : opponentPlayerMarbles){
+                            opponentPlayerManhattanDistanceCount += node.getManhDist();
+                            for (Direction d : Direction.UPPER_LEFT){
+                                if (s.getMarbleOwner(node.getNeighbour(d)) == s.getMarbleOwner(node)){
+                                    opponentPlayerTeammatesCount++;
+                                }
+                            }
+                        }
+                        
 			// Calculation of individual functions
 			functionResults = new ArrayList<Integer>();
-			functionResults.add(0,opponentPlayerManhattanDistanceCount - currentPlayerManhattanDistanceCount);
-			functionResults.add(1,currentPlayerTeammatesCount - opponentPlayerTeammatesCount);
-			functionResults.add(2,currentPlayerBreakStrongGroupStrategyCount - opponentPlayerBreakStrongGroupStrategyCount);
-			functionResults.add(3,currentPlayerStrengthenGroupStrategyCount - opponentPlayerStrengthenGroupStrategyCount);
-			functionResults.add(4,lostMarbles.get(opponentPlayer));
-			functionResults.add(5,lostMarbles.get(currentPlayer));
+                        functionResults.add(0, (int) ((Math.pow(opponentPlayerManhattanDistanceCount, (lostMarbles.get(opponentPlayer) + EXPONENTIAL_CONSTANT))) - (Math.pow(currentPlayerManhattanDistanceCount, (lostMarbles.get(currentPlayer) + EXPONENTIAL_CONSTANT)))));
+                        functionResults.add(1, currentPlayerTeammatesCount - opponentPlayerTeammatesCount);
 
 			// Evaluation.
 			double eval = 0;
