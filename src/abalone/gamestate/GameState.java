@@ -32,11 +32,13 @@ public class GameState implements SearchState, SymmetryHashable
 	private Map<Node, Player> marbleOwners;
 	private Map<Player, Set<Node>> marblePositions;
 	private Long hash = null;
+	private Player winner;
 
 	public GameState()
 	{
 		marbleOwners = new HashMap<Node, Player>();
 		marblePositions = new HashMap<Player, Set<Node>>();
+		winner = null;
 	}
 
 	public Board getBoard()
@@ -134,6 +136,7 @@ public class GameState implements SearchState, SymmetryHashable
 		s2.opponentPlayer = this.opponentPlayer;
 		s2.marblesRemoved = new HashMap<Player, Integer>(marblesRemoved);
 		s2.setPlayers(this.players);
+		s2.winner = winner;
 		s2.marbleOwners = new HashMap<Node, Player>(this.marbleOwners);
 		for (Entry<Player, Set<Node>> e : marblePositions.entrySet())
 		{
@@ -201,5 +204,14 @@ public class GameState implements SearchState, SymmetryHashable
 	{
 		return hash;
 	}
-
+	
+	public Player getWinner()
+	{
+		return winner;
+	}
+	
+	public void setWinner(Player winner)
+	{
+		this.winner = winner;
+	}
 }

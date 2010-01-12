@@ -221,6 +221,10 @@ public class StandardAbaloneLogic implements GameLogic
 			// marble pushed off the board
 			int removed = state.getMarblesRemoved().get(state.getMarbleOwner(m));
 			removed++;
+			if(removed >= state.getMarblesToWin())
+			{
+				state.setWinner(p);
+			}
 			state.getMarblesRemoved().put(state.getMarbleOwner(m), removed);
 			state.removeMarble(m);
 			n = m;
@@ -317,15 +321,7 @@ public class StandardAbaloneLogic implements GameLogic
 	@Override
 	public Player getWinner(GameState state)
 	{
-		if (state.getMarblesRemoved().get(state.getCurrentPlayer()) >= marblesToWin)
-		{
-			return state.getOpponentPlayer();
-		}
-		else if (state.getMarblesRemoved().get(state.getOpponentPlayer()) >= marblesToWin)
-		{
-			return state.getCurrentPlayer();
-		}
-		return null;
+		return state.getWinner();
 	}
 
 	@Override
