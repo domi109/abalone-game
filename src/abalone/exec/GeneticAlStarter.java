@@ -17,22 +17,37 @@ public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
+		long time = System.currentTimeMillis();
+
 		GeneticSearch search = new GeneticSearch(generatePop(16), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new CrossTournamentMultiThreaded());
 		search.setSelectionSize(8);
 
-		int numberOfGenerations = 50;
+		int numberOfGenerations = 10;
 
 		try
 		{
+			long totalRunTime = 0;
 		while(search.getGeneration() < numberOfGenerations)
 		{
+			long timeGen = System.currentTimeMillis();
+			
 			search.spawnGeneration();
+	
+			GeneticPopulation pop = search.getPopulation();
+			System.out.print(search.getGeneration() + "/" + numberOfGenerations + "   ");
+			
+			totalRunTime += System.currentTimeMillis() - timeGen;
+			long averageTime = (totalRunTime / search.getGeneration() * (numberOfGenerations - search.getGeneration())) / 1000; // in seconds
+			System.out.print("Estimated time left: " + ((int) averageTime / 3600) + "h " + ((int) (averageTime % 3600) / 60) + "m " + (averageTime % 60) + "s");
+			System.out.println();
 		}
 		}
 		catch (InterruptedException e)
 		{
 			throw new RuntimeException("Unexpected Interrupt");
 		}
+		System.out.println("Finished!");
+		System.out.println("Running time: " + (System.currentTimeMillis() - time)/1000 + " sec");
 	}
 
 	private static GeneticPopulation generatePop(int popSize)
