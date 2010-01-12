@@ -48,13 +48,6 @@ public class SimpleAI extends Ai
 				// copy the current state and apply the action on the state copy
 				GameState newState = (GameState) getState().clone();
 
-				if (!logic.isLegal(newState, (Move) a))
-				{
-					// TODO: leave this if statement here until youre sure that
-					// the AI knows what it's doin'
-					throw new RuntimeException("illegal move generated: " + a.toString());
-				}
-
 				logic.applyMove(newState, (Move) a);
 
 				// create new node and assign properties
