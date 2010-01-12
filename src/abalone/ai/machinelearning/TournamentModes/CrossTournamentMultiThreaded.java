@@ -60,7 +60,12 @@ public class CrossTournamentMultiThreaded implements FitnessEvaluator
 				counter++;
 			}
 		}
-		// System.out.println("nr matches: " + counter);
+//		System.out.println("nr matches: " + counter);
+/*		for (int i = 0; i < counter; i++) {
+			System.out.print(".");
+		}
+		System.out.print("V");
+		System.out.println();*/
 		ArrayList<ArrayList<Thread>> test = splitMatches(matches);
 		runMatches(test);
 
@@ -110,21 +115,29 @@ public class CrossTournamentMultiThreaded implements FitnessEvaluator
 			for (Thread matchThread : matchList)
 			{
 				matchThread.start();
-				// System.out.println("thread started");
 			}
 
 			finished = false;
 			// System.out.println("Starting while loop");
+			int counter;
+			int counter2 = 0;
 			while (!finished)
 			{
 				finished = true;
+				counter = 0;
 				for (Thread thread : matchList)
 				{
 					if (thread.isAlive())
 						finished = false;
+					else counter++;
+				}
+				if(counter > counter2) {
+					System.out.print(".");
+					counter2 = counter;
 				}
 			}
 		}
+		System.out.println();
 		// System.out.println("Total nr threads: " + nrMatches);
 	}
 
@@ -172,7 +185,7 @@ public class CrossTournamentMultiThreaded implements FitnessEvaluator
 			GameState state = logic.initState(boardT, players);
 
 			boolean finished = false;
-			int numberOfPlies = 0;
+			int numberOfPlies = 1;
 
 			try
 			{
