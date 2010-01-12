@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -66,27 +66,30 @@ Department of Knowledge Engineering, Maastricht University
 
 \end_layout
 
-\begin_layout Part*
-Abstract
-\end_layout
-
-\begin_layout Standard
+\begin_layout Abstract
 Abstract will go here.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
+\begin_layout Section
+Introduction
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Introduction"
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Part
-Introduction
-\end_layout
-
-\begin_layout Section*
+\begin_layout Subsection
 Background Information
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Background-Information"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -149,8 +152,15 @@ key "MonteCarlo1,MonteCarlo2"
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 The Game of Abalone
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:The-Game-of"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -160,8 +170,15 @@ Abalone is a two-person zero-sum board game, with perfect information.
  
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Research Questions
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Research-Questions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -192,12 +209,26 @@ Which type of opponent modeling will improve the performance?
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Complexity of Abalone
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Complexity-of-Abalone"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 State-Space Complexity
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:State-Space-Complexity"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -255,8 +286,15 @@ m = 9 is for the player, to ensure it does not loose.
 Overall a relatively low state-space complexity.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Game-Tree Complexity
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Game-Tree-Complexity"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -320,88 +358,188 @@ Overall a high game-tree complexity.
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 General Tree Searching Techniques
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:General-Tree-Searching"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Tree Search
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Tree-Search"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
-Tree Search Strategies
+\begin_layout Standard
+As abalone is a deterministic, full information zero sum game, it is suited
+ well for the standard minimax search approach
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AIAMA"
+
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Subsubsection*
-Depth-Limited Search
-\end_layout
-
-\begin_layout Subsubsection*
-Iterative Deepening Search
-\end_layout
-
-\begin_layout Subsubsection*
-Tree Searching Algorithms
-\end_layout
-
-\begin_layout Subsubsection*
-Minimax Algorithm
-\end_layout
-
-\begin_layout Subsubsection*
-Alpha-Beta Pruning
-\end_layout
-
-\begin_layout Section*
+\begin_layout Subsection
 Tree Search Optimizations
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Tree-Search-Optimizations"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection
 Transposition Tables
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Transposition-Tables"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Standard
+In section
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Complexity-of-Abalone"
+
+\end_inset
+
+ it was pointed out that abalone has a complex game tree while it's state
+ space size is comparably modest.
+ This leads to the conclusion, that a lot of states in the tree are reached
+ by multiple branches.
+\end_layout
+
+\begin_layout Standard
+A typical solution for this is a transopostion table.
+\end_layout
+
+\begin_layout Subsubsection
 Zorbist Hashing
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Zorbist-Hashing"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Symmetry Aware Hashing
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Symmetry-Aware-Hashing"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsection
 Heuristics
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Heuristics"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Move-Ordering
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Move-Ordering"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Killer-Moves
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Killer-Moves"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Evaluation Functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Evaluation-Functions"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection
 Linear Evaluation Functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Linear-Evaluation-Functions"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Simple Evaluator
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Simple-Evaluator"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Lemmen's Evaluator
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Lemmen's-Evaluator"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
-Non-Linear Evaluation Functions
-\end_layout
-
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 Non-Linear Evaluator
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Non-Linear-Evaluator"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -411,16 +549,37 @@ Non-Linear Evaluator
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Genetic Algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Genetic-Algorithm"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Design
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:GA-Design"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:GA-Implementation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -430,16 +589,37 @@ Implementation
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Opponent Modeling
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Opponent-Modeling"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Design
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:OpponentModeling-Design"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:OpponentModeling-Implementation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -449,12 +629,26 @@ Implementation
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Experiments
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 Experimental Setup
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Experimental-Setup"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -485,8 +679,15 @@ If GA weights are (much) better than hand picked
 Evolution of the weights (in a nice graph)
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Results
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Results"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -496,8 +697,15 @@ Results
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -507,8 +715,15 @@ Conclusions
 
 \end_layout
 
-\begin_layout Part
+\begin_layout Section
 Further Research
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Further-Research"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -522,7 +737,7 @@ Further Research
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "bibliography"
-options "bibtotoc,plain"
+options "bibtotoc,apalike2"
 
 \end_inset
 
