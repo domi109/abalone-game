@@ -389,14 +389,77 @@ key "AIAMA"
 
 \end_inset
 
-.
+ which can be further enhanced by alpha-beta pruning.
+ With all optimizations, including move ordering and the hashing techniques
+ described in the following sections, it was possible to search up to a
+ depth of five ply in reasonable time.
 \end_layout
 
-\begin_layout Subsection
-Tree Search Optimizations
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Tree-Search-Optimizations"
+\begin_layout Subsubsection
+Move Ordering
+\end_layout
+
+\begin_layout Standard
+As stated before, alpha-beta pruning as a standard optimization technique
+ for minimax searches could successfully applied to the game of abalone.
+ It's real impact on efficiency, however, highly depends on the move ordering
+ technique applied.
+ Former research has shown that in the case of abalone the following ordering
+ was effective
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+3-marble pushoff moves.
+\end_layout
+
+\begin_layout Enumerate
+2-marble pushoff moves.
+\end_layout
+
+\begin_layout Enumerate
+3-marble sumeti moves.
+\end_layout
+
+\begin_layout Enumerate
+2-marble sumeti moves.
+\end_layout
+
+\begin_layout Enumerate
+3-marble inline moves.
+\end_layout
+
+\begin_layout Enumerate
+2-marble inline moves.
+\end_layout
+
+\begin_layout Enumerate
+3-marble broadside moves.
+\end_layout
+
+\begin_layout Enumerate
+2-marble broadside moves.
+\end_layout
+
+\begin_layout Enumerate
+Single marble moves.
+\end_layout
+
+\begin_layout Standard
+This move ordering has led to a good performance of the alpha beta pruning
+ 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+give results/statistics here
+\end_layout
 
 \end_inset
 
@@ -404,7 +467,7 @@ name "sub:Tree-Search-Optimizations"
 \end_layout
 
 \begin_layout Subsubsection
-Transposition Tables
+Transposition Tables and Zobrist Hashing
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Transposition-Tables"
@@ -424,23 +487,53 @@ reference "sec:Complexity-of-Abalone"
 
  it was pointed out that abalone has a complex game tree while it's state
  space size is comparably modest.
- This leads to the conclusion, that a lot of states in the tree are reached
- by multiple branches.
-\end_layout
-
-\begin_layout Standard
-A typical solution for this is a transopostion table.
-\end_layout
-
-\begin_layout Subsubsection
-Zorbist Hashing
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Zorbist-Hashing"
+ It is possible to conclude, that many states are reached by multiple branches.
+ This imbalance suggests that transposition tables might yield an improvement
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AIAMA"
 
 \end_inset
 
+.
+\end_layout
 
+\begin_layout Standard
+A famous transposition table implementation for board games is the so called
+ Zobrist Hashing.
+ Let 
+\begin_inset Formula \[
+\text{hash}:\mathbb{F}\times\mathbb{A}\rightarrow\mathbb{Z}\]
+
+\end_inset
+
+be a function that maps a combination of a field on the board 
+\begin_inset Formula $f\in\mathbb{F}$
+\end_inset
+
+ and a possible assignment 
+\begin_inset Formula $a\in\mathbb{A}$
+\end_inset
+
+ to a individual hash-value (normally a 64 bit integer value).
+ A state of the game is identified by a function 
+\begin_inset Formula \[
+\text{state}:\mathbb{F}\rightarrow\mathbb{A}\]
+
+\end_inset
+
+that maps each field of the board to it's current assignment.
+ A Zobrist hash function is then defined as
+\begin_inset Formula \[
+\text{zobrist}\left(\text{state}\right)=\bigotimes_{f\in\mathbb{F}}\text{hash}\left(f,\text{state}\left(f\right)\right)\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\bigotimes$
+\end_inset
+
+ is the bitwise xor operation over the set of all hashes.
 \end_layout
 
 \begin_layout Subsubsection
@@ -452,6 +545,251 @@ name "sub:Symmetry-Aware-Hashing"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+As explained in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Complexity-of-Abalone"
+
+\end_inset
+
+, an important factor that reduces the statespace in abalone is the fact
+ that there are twelve symmetric versions of every state.
+ The standard Zobrist Hashing approach however does not take those symmetries
+ into account.
+ There are two main ideas that can lead to the desired, symmetry aware behaviour
+:
+\end_layout
+
+\begin_layout Enumerate
+Let the hashing work in such a way, that all symmetric versions of a state
+ lead to the same hash value.
+\end_layout
+
+\begin_layout Enumerate
+Provide a function that efficiently allows to conclude from a given hash
+ to all the hashes of symmetric states and store them all in the hash table.
+\end_layout
+
+\begin_layout Standard
+The latter approach has the disadvantage that the size of the transposition
+ table grows by a factor that corresponds to the number of symmetries while
+ the first approach comes with a potential computational overhead.
+ The latter approach has successfully been applied to the game of go
+\begin_inset CommandInset citation
+LatexCommand cite
+key "HuimaGroupZobrist"
+
+\end_inset
+
+.
+ The main idea behind this symmetry aware hashing technique is, that the
+ symmetries of the board graph form a dihedral group.
+ The dihedral group can be constructed with two generating elements - in
+ our case we can choose the clockwise rotation by one step 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and the mirroring about the vertical axis 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ The dihedral group of the abalone board then consist of the following elements:
+\begin_inset Formula \[
+e,\alpha,\alpha^{2},\alpha^{3},\alpha^{4},\alpha^{5},\beta,\beta\alpha,\beta\alpha^{2},\beta\alpha^{3},\beta\alpha^{4},\beta\alpha^{5}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now want to define a permutative group on our hashes which is isomorphic
+ to the dihedral group of board symmetries.
+ For this purpose two bitwise functions are used as generating elements:
+\begin_inset Formula \[
+\pi:\left(b_{1},b_{2},b_{3},b_{4},b_{5},b_{6},b_{7},b_{8}\right)\rightarrow\left(b_{1},b_{3},b_{4},b_{5},b_{6},b_{7},b_{2},b_{8}\right)\]
+
+\end_inset
+
+
+\begin_inset Formula \[
+\rho:\left(b_{1},b_{2},b_{3},b_{4},b_{5},b_{6},b_{7},b_{8}\right)\rightarrow\left(b_{1},b_{7},b_{6},b_{5},b_{4},b_{3},b_{2},b_{8}\right)\]
+
+\end_inset
+
+where 
+\begin_inset Formula $b_{i}$
+\end_inset
+
+ is the byte of the hash at position 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Observe, that 
+\begin_inset Formula $\pi$
+\end_inset
+
+ behaves similar as 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+rotating
+\begin_inset Quotes erd
+\end_inset
+
+ the hash in 6 steps, while 
+\begin_inset Formula $\rho$
+\end_inset
+
+ behaves similar as 
+\begin_inset Formula $\beta$
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+mirroring
+\begin_inset Quotes erd
+\end_inset
+
+ the hash
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This is surely no proof for isomorphism.
+ Group theoretic proofs, however, are beyond the scope of this article and
+ therefore left out.
+\end_layout
+
+\end_inset
+
+.
+ What is important about bitwise permutations is that they are invariant
+ under the xor operation.
+ Therefore we know that
+\begin_inset Formula \begin{equation}
+\pi\left(\text{zobrist}\left(\text{state}\right)\right)=\pi\left(\bigotimes_{f\in\mathbb{F}}\text{hash}\left(f,\text{state}\left(f\right)\right)\right)=\bigotimes_{f\in\mathbb{F}}\pi\left(\text{hash}\left(f,\text{state}\left(f\right)\right)\right)\label{eq:pi-invariant-xor}\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+\rho\left(\text{zobrist}\left(\text{state}\right)\right)=\rho\left(\bigotimes_{f\in\mathbb{F}}\text{hash}\left(f,\text{state}\left(f\right)\right)\right)=\bigotimes_{f\in\mathbb{F}}\rho\left(\text{hash}\left(f,\text{state}\left(f\right)\right)\right)\label{eq:rho-invariant-xor}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now define that 
+\begin_inset Formula $\pi\left(\text{zobrist}\left(\text{state}\right)\right)=\text{zobrist\left(\alpha\circ\text{state}\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho\left(\text{zobrist}\left(\text{state}\right)\right)=\text{zobrist\left(\beta\circ state\right)}$
+\end_inset
+
+.
+ With equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pi-invariant-xor"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rho-invariant-xor"
+
+\end_inset
+
+ that yields the following expressions:
+\begin_inset Formula \begin{equation}
+zobrist\left(\alpha\circ\text{state}\right)=\bigotimes_{f\in\mathbb{F}}\pi\left(\text{hash}\left(f,\text{state}\left(f\right)\right)\right)=\bigotimes_{f\in\mathbb{F}}\text{hash}\left(f,\alpha\circ\text{state}\left(f\right)\right)\label{eq:alpha-pi-equality}\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+zobrist\left(\beta\circ\text{state}\right)=\bigotimes_{f\in\mathbb{F}}\rho\left(\text{hash}\left(f,\text{state}\left(f\right)\right)\right)=\bigotimes_{f\in\mathbb{F}}\text{hash}\left(f,\beta\circ\text{state}\left(f\right)\right)\label{eq:beta-rho-equality}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The most straightforeward way to satisfy 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:alpha-pi-equality"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:beta-rho-equality"
+
+\end_inset
+
+is to put the following constraint on the 
+\begin_inset Formula $\text{hash}\left(f,a\right)$
+\end_inset
+
+ function: 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{hash}\left(f_{1},a\right)=\pi\left(\text{hash}\left(f_{2},a\right)\right)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\alpha\circ\text{state}\left(f_{2}\right)=\text{state\left(f_{1}\right)}$
+\end_inset
+
+ for all states.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{hash}\left(f_{1},a\right)=\rho\left(\text{hash}\left(f_{2},a\right)\right)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\beta\circ\text{state}\left(f_{2}\right)=\text{state\left(f_{1}\right)}$
+\end_inset
+
+ for all states.
+\end_layout
+
+\begin_layout Standard
+As long as we know that those constraints are valid for our hash function,
+ we can easily apply 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ on a known hash in order to get all it's symmetries.
+ The problem that remains is how to enforce those constraints.
 \end_layout
 
 \begin_layout Subsection
