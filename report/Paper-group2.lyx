@@ -236,27 +236,8 @@ Approximation of an upper bound for the number of possible game positions:
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-sum_{k=8}^{14}
-\backslash
-sum_{m=9}^{14}
-\backslash
-frac{61!}{k!(61-k)!}
-\backslash
-times
-\backslash
-frac{(61-k)!}{m!((61-k)-m)!}
-\backslash
-] 
-\end_layout
+\begin_inset Formula \[
+\sum_{k=8}^{14}\sum_{m=9}^{14}\frac{61!}{k!\left(61-k\right)!}\times\frac{\left(61-k\right)!}{m!\left(\left(61-k\right)-m\right)!}\]
 
 \end_inset
 
@@ -307,20 +288,7 @@ From research it was discovered that the branching factor of Abalone to
 
 \begin_layout Standard
 Lower bound: 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[60^{87}=5.0
-\backslash
-times10^{154}
-\backslash
-]
-\end_layout
-
+\begin_inset Formula $60^{87}=5.0\times10^{154}$
 \end_inset
 
 
@@ -328,20 +296,7 @@ times10^{154}
 
 \begin_layout Standard
 Upper bound: 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[65^{130}=4.77
-\backslash
-times10^{235}
-\backslash
-]
-\end_layout
-
+\begin_inset Formula $65^{130}=4.77\times10^{235}$
 \end_inset
 
 
@@ -1263,7 +1218,7 @@ The problem of those measurements in the game of abalone is, that the complexity
  of a search strongly depends on several factors different from the applied
  optimization, as for example the number of possible moves in a state.
  To overcome this issue and provide a reliable result, multiple distinct
- statistics are provided:
+ statistics are collected:
 \end_layout
 
 \begin_layout Enumerate
