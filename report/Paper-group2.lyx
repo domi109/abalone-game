@@ -28,7 +28,7 @@
 \paperorientation portrait
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
+\paragraph_separation skip
 \defskip medskip
 \quotes_language english
 \papercolumns 1
@@ -381,6 +381,12 @@ name "sub:Tree-Search"
 \end_layout
 
 \begin_layout Standard
+This section shows how standard treesearch techniques can be applied to
+ the game of abalone.
+ 
+\end_layout
+
+\begin_layout Standard
 As abalone is a deterministic, full information zero sum game, it is suited
  well for the standard minimax search approach
 \begin_inset CommandInset citation
@@ -389,18 +395,31 @@ key "AIAMA"
 
 \end_inset
 
- which can be further enhanced by alpha-beta pruning.
- With all optimizations, including move ordering and the hashing techniques
- described in the following sections, it was possible to search up to a
- depth of five ply in reasonable time.
+.
+ Minimax searching is based on the idea, that there are two opposing optimal
+ players.
+ One player tries to maximise the game outcome, which his opponent seeks
+ to minimize.
+ A minimax search can be further enhanced by alpha-beta pruning which hinders
+ some nodes from being investigated if they would not be valuable under
+ the above assumptions anyway.
+ 
 \end_layout
 
 \begin_layout Standard
-Usually it is necessary to restrict the time an AI needs in order to come
- to a decision - e.g.
- as there is a time limit for tournament play.
- For this reason, a time limited iterative deepening search was used, that
- successively started a depth limited search with increasing depth limit.
+Abalone's search tree is too complex to be searched completely by any known
+ means.
+ Instead a depth limited minimax search is introduced that cancels the search
+ proces at a certain depth.
+ Moreover, as it is usually necessary to restrict the consideration time
+ of an AI needs, a time limited iterative deepening search was used.
+ Iteratively expanding the tree, this search strategy stops after a given
+ time and returns the most detailed value found.
+\end_layout
+
+\begin_layout Standard
+The following sections will introduce more advanced optimization techniques
+ that can be used to enhance the minimax tree search.
 \end_layout
 
 \begin_layout Subsubsection
@@ -527,7 +546,8 @@ reference "sec:Complexity-of-Abalone"
  it was pointed out that abalone has a complex game tree while it's state
  space size is comparably modest.
  It is possible to conclude, that many states are reached by multiple branches.
- This imbalance suggests that transposition tables might yield an improvement
+ This section introduces transposition tables, which make use of this fact
+ to prune some of the branches from the search tree
 \begin_inset CommandInset citation
 LatexCommand cite
 key "AIAMA"
@@ -539,7 +559,14 @@ key "AIAMA"
 
 \begin_layout Standard
 A famous transposition table implementation for board games is the so called
- Zobrist Hashing.
+ Zobrist Hashing
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+.
  Let 
 \begin_inset Formula \[
 \text{hash}:\mathbb{F}\times\mathbb{A}\rightarrow\mathbb{Z}\]
@@ -573,6 +600,37 @@ where
 \end_inset
 
  is the bitwise xor operation over the set of all hashes.
+\end_layout
+
+\begin_layout Standard
+The Zobrist hash now serves as a quasi-unique identification of the state.
+ A table can be set up with this identifier on the left hand side and the
+ value of the state on the right hand side
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Actually there is a bit more to it.
+ For example we furthermore need a value measuring the 
+\begin_inset Quotes eld
+\end_inset
+
+level of detail
+\begin_inset Quotes erd
+\end_inset
+
+ of our hash, that is, how deep we searched in order to calculate it.
+ This article, however, does not aim to cover transposition tables in detail.
+ More information and references can be found at http://chessprogramming.wikispac
+es.com/Transposition+Table.
+\end_layout
+
+\end_inset
+
+.
+ When the same state is encountered a second time, it can be looked up in
+ the table and its value can be returned immediatelly without any further
+ investigation.
 \end_layout
 
 \begin_layout Subsubsection
@@ -642,7 +700,11 @@ e,\alpha,\alpha^{2},\alpha^{3},\alpha^{4},\alpha^{5},\beta,\beta\alpha,\beta\alp
 
 \end_inset
 
+where 
+\begin_inset Formula $e$
+\end_inset
 
+ is the identity transformation.
 \end_layout
 
 \begin_layout Standard
@@ -831,6 +893,188 @@ As long as we know that those constraints are valid for our hash function,
  The problem that remains is how to enforce those constraints.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename abalone-board-symmetries.dia
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Symmetries of the abalone board.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Symmetries"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Looking at the board in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Symmetries"
+
+\end_inset
+
+ reveals that there are two classes of symmetry axes - the ones that are
+ odd numbered and marked by a light green line and the ones that are even
+ numberd and marked by a dark green line.
+ For the yellow nodes on the horizontal axis (1), we cann apply the following
+ constraint:
+\begin_inset Formula \[
+\beta=\alpha^{3}\]
+
+\end_inset
+
+which means that 
+\begin_inset Formula $\rho=\pi^{3}$
+\end_inset
+
+.
+ Looking at what this means for the bitwise permutation we get the following
+ condition:
+\begin_inset Formula \begin{eqnarray*}
+\left(b_{1},b_{7},b_{6},b_{5},b_{4},b_{3},b_{2},b_{8}\right) & = & \left(b_{1},b_{3},b_{4},b_{5},b_{6},b_{7},b_{2},b_{8}\right)\end{eqnarray*}
+
+\end_inset
+
+which gives us
+\begin_inset Formula \begin{eqnarray*}
+b_{3} & = & b_{7}\\
+b_{6} & = & b_{4}\end{eqnarray*}
+
+\end_inset
+
+so that we can derive the structure of the hashes on axis (1):
+\begin_inset Formula \[
+\left(b_{1},b_{2},b_{3},b_{2},b_{4},b_{5},b_{4},b_{6}\right)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly we can derive the hash structures of axes (3) and (5):
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(b_{1},b_{2},b_{3},b_{4},b_{5},b_{4},b_{3},b_{6}\right)$
+\end_inset
+
+ for axis (3)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(b_{1},b_{2},b_{3},b_{4},b_{3},b_{2},b_{5},b_{6}\right)$
+\end_inset
+
+ for axis (5)
+\end_layout
+
+\begin_layout Standard
+The constraint we find on axis (4) is that 
+\begin_inset Formula $\beta=e$
+\end_inset
+
+.
+ Using the same approach as above we can derive the following structures:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(b_{1},b_{2},b_{3},b_{4},b_{4},b_{3},b_{2},b_{5}\right)$
+\end_inset
+
+ for axis (4)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(b_{1},b_{2},b_{3},b_{3},b_{2},b_{4},b_{4},b_{5}\right)$
+\end_inset
+
+ for axis (6)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(b_{1},b_{2},b_{2},b_{3},b_{4},b_{4},b_{3},b_{5}\right)$
+\end_inset
+
+ for axis (2)
+\end_layout
+
+\begin_layout Standard
+Note that the structures actually allow us to apply 
+\begin_inset Formula $\pi$
+\end_inset
+
+ three times on every node of one axis of each class in order to assign
+ the correctly constrainted values.
+ Note also that we reduced the effective hash size to six byte on axis (1),
+ (3) and (5) and to five byte on axis (2), (4) and (6).
+\end_layout
+
+\begin_layout Standard
+There is one more special case, namely the central node whose hash has to
+ stay invariant under 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho$
+\end_inset
+
+.
+ We therefore simply assign it a value with the structure 
+\begin_inset Formula $\left(b_{1},b_{2},b_{2},b_{2},b_{2},b_{2},b_{2},b_{3}\right)$
+\end_inset
+
+.
+ The hashes of the remaining nodes (colored blue in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Symmetries"
+
+\end_inset
+
+) are easily generated by generating random eight byte values and applying
+ 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ to derive all symmetries.
+\end_layout
+
 \begin_layout Subsection
 Evaluation Functions
 \begin_inset CommandInset label
@@ -974,10 +1218,10 @@ name "sub:OpponentModeling-Implementation"
 \end_layout
 
 \begin_layout Section
-Experiments
+Experimental Setup
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Experiments"
+name "sec:Experiments-Setup"
 
 \end_inset
 
@@ -985,10 +1229,95 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Subsection
-Experimental Setup
+Tree Search Performance
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Experimental-Setup"
+name "sub:Setup-Tree-Search-Performance"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The experimental setup for the tree search performance aimed at measuring
+ two criteria:
+\end_layout
+
+\begin_layout Enumerate
+The time needed for a search run of a certain depth.
+\end_layout
+
+\begin_layout Enumerate
+The nodes investigated during a search run of a certain depth.
+\end_layout
+
+\begin_layout Standard
+While the latter criterion has the advantage of beeing independent of implementa
+tional issues and more reproducible, the former criterion also takes into
+ account overhead that might have been added by certain pruning techniques.
+\end_layout
+
+\begin_layout Standard
+The problem of those measurements in the game of abalone is, that the complexity
+ of a search strongly depends on several factors different from the applied
+ optimization, as for example the number of possible moves in a state.
+ To overcome this issue and provide a reliable result, multiple distinct
+ statistics are provided:
+\end_layout
+
+\begin_layout Enumerate
+The results of a search from the start position.
+\end_layout
+
+\begin_layout Enumerate
+The results of a search from a typical in-game situation.
+\end_layout
+
+\begin_layout Enumerate
+The averaged result of multiple searches throughout a game.
+\end_layout
+
+\begin_layout Standard
+Having established the test strategy, it can be applied to the optimization
+ techniques desribed in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:General-Tree-Searching"
+
+\end_inset
+
+ including alpha-beta pruning, move ordering, zobrist hashing and symmetry
+ aware hashing.
+\end_layout
+
+\begin_layout Standard
+The results are given in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Result-Tree-Search-Performance"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Training of the Evaluation Function
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Setup-Training-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Overal AI Performance
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Setup-AI-Performance"
 
 \end_inset
 
@@ -1007,24 +1336,8 @@ Our AI vs Random Software Abalone*
 Out AI vs NetAbalone* 
 \end_layout
 
-\begin_layout Enumerate
-Compare with and without board-hashing
-\end_layout
-
-\begin_layout Enumerate
-Cutoff at a certain depth vs iterative deepening
-\end_layout
-
-\begin_layout Enumerate
-If GA weights are (much) better than hand picked
-\end_layout
-
-\begin_layout Enumerate
-Evolution of the weights (in a nice graph)
-\end_layout
-
 \begin_layout Section
-Results
+Results of Experients
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Results"
@@ -1034,8 +1347,46 @@ name "sec:Results"
 
 \end_layout
 
+\begin_layout Subsection
+Tree Search Performance
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Result-Tree-Search-Performance"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-\begin_inset Newpage newpage
+In this section the results of experimental setup described in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Setup-Tree-Search-Performance"
+
+\end_inset
+
+ will be given and interpreted.
+ 
+\end_layout
+
+\begin_layout Subsection
+Training of the Evaluation Function
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Result-Training-of-the-Evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Overal AI Performance
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Result-Overal-AI-Performance"
+
 \end_inset
 
 
@@ -1052,26 +1403,12 @@ name "sec:Conclusions"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-Further Research
+Discussion and Further Research
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Further-Research"
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
 \end_inset
 
 
@@ -1086,6 +1423,15 @@ options "bibtotoc,apalike2"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+Result Tables for the Experimental Results
+\end_layout
+
+\begin_layout Subsection
+Tree Search Performance
 \end_layout
 
 \end_body
