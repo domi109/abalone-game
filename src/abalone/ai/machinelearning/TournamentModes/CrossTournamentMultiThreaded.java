@@ -47,7 +47,7 @@ public class CrossTournamentMultiThreaded implements FitnessEvaluator
 		{
 			for (int j = i + 1; j < pop.size(); j++)
 			{
-				play.addMatch(pop.get(i), i, pop.get(j), j);
+				play.addMatch(pop.get(i), pop.get(j));
 
 				counter++;
 			}

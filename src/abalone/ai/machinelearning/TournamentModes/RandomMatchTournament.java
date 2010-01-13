@@ -10,6 +10,7 @@ import nl.maastrichtuniversity.dke.libreason.genetics.GeneticIndividual;
 import nl.maastrichtuniversity.dke.libreason.genetics.GeneticPopulation;
 import abalone.ai.SimpleAI;
 import abalone.ai.evaluation.LinearEvaluator;
+import abalone.ai.machinelearning.MultiThreadedPlay;
 import abalone.gamelogic.GameLogic;
 import abalone.gamelogic.StandardAbaloneLogic;
 import abalone.gamestate.GameState;
@@ -24,12 +25,14 @@ public class RandomMatchTournament implements FitnessEvaluator
 	private GeneticPopulation pop;
 	private int matches;
 	private Random rand = new Random();
+	private MultiThreadedPlay play;
 
 	public RandomMatchTournament(int matches)
 	{
 		this.logic = new StandardAbaloneLogic();
 		this.board = logic.initBoard();
 		this.matches = matches;
+		play = new MultiThreadedPlay(200);
 	}
 
 	@Override
@@ -42,19 +45,21 @@ public class RandomMatchTournament implements FitnessEvaluator
 		// of each individual is calculated using these stats.
 		this.pop = aPop;
 
-
+		int randomNr;
 		for (int i = 0; i < pop.size(); i++)
 		{
 			for(int j =0; j<matches;j++)
 			{
-				match(pop.get(i),pop.get(rand.nextInt(pop.size())));
+				randomNr = rand.nextInt(pop.size());
+				play.addMatch(pop.get(i), pop.get(randomNr));
 			}
 		}
-
+		play.runMatches();
+		
 		return pop;
 	}
 
-	@SuppressWarnings("unchecked")
+/*	@SuppressWarnings("unchecked")
 	private void match(GeneticIndividual p1, GeneticIndividual p2) throws InterruptedException
 	{
 		if(p1 == p2)
@@ -108,5 +113,5 @@ public class RandomMatchTournament implements FitnessEvaluator
 			}
 			numberOfPlies++;
 		}
-	}
+	}*/
 }

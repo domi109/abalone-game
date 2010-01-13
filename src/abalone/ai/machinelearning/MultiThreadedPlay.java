@@ -34,20 +34,21 @@ public class MultiThreadedPlay {
 		this.plyLvl = plyLvl;
 	}
 	
-	public void addMatch(GeneticIndividual p1, int id1, GeneticIndividual p2, int id2){
+	public void addMatch(GeneticIndividual p1, GeneticIndividual p2){
 		MatchThread match = new MatchThread();
 		
 		match.setp1(p1);
 		match.setp2(p2);
-		match.setID(id1, id2);
 
 		matches.add(match);
 	}
 	
 	private ArrayList<ArrayList<Thread>> splitMatches()
 	{
+//		System.out.println("Splitting matches...");
+		
 		threads.clear();
-		ArrayList<Integer> currentIndividuals = new ArrayList<Integer>();
+		ArrayList<GeneticIndividual> currentIndividuals = new ArrayList<GeneticIndividual>();
 		int arrayNr = 0;
 
 		while (!matches.isEmpty())
@@ -57,10 +58,10 @@ public class MultiThreadedPlay {
 			for (Iterator<MatchThread> it = matches.iterator(); it.hasNext();)
 			{
 				MatchThread match = it.next();
-				if (!currentIndividuals.contains(match.getIDp1()) && !currentIndividuals.contains(match.getIDp2()))
+				if (!currentIndividuals.contains(match.getP1()) && !currentIndividuals.contains(match.getP2()))
 				{
-					currentIndividuals.add(match.getIDp1());
-					currentIndividuals.add(match.getIDp2());
+					currentIndividuals.add(match.getP1());
+					currentIndividuals.add(match.getP2());
 					threads.get(arrayNr).add(new Thread(match));
 					it.remove();
 				}
@@ -69,18 +70,24 @@ public class MultiThreadedPlay {
 			currentIndividuals.clear();
 			arrayNr++;
 		}
+		
+//		System.out.println("Splitting finished");
+		
 		return threads;
 	}
 
 	public void runMatches()
 	{
 		splitMatches();
+		
+//		System.out.println("Running matches...");
+		
 		boolean finished;
 		int it = 0;
 		int nrMatches = 0;
 		for (ArrayList<Thread> matchList : threads)
 		{
-			System.out.println("running matchList " + it + " (size: " + matchList.size() + " )");
+//			System.out.println("running matchList " + it + " (size: " + matchList.size() + " )");
 			nrMatches += matchList.size();
 			it++;
 
@@ -90,7 +97,7 @@ public class MultiThreadedPlay {
 			}
 
 			finished = false;
-			System.out.println("Starting while loop");
+//			System.out.println("Starting while loop");
 			int counter;
 			int counter2 = 0;
 			while (!finished)
@@ -110,7 +117,8 @@ public class MultiThreadedPlay {
 			}
 		}
 		System.out.println();
-		System.out.println("Total nr threads: " + nrMatches);
+//		System.out.println("Finished running");
+//		System.out.println("Total nr threads: " + nrMatches);
 		matches.clear();
 	}
 
@@ -119,8 +127,6 @@ public class MultiThreadedPlay {
 
 		private GeneticIndividual p1;
 		private GeneticIndividual p2;
-		private int iDp1;
-		private int iDp2;
 
 		public void setp1(GeneticIndividual p1)
 		{
@@ -132,20 +138,14 @@ public class MultiThreadedPlay {
 			this.p2 = p2;
 		}
 
-		public void setID(int first, int second)
+		public GeneticIndividual getP1()
 		{
-			iDp1 = first;
-			iDp2 = second;
+			return p1;
 		}
 
-		public int getIDp1()
+		public GeneticIndividual getP2()
 		{
-			return iDp1;
-		}
-
-		public int getIDp2()
-		{
-			return iDp2;
+			return p2;
 		}
 
 		@Override
