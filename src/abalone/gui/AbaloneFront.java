@@ -5,23 +5,17 @@ import abalone.gamestate.GameState;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QFileInfo;
 import com.trolltech.qt.core.QUrl;
-import com.trolltech.qt.gui.QAction;
-import com.trolltech.qt.gui.QFileDialog;
-import com.trolltech.qt.gui.QHBoxLayout;
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QKeySequence;
-import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMenu;
-import com.trolltech.qt.gui.QMenuBar;
-import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.*;
 import com.trolltech.qt.webkit.QWebView;
+import com.trolltech.qt.gui.QDialog.DialogCode;
+import java.lang.Integer;
 
 public class AbaloneFront extends QMainWindow
 {
 	public Signal0 newGame = new Signal0();
 	public Signal1<String> saveGame = new Signal1<String>();
 	public Signal1<String> loadGame = new Signal1<String>();
+	public Signal2<Integer, Integer> prefGame = new Signal2<Integer, Integer>();
 	
 	private GameState state;
 	
@@ -115,6 +109,16 @@ public class AbaloneFront extends QMainWindow
 		}
 	}
 	
+	public void pref()
+	{
+		PreferencePage pref = new PreferencePage(this);
+		int outcome = pref.exec();
+		if(outcome == DialogCode.Accepted.value())
+		{
+			prefGame.emit(new Integer(pref.player1), new Integer(pref.player2));
+		}
+	}
+	
 	public void aboutAbalone()
 	{
 		QWebView view = new QWebView();
@@ -167,12 +171,12 @@ public class AbaloneFront extends QMainWindow
 		saveAsAct.setStatusTip(tr("Saves a game under a new name"));
 		saveAsAct.triggered.connect(this, "saveAs()");
 		
-		networkgameAct = new QAction(new QIcon("classpath:abalone/gui/Icons/networkGame.png"),tr("Network Game"), this);
-		networkgameAct.setStatusTip(tr("Play a game over the network"));
+		//networkgameAct = new QAction(new QIcon("classpath:abalone/gui/Icons/networkGame.png"),tr("Network Game"), this);
+		//networkgameAct.setStatusTip(tr("Play a game over the network"));
 		
-		undoMoveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/undo.png"),tr("Undo move"), this);
-		undoMoveAct.setShortcut(tr("Ctrl+Z"));
-		undoMoveAct.setStatusTip(tr("1 step back"));
+		//undoMoveAct = new QAction(new QIcon("classpath:abalone/gui/Icons/undo.png"),tr("Undo move"), this);
+		//undoMoveAct.setShortcut(tr("Ctrl+Z"));
+		//undoMoveAct.setStatusTip(tr("1 step back"));
 		
 		resignAct = new QAction(new QIcon("classpath:abalone/gui/Icons/resign.png"),tr("&Resign"), this);
 		resignAct.setShortcut(tr("Ctrl+R"));
@@ -194,6 +198,7 @@ public class AbaloneFront extends QMainWindow
 		
 		preferencesAct = new QAction(tr("Preferences"), this);
 		preferencesAct.setStatusTip(tr("Preferences menu"));
+		preferencesAct.triggered.connect(this, "pref()");
 		
 		aboutAbaloneAct = new QAction(tr("About Abalone"), this);
 		aboutAbaloneAct.setStatusTip(tr("Link to abalone wiki"));
@@ -218,9 +223,9 @@ public class AbaloneFront extends QMainWindow
 		game.addSeparator();
 		game.addAction(networkgameAct);
 		game.addSeparator();
-		game.addAction(undoMoveAct);
-		game.addAction(resignAct);
-		game.addSeparator();
+		//game.addAction(undoMoveAct);
+		//game.addAction(resignAct);
+		//game.addSeparator();
 		game.addAction(quitAct);
 		
 		view = menuBar().addMenu(tr("View"));
@@ -258,6 +263,73 @@ public class AbaloneFront extends QMainWindow
 			setLayout(leftRight);
 		}
 	}
+	
+	/**
+	 * A separate preferences widget that will only be used by the 
+	 * Front
+	 */
+	private class PreferencePage extends QDialog
+	{
+		public int player1;
+		public int player2;
+
+        public PreferencePage(QWidget parent) 
+        {
+            super(parent);
+            QGroupBox configGroup = new QGroupBox(tr("Players"));
+            
+            QLabel player1Label = new QLabel(tr("Player 1"));
+            QComboBox player1Combo = new QComboBox();
+            player1Combo.addItem(tr("Minimax AI"));
+            player1Combo.addItem(tr("Human"));
+            player1Combo.setCurrentIndex(player1);
+            player1Combo.currentIndexChanged.connect(this, "setPlayer1(Integer)");
+            
+            QHBoxLayout player1Layout = new QHBoxLayout();
+            player1Layout.addWidget(player1Label);
+            player1Layout.addWidget(player1Combo);
+            
+			QLabel player2Label = new QLabel(tr("Player 2"));
+            QComboBox player2Combo = new QComboBox();
+            player2Combo.addItem(tr("Minimax AI"));
+            player2Combo.addItem(tr("Human"));
+            player2Combo.setCurrentIndex(player2);
+            player2Combo.currentIndexChanged.connect(this, "setPlayer2(Integer)");
+            
+            QHBoxLayout player2Layout = new QHBoxLayout();
+            player2Layout.addWidget(player2Label);
+            player2Layout.addWidget(player2Combo);
+            
+            QPushButton accept = new QPushButton(tr("Accept"));
+            accept.released.connect(this, "accept()");
+            QPushButton reject = new QPushButton(tr("Reject"));
+            reject.released.connect(this, "reject()");
+            
+            QHBoxLayout buttons = new QHBoxLayout();
+            buttons.addWidget(accept);
+            buttons.addWidget(reject);
+            
+            QVBoxLayout configLayout = new QVBoxLayout();
+            configLayout.addLayout(player1Layout);
+            configLayout.addLayout(player2Layout);
+            configLayout.addLayout(buttons);
+            configGroup.setLayout(configLayout);
+            
+             setLayout(configLayout);
+        }
+        
+        private void setPlayer1(Integer num)
+        {
+			int val = num.intValue();
+			player1 = val;
+		}
+        
+        private void setPlayer2(Integer num)
+        {
+			int val = num.intValue();
+			player2 = val;
+		}
+    }
 
 	public BoardWidget getBoardWidget()
 	{

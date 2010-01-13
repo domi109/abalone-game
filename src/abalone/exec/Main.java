@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Integer;
 
 import abalone.ai.Ai;
 import abalone.ai.BasicMinimaxAI;
@@ -17,6 +18,7 @@ import abalone.gui.AbaloneFront;
 import abalone.model.Board;
 import abalone.model.Move;
 import abalone.model.Player;
+import abalone.model.HumanPlayer;
 
 import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.Qt.ConnectionType;
@@ -120,6 +122,65 @@ public class Main
 		state.initHash();
 		front.updateFront(state);
 	}
+	
+	private void prefGame(Integer player1, Integer player2)
+	{
+		try
+		{
+			logic = logicClass.newInstance();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		board = logic.initBoard();
+		players = new ArrayList<Player>(2);
+		Player one  = null;
+		if(player1.intValue() == 0)
+		{
+			one = new BasicMinimaxAI(logic);
+		}
+		else if (player1.intValue() == 1)
+		{
+			one = new HumanPlayer("Human");
+		}
+		else
+		{
+			System.out.println("Pref-Err: 1");
+		}
+		players.add(one);
+		
+		Player two = null;
+		if(player2.intValue() == 0)
+		{
+			two = new BasicMinimaxAI(logic);
+		}
+		else if (player2.intValue() == 1)
+		{
+			two = new HumanPlayer("Human");
+		}
+		else
+		{
+			System.out.println("Pref-Err: 2");
+		}
+		players.add(two);
+		
+		state = logic.initState(board, players);
+		state.initHash();
+		
+		
+		front.close();
+		front = new AbaloneFront(state);
+		front.show();
+		front.getBoardWidget().move.connect(this, "moveDone(Move)");
+		front.getBoardWidget().updated.connect(this, "boardUpdated()");
+		front.newGame.connect(this, "resetGame()");
+		front.saveGame.connect(this, "saveGame(String)");
+		front.loadGame.connect(this, "loadGame(String)");
+		front.prefGame.connect(this, "prefGame(Integer, Integer)");
+		//front.updateFront(state);
+		boardUpdated();
+	}
 
 	public Main(String[] args)
 	{
@@ -133,7 +194,7 @@ public class Main
 		}
 		board = logic.initBoard();
 		players = new ArrayList<Player>(2);
-//		players.add(new HumanPlayer("Pong"));
+		//players.add(new HumanPlayer("Pong"));
 		Player player1 = new BasicMinimaxAI(logic);
 		players.add(player1);
 		Player player2 = new BasicMinimaxAI(logic);
@@ -154,6 +215,7 @@ public class Main
 		front.newGame.connect(this, "resetGame()");
 		front.saveGame.connect(this, "saveGame(String)");
 		front.loadGame.connect(this, "loadGame(String)");
+		front.prefGame.connect(this, "prefGame(Integer, Integer)");
 
 		boardUpdated();
 
@@ -244,7 +306,7 @@ public class Main
 			front.newGame.connect(this, "resetGame()");
 			front.saveGame.connect(this, "saveGame(String)");
 			front.loadGame.connect(this, "loadGame(String)");
-
+			front.prefGame.connect(this, "prefGame(Integer, Integer)");
 			boardUpdated();
 		}
 		catch (Exception e)
