@@ -395,8 +395,23 @@ key "AIAMA"
  depth of five ply in reasonable time.
 \end_layout
 
+\begin_layout Standard
+Usually it is necessary to restrict the time an AI needs in order to come
+ to a decision - e.g.
+ as there is a time limit for tournament play.
+ For this reason, a time limited iterative deepening search was used, that
+ successively started a depth limited search with increasing depth limit.
+\end_layout
+
 \begin_layout Subsubsection
 Move Ordering
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Move-Ordering"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -424,11 +439,11 @@ key "Chorus1"
 \end_layout
 
 \begin_layout Enumerate
-3-marble sumeti moves.
+3-marble sutemi moves.
 \end_layout
 
 \begin_layout Enumerate
-2-marble sumeti moves.
+2-marble sutemi moves.
 \end_layout
 
 \begin_layout Enumerate
@@ -452,13 +467,37 @@ Single marble moves.
 \end_layout
 
 \begin_layout Standard
-This move ordering has led to a good performance of the alpha beta pruning
+This move ordering has led to a good performance of the alpha beta pruning.
  
-\begin_inset Note Comment
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 give results/statistics here
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Killer-Moves
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Killer-Moves"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Is there anything to say about killer moves?
 \end_layout
 
 \end_inset
@@ -790,39 +829,6 @@ As long as we know that those constraints are valid for our hash function,
 
  on a known hash in order to get all it's symmetries.
  The problem that remains is how to enforce those constraints.
-\end_layout
-
-\begin_layout Subsection
-Heuristics
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Heuristics"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Move-Ordering
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Move-Ordering"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Killer-Moves
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Killer-Moves"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
