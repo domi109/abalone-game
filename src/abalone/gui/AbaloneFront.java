@@ -312,10 +312,14 @@ public class AbaloneFront extends QMainWindow
             QVBoxLayout configLayout = new QVBoxLayout();
             configLayout.addLayout(player1Layout);
             configLayout.addLayout(player2Layout);
-            configLayout.addLayout(buttons);
             configGroup.setLayout(configLayout);
             
-             setLayout(configLayout);
+            QVBoxLayout mainLayout = new QVBoxLayout();
+            mainLayout.addWidget(configGroup);
+            mainLayout.addStretch(1);
+            mainLayout.addLayout(buttons);
+            
+            setLayout(mainLayout);
         }
         
         private void setPlayer1(Integer num)

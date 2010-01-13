@@ -20,10 +20,10 @@ public class GameInfoWidget extends QWidget
 	
 	public GameInfoWidget(GameState state)
 	{	
-		 // A revert button
+		 /** A revert button
 		 QPushButton revert = new QPushButton("Revert");
 		 revert.clicked.connect(this,"revertClicked()");
-		 
+		 */
 		 QGridLayout layout = new QGridLayout();
 
 		 pmDisplays = new ArrayList<PushedMarblesDisplayWidget>(2);
@@ -40,7 +40,7 @@ public class GameInfoWidget extends QWidget
 			 i++;
 		 }
 		 
-		 layout.addWidget(revert,2,0,1,-1);
+		 // layout.addWidget(revert,2,0,1,-1);
 		 // there is still room for more buttons if needed!
 		 setLayout(layout);
 		 setFixedSize(sizeHint().width(),sizeHint().height());
