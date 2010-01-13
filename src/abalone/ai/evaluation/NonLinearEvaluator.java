@@ -77,7 +77,6 @@ public class NonLinearEvaluator implements GeneticIndividual, Evaluator<Double>
 	public NonLinearEvaluator()
 	{
 		this(generatePhenotype());
-
 		scalePhenotype();
 	}
 
