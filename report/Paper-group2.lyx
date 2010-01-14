@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -232,8 +232,8 @@ name "sub:State-Space-Complexity"
 \end_layout
 
 \begin_layout Standard
-The state-space complexity of a game is the number of moves possible throughout
- a game.
+The state-space complexity of a game is the number of positions possible
+ throughout a game.
  In general it is difficult to approximate the average state-space complexity
  of Abalone.
  Hence, an approximation for the upper bound number of possible game positions
@@ -268,14 +268,14 @@ In the given approximation above
 \end_inset
 
  represents the opponent player having 8 marbles left on the board out of
- a initial number of 14 marbles (ie.
+ a initial number of 14 marbles (i.e.
  opponent player has lost 6 marbles, the requirement for the game to end).
  Furthermore, 
 \begin_inset Formula $m=9$
 \end_inset
 
  represents the current player having 9 marbles left out of an initial number
- of 14 marbles (ie.
+ of 14 marbles (i.e.
  the minimum amount of marbles needed to be retained to not lose the game).
  The number 61 represents the number of positions on the board which can
  be occupied by marbles.
@@ -421,12 +421,12 @@ name "sub:Tree-Search"
 \begin_layout Standard
 In this section it will be demonstrated, how standard tree search techniques
  as minimax search and alpha beta pruning can be applied to the game of
- abalone.
+ Abalone.
  
 \end_layout
 
 \begin_layout Standard
-As abalone is a deterministic, full information zero sum game, it is suited
+As Abalone is a deterministic, full information zero sum game, it is suited
  well for the standard minimax search approach
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -439,21 +439,35 @@ key "AIAMA"
  players.
  One player tries to maximize the game outcome, which his opponent seeks
  to minimize.
- A minimax search can be further enhanced by alpha-beta pruning which hinders
- some nodes from being investigated if they would not be valuable under
- the above assumptions anyway.
- 
+ As sketched out in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Complexity-of-Abalone"
+
+\end_inset
+
+, Abalone's game tree is too complex to be searched completely by any known
+ means.
+ Instead a depth limited minimax search is introduced that cancels the minimax
+ process at a certain depth.
+ Moreover, as it is usually necessary to restrict an agent's consideration
+ time, a time limited iterative deepening search is applied.
+ Iteratively expanding the tree, this search strategy stops after a given
+ time and returns the value found in the deepest completed search.
 \end_layout
 
 \begin_layout Standard
-Abalone's search tree is too complex to be searched completely by any known
- means.
- Instead a depth limited minimax search is introduced that cancels the search
- process at a certain depth.
- Moreover, as it is usually necessary to restrict the consideration time
- of an AI needs, a time limited iterative deepening search was used.
- Iteratively expanding the tree, this search strategy stops after a given
- time and returns the most detailed value found.
+A minimax search can be further enhanced by alpha-beta pruning which hinders
+ some nodes from being investigated if a player under the assumptions above
+ would never choose for them anyway
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AIAMA"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -474,10 +488,10 @@ name "sub:Move-Ordering"
 
 \begin_layout Standard
 As stated before, alpha-beta pruning as a standard optimization technique
- for minimax searches could successfully applied to the game of abalone.
+ for minimax searches could successfully applied to the game of Abalone.
  It's real impact on efficiency, however, highly depends on the move ordering
  technique applied.
- Former research has shown that in the case of abalone the following ordering
+ Former research has shown that in the case of Abalone the following ordering
  was effective
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -582,7 +596,7 @@ reference "sec:Complexity-of-Abalone"
 
 \end_inset
 
- it was pointed out that abalone has a complex game tree while it's state
+ it was pointed out that Abalone has a complex game tree while it's state
  space size is comparably modest.
  It is possible to conclude, that many states are reached by multiple branches.
  This section introduces transposition tables, which make use of this fact
@@ -691,7 +705,7 @@ reference "sec:Complexity-of-Abalone"
 
 \end_inset
 
-, an important factor that reduces the state-space in abalone is the fact
+, an important factor that reduces the state-space in Abalone is the fact
  that there are twelve symmetric versions of every state.
  The standard Zobrist Hashing approach however does not take those symmetries
  into account.
@@ -732,7 +746,7 @@ key "HuimaGroupZobrist"
 \end_inset
 
 .
- The dihedral group of the abalone board then consist of the following elements:
+ The dihedral group of the Abalone board then consist of the following elements:
 \begin_inset Formula \[
 e,\alpha,\alpha^{2},\alpha^{3},\alpha^{4},\alpha^{5},\beta,\beta\alpha,\beta\alpha^{2},\beta\alpha^{3},\beta\alpha^{4},\beta\alpha^{5}\]
 
@@ -953,7 +967,7 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Symmetries of the abalone board.
+Symmetries of the Abalone board.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Symmetries"
@@ -1160,8 +1174,8 @@ An evaluation function is a function which estimates the value of a position
 \end_layout
 
 \begin_layout Standard
-When constructing a evaluation funtion for a AI for Abalone, one must take
- into account general strategies used in Abalone.
+When constructing a evaluation function for an agent playing Abalone, one
+ must take into account general strategies used in Abalone.
  Below is a list of generally good strategies for Abalone:
 \end_layout
 
@@ -1405,14 +1419,14 @@ There is a difference between opponents that are already know and there
  If the opponent is not known, the AI tries to adjust our evaluation function
  to emulate how the opponent makes his moves and create a model of the opponent.
  This way the AI tries to make a model of the opponent which is compatible
- with the AI's own model and can be incorporated in the OM-search.
+ with the agent's own model and can be incorporated in the OM-search.
  This will not be a perfect model of the opponents decision algorithm but
  it can be assumed that the opponents decision algorithm is a minimax search
  with the same (or parts of) our evaluation function.
  The opponents evaluation function (model) is only a small variation of
- the OM-search AI's evaluation function so there is no big risk that he
- will make a much worse move (when the OM-search AI predicts the wrong move)
- than if normal minimax-search would have been used.
+ the OM-search agent's evaluation function so there is no big risk that
+ he will make a much worse move (when the OM-search AI predicts the wrong
+ move) than if normal minimax-search would have been used.
  
 \end_layout
 
@@ -1424,7 +1438,7 @@ l move which, in the end, has a higher evaluation for the OM-search AI.
 \end_layout
 
 \begin_layout Standard
-OM-search works with a seperate evaluation function (model) for the opponent
+OM-search works with a separate evaluation function (model) for the opponent
  and for himself.
  It is very similar to minimax-search but the algorithm stores both the
  evaluation-outcomes at every node.
@@ -1453,9 +1467,9 @@ In our implementation a opponent-model consists of the weights of the evaluation
  function in that they are more aggressive or more defensive, more or less
  risk.
  Sometimes the AI does not know anything about the opponent.
- In that case the opponents model starts out as a replica of the AI's weights
- but they get changed bit by bit for every decision the opponent makes different
-ly that the OM-search AI thought he would do.
+ In that case the opponents model starts out as a replica of the agent's
+ weights but they get changed bit by bit for every decision the opponent
+ makes differently that the OM-search AI thought he would do.
 \end_layout
 
 \begin_layout Standard
@@ -1507,7 +1521,7 @@ ions issues and more reproducible, the former criterion also takes into
 \end_layout
 
 \begin_layout Standard
-The problem of those measurements in the game of abalone is, that the complexity
+The problem of those measurements in the game of Abalone is, that the complexity
  of a search strongly depends on several factors different from the applied
  optimization, as for example the number of possible moves in a state.
  To overcome this issue and provide a reliable result, multiple distinct
@@ -1616,6 +1630,82 @@ reference "sub:Setup-Tree-Search-Performance"
 
  will be given and interpreted.
  
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-result-of-hashing"
+
+\end_inset
+
+ shows the result of the various hashing strategies...
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Provide more statistics here.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename graph_treesearch_01.png
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename graph_treesearch_02.png
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of symmetric hashing compared by time and investigated nodes.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-result-of-hashing"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
