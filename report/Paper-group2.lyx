@@ -1187,10 +1187,15 @@ eval(s)=\sum_{i=1}^{5}w_{i}\times f_{i}(s)-w_{6}\times f_{6}(s)\]
 \begin_inset Formula $f_{1}(s)$
 \end_inset
 
-: The difference between the sum of the Manhattan distances of marbles for
- each players, for a given board state 
+: The difference between the sum of the Manhattan distances for every marble
+ for each player, for a given board state 
 \emph on
 s
+\emph default
+.
+ This is called the 
+\emph on
+center strategy
 \emph default
 .
 \end_layout
@@ -1200,9 +1205,32 @@ s
 \end_inset
 
 : The difference between the sum of the number of neighboring teammates
- for marbles for each players, for a given board state 
+ for every marble for each player, for a given board state 
 \emph on
 s
+\emph default
+.
+ This is called the 
+\emph on
+cohesion strategy
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{3}(s)$
+\end_inset
+
+: The difference between the sum of having an opponent marble at one adjacent
+ side of a player's marble and having an opponent marble at the opposing
+ adjacent side, for a given board state 
+\emph on
+s
+\emph default
+.
+ This is called the 
+\emph on
+break strong group strategy
 \emph default
 .
  
@@ -1212,14 +1240,19 @@ s
 \begin_inset Formula $f_{4}(s)$
 \end_inset
 
-: The difference between the sum of the 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $f_{4}(s)$
-\end_inset
-
-: The difference between the sum of the 
+: The difference between the sum of having an opponent marble at one adjacent
+ side of a player's marble and having an teammate marble at the opposing
+ adjacent side, for a given board state 
+\emph on
+s
+\emph default
+.
+ This is called the 
+\emph on
+strengthen group strategy
+\emph default
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1232,7 +1265,11 @@ s
 s
 \emph default
 .
- 
+ This is called the 
+\emph on
+taken marble strategy
+\emph default
+.
 \end_layout
 
 \begin_layout Standard
@@ -1245,7 +1282,11 @@ s
 s
 \emph default
 .
- 
+ This is called the 
+\emph on
+lost marble strategy
+\emph default
+.
 \end_layout
 
 \begin_layout Subsubsection
