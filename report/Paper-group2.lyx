@@ -1379,6 +1379,51 @@ name "sec:Genetic-Algorithm"
 
 \end_layout
 
+\begin_layout Standard
+The previous section examined evaluators that can form the basis of decisionmaki
+ng for an Abalone player.
+ But the performance of the AI also depends on the weighting of the individual
+ evaluation functions.
+ This section discusses the use of a genetic algorithm (the use of machine
+ learning techniques) to optimize these weights.
+\end_layout
+
+\begin_layout Standard
+Genetic algorithms are evolutionary algorithms that model natural selection
+ (and can be used) to solve optimization problems.
+ Analogue to biological evolution whose main idea is that in a competitive
+ environment, fitter organisms have an increased chance to pass their genetic
+ information to succeeding generations, individuals of a population of a
+ genetic algorithm are assigned a fitness value that decides whether it
+ will pass to the succeeding generation.
+\end_layout
+
+\begin_layout Standard
+Accordingly, the genetic individuals in this problem represent Abalone agents
+ that are distinct by their genome, i.e.
+ the weights used for their evaluation function.
+ The fitness of the individuals is determined in matches with teir peers
+ in a competition/tournament.
+ In the transition of one population of individuals to its successor, some
+ of the individuals are selected to reproduce themselves and mutate to generate
+ the new population of individuals.
+ The type of tournament, selection method, reproduction method and the mutation
+ method can be varied and adapted to the problem.
+ A more detailed description of the design of the experiments follows in
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:GA-Design"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+why use a genetic algorithm?
+\end_layout
+
 \begin_layout Subsection
 Design
 \begin_inset CommandInset label
@@ -1390,6 +1435,95 @@ name "sub:GA-Design"
 
 \end_layout
 
+\begin_layout Subsubsection
+Scaling of the weights/ reproduction
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Scaling-of-weights"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As mentionned, the weights compose the genome of a genetic individual.
+ Since the evaluation functions are scaled, the weights express the relative
+ importance of individual evaluation functions.
+ During the reproduction process, a new individual is created by combining
+ single genes or blocks of genes of parent individuals to form a new genome.
+ However, the absolute values of the weights are only representative in
+ the context of their original genome.
+ The important information, that is the relative proportion of the value
+ of a gene to the values of the other genes of a genome, is not inherited
+ in this way.
+ By scaling the sum of the absolute values of a genome to 1, the absolute
+ value of a gene represents the proportion that the corresponding evaluation
+ function occupies in its evaluator.
+ Thus, a scaled gene transfers this information if it is inherited.
+\end_layout
+
+\begin_layout Standard
+(Of course, the genome of a reproduced individual has to be rescaled after
+ its creation + explanation)
+\end_layout
+
+\begin_layout Subsubsection
+Mutation
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Mutation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fitness function
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Fitness-function"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+should give feedback on the performance of an agent during a match
+\end_layout
+
+\begin_layout Itemize
+problem: Abalone games can be infinite
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+how to evaluate performance after ply limit is reached?
+\end_layout
+
+\begin_layout Itemize
+can this be done unbiased (e.g.
+ fitness plus for pushed marbles --> offensive player)
+\end_layout
+
+\begin_layout Itemize
+how to avoid loops
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+conservative
+\begin_inset Quotes erd
+\end_inset
+
+ character of abalone --> very few pushes with randomly initialized individuals
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Implementation
 \begin_inset CommandInset label
