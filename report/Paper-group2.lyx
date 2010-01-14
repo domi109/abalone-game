@@ -1142,6 +1142,84 @@ name "sub:Lemmen's-Evaluator"
 
 \end_layout
 
+\begin_layout Standard
+Lemmen's Evaluator is a linear, weighted evaluator 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+eval(s)=\sum_{i=1}^{5}w_{i}\times f_{i}(s)-w_{6}\times f_{6}(s)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{1}(s)$
+\end_inset
+
+: The difference between the sum of the Manhattan distances of marbles for
+ each players, for a given board state 
+\emph on
+s
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{2}(s)$
+\end_inset
+
+: The difference between the sum of the number of neighboring teammates
+ for marbles for each players, for a given board state 
+\emph on
+s
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{4}(s)$
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{4}(s)$
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{5}(s)$
+\end_inset
+
+: The number of lost marbles of the opponent player, for a given board state
+ 
+\emph on
+s
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{6}(s)$
+\end_inset
+
+: The number of lost marbles of the current player, for a given board state
+ 
+\emph on
+s
+\emph default
+.
+ 
+\end_layout
+
 \begin_layout Subsubsection
 Non-Linear Evaluator
 \begin_inset CommandInset label
