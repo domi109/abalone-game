@@ -1183,17 +1183,38 @@ An evaluation function is a function which estimates the value of a position
 \end_layout
 
 \begin_layout Standard
+<<<<<<< .mine
+When constructing a evaluation function for a AI for Abalone, one must take
+ into account general strategies used in Abalone.
+=======
 When constructing a evaluation function for an agent playing Abalone, one
  must take into account general strategies used in Abalone.
+>>>>>>> .r297
  Below is a list of generally good strategies for Abalone:
 \end_layout
 
 \begin_layout Itemize
-Defensively 
+Keep your own marbles at the center of the board, while keeping opponent
+ marbles at the outside of the board.
+\end_layout
+
+\begin_layout Itemize
+Keep marbles together (good both offensively and defensively).
+\end_layout
+
+\begin_layout Itemize
+To strengthen marbles if in contact with enemy.
+ 
+\end_layout
+
+\begin_layout Itemize
+Attacking opponent by dividing them.
+ ie.
+ cutting inbetween their lines.
 \end_layout
 
 \begin_layout Subsubsection
-Lemmen's Evaluator
+Linear Evaluator
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Lemmen's-Evaluator"
@@ -1204,7 +1225,14 @@ name "sub:Lemmen's-Evaluator"
 \end_layout
 
 \begin_layout Standard
-Lemmen's Evaluator is a linear, weighted evaluator.
+Linear Evaluator is a linear, weighted evaluator from a paper by Lemmens.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
