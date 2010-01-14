@@ -336,8 +336,9 @@ name "sub:Tree-Search"
 \end_layout
 
 \begin_layout Standard
-This section shows how standard treesearch techniques can be applied to
- the game of abalone.
+In this section it will be demonstrated, how standard tree search techniques
+ as minimax search and alpha beta pruning can be applied to the game of
+ abalone.
  
 \end_layout
 
@@ -353,7 +354,7 @@ key "AIAMA"
 .
  Minimax searching is based on the idea, that there are two opposing optimal
  players.
- One player tries to maximise the game outcome, which his opponent seeks
+ One player tries to maximize the game outcome, which his opponent seeks
  to minimize.
  A minimax search can be further enhanced by alpha-beta pruning which hinders
  some nodes from being investigated if they would not be valuable under
@@ -365,7 +366,7 @@ key "AIAMA"
 Abalone's search tree is too complex to be searched completely by any known
  means.
  Instead a depth limited minimax search is introduced that cancels the search
- proces at a certain depth.
+ process at a certain depth.
  Moreover, as it is usually necessary to restrict the consideration time
  of an AI needs, a time limited iterative deepening search was used.
  Iteratively expanding the tree, this search strategy stops after a given
@@ -405,11 +406,11 @@ key "Chorus1"
 \end_layout
 
 \begin_layout Enumerate
-3-marble pushoff moves.
+3-marble push-off moves.
 \end_layout
 
 \begin_layout Enumerate
-2-marble pushoff moves.
+2-marble push-off moves.
 \end_layout
 
 \begin_layout Enumerate
@@ -584,7 +585,7 @@ es.com/Transposition+Table.
 
 .
  When the same state is encountered a second time, it can be looked up in
- the table and its value can be returned immediatelly without any further
+ the table and its value can be returned immediately without any further
  investigation.
 \end_layout
 
@@ -607,12 +608,11 @@ reference "sec:Complexity-of-Abalone"
 
 \end_inset
 
-, an important factor that reduces the statespace in abalone is the fact
+, an important factor that reduces the state-space in abalone is the fact
  that there are twelve symmetric versions of every state.
  The standard Zobrist Hashing approach however does not take those symmetries
  into account.
- There are two main ideas that can lead to the desired, symmetry aware behaviour
-:
+ There are two main ideas that can lead to the desired, symmetry aware behavior:
 \end_layout
 
 \begin_layout Enumerate
@@ -791,7 +791,7 @@ zobrist\left(\beta\circ\text{state}\right)=\bigotimes_{f\in\mathbb{F}}\rho\left(
 \end_layout
 
 \begin_layout Standard
-The most straightforeward way to satisfy 
+The most straightforward way to satisfy 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:alpha-pi-equality"
@@ -900,8 +900,8 @@ reference "fig:Symmetries"
 
  reveals that there are two classes of symmetry axes - the ones that are
  odd numbered and marked by a light green line and the ones that are even
- numberd and marked by a dark green line.
- For the yellow nodes on the horizontal axis (1), we cann apply the following
+ numbered and marked by a dark green line.
+ For the yellow nodes on the horizontal axis (1), we can apply the following
  constraint:
 \begin_inset Formula \[
 \beta=\alpha^{3}\]
@@ -990,7 +990,7 @@ Note that the structures actually allow us to apply
 \end_inset
 
  three times on every node of one axis of each class in order to assign
- the correctly constrainted values.
+ the correctly constrained values.
  Note also that we reduced the effective hash size to six byte on axis (1),
  (3) and (5) and to five byte on axis (2), (4) and (6).
 \end_layout
@@ -1208,8 +1208,8 @@ The nodes investigated during a search run of a certain depth.
 \end_layout
 
 \begin_layout Standard
-While the latter criterion has the advantage of beeing independent of implementa
-tional issues and more reproducible, the former criterion also takes into
+While the latter criterion has the advantage of being independent of implementat
+ions issues and more reproducible, the former criterion also takes into
  account overhead that might have been added by certain pruning techniques.
 \end_layout
 
@@ -1235,14 +1235,14 @@ The averaged result of multiple searches throughout a game.
 
 \begin_layout Standard
 Having established the test strategy, it can be applied to the optimization
- techniques desribed in section 
+ techniques described in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:General-Tree-Searching"
 
 \end_inset
 
- including alpha-beta pruning, move ordering, zobrist hashing and symmetry
+ including alpha-beta pruning, move ordering, Zobrist hashing and symmetry
  aware hashing.
 \end_layout
 
@@ -1269,7 +1269,7 @@ name "sub:Setup-Training-of-the"
 \end_layout
 
 \begin_layout Subsection
-Overal AI Performance
+Overall AI Performance
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Setup-AI-Performance"
@@ -1292,7 +1292,7 @@ Out AI vs NetAbalone*
 \end_layout
 
 \begin_layout Section
-Results of Experients
+Results of Experiments
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Results"
@@ -1337,7 +1337,7 @@ name "sub:Result-Training-of-the-Evaluation"
 \end_layout
 
 \begin_layout Subsection
-Overal AI Performance
+Overall AI Performance
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Result-Overal-AI-Performance"
@@ -1387,6 +1387,10 @@ Result Tables for the Experimental Results
 
 \begin_layout Subsection
 Tree Search Performance
+\end_layout
+
+\begin_layout Subsection
+Training of the Evaluation Function
 \end_layout
 
 \end_body
