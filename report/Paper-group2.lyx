@@ -1159,6 +1159,16 @@ An evaluation function is a function which estimates the value of a position
  
 \end_layout
 
+\begin_layout Standard
+When constructing a evaluation funtion for a AI for Abalone, one must take
+ into account general strategies used in Abalone.
+ Below is a list of generally good strategies for Abalone:
+\end_layout
+
+\begin_layout Itemize
+Defensively 
+\end_layout
+
 \begin_layout Subsubsection
 Lemmen's Evaluator
 \begin_inset CommandInset label
@@ -1388,8 +1398,8 @@ name "sub:OpponentModeling-Design"
 \end_layout
 
 \begin_layout Standard
-There is a difference beten opponents that are already know and there is
- a model of and opponents never seen before without any known model.
+There is a difference between opponents that are already know and there
+ is a model of and opponents never seen before without any known model.
  If the opponent is already known its model can be loaded into a OM-search
  AI that will incorporate the model in his search.
  If the opponent is not known, the AI tries to adjust our evaluation function
