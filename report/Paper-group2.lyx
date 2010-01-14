@@ -166,7 +166,16 @@ name "sub:The-Game-of"
 \begin_layout Standard
 Abalone is a two-person zero-sum board game, with perfect information.
  The goal of the game is to remove 6 opponent marbles from the hexagonal
- board.
+ board (figure 1).
+ There are 2 types of moves, a broadside move (figure 2) and an inline move
+ (figure 3).The maximum nr of marbles that can pushed is 3.
+ An inline move can also be a sumito move which means that a marble of the
+ opponent is pushed.
+ Marbles can be pushed as long as the number of marbles pushed is less than
+ the number of marbles pushing.
+ (i.e.
+ 3 marbles push 2 marbles, 2 marbles push 1 marble).
+ Also, it is not allowed to push your own marbles off the board.
  
 \end_layout
 
