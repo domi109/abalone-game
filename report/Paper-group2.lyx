@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -232,6 +232,15 @@ name "sub:State-Space-Complexity"
 \end_layout
 
 \begin_layout Standard
+The state-space complexity of a game is the number of moves possible throughout
+ a game.
+ In general it is difficult to approximate the average state-space complexity
+ of Abalone.
+ Hence, an approximation for the upper bound number of possible game positions
+ will be given instead.
+\end_layout
+
+\begin_layout Standard
 Approximation of an upper bound for the number of possible game positions:
 \end_layout
 
@@ -244,27 +253,55 @@ Approximation of an upper bound for the number of possible game positions:
 
 \end_layout
 
-\begin_layout Itemize
-The number 14 represents the amount of marbles which each player starts
- with.
-\end_layout
+\begin_layout Standard
+\begin_inset Formula \[
+\thickapprox7.8\times10^{24}\]
 
-\begin_layout Itemize
-The number 61 represents the slots on the board.
- 
-\end_layout
+\end_inset
 
-\begin_layout Itemize
-k = 8 is for the opposite player the minimum when it looses.
- 
-\end_layout
 
-\begin_layout Itemize
-m = 9 is for the player, to ensure it does not loose.
 \end_layout
 
 \begin_layout Standard
-Overall a relatively low state-space complexity.
+In the given approximation above 
+\begin_inset Formula $k=8$
+\end_inset
+
+ represents the opponent player having 8 marbles left on the board out of
+ a initial number of 14 marbles (ie.
+ opponent player has lost 6 marbles, the requirement for the game to end).
+ Furthermore, 
+\begin_inset Formula $m=9$
+\end_inset
+
+ represents the current player having 9 marbles left out of an initial number
+ of 14 marbles (ie.
+ the minimum amount of marbles needed to be retained to not lose the game).
+ The number 61 represents the number of positions on the board which can
+ be occupied by marbles.
+\end_layout
+
+\begin_layout Standard
+Furthermore, when considering about state-space complexity for Abalone,
+ one must take into account the symmetry which is present in the game.
+ Abalone is played on a hexagonal board, as a result there are 6 possible
+ mirror images and 6 possible rotations possible.
+ This means that the upper bound approximation can be further divided by
+ 12, leading to the following approximation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\thickapprox6.5\times10^{23}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In comparison with other games, Abalone has a relatively low state-space
+ complexity.
 \end_layout
 
 \begin_layout Subsection
@@ -276,6 +313,10 @@ name "sub:Game-Tree-Complexity"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The game-tree complexity of a game is, 
 \end_layout
 
 \begin_layout Standard
@@ -1042,7 +1083,7 @@ name "sub:Evaluation-Functions"
 \end_layout
 
 \begin_layout Subsubsection
-Linear Evaluation Functions
+Introduction to Evaluation Functions
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Linear-Evaluation-Functions"
@@ -1052,15 +1093,28 @@ name "sub:Linear-Evaluation-Functions"
 
 \end_layout
 
-\begin_layout Subsubsection
-Simple Evaluator
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Simple-Evaluator"
+\begin_layout Standard
+In section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:General-Tree-Searching"
 
 \end_inset
 
+ the practicalities of searching a game tree with a high game-tree complexity
+ are brought to light.
+ In practice, a search can only go to a certain depth, before it has to
+ analyze the situation and make a decision.
+ The question which arises is, how does one judge the quality of a possible
+ move given that they do not know the end state? A solution to this is through
+ the use of evaluation functions (also known as scoring functions).
+ 
+\end_layout
 
+\begin_layout Standard
+An evaluation function is a function which estimates the value of a position
+ in a search.
+ 
 \end_layout
 
 \begin_layout Subsubsection
