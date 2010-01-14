@@ -1143,7 +1143,7 @@ name "sub:Lemmen's-Evaluator"
 \end_layout
 
 \begin_layout Standard
-Lemmen's Evaluator is a linear, weighted evaluator 
+Lemmen's Evaluator is a linear, weighted evaluator.
 \end_layout
 
 \begin_layout Standard
@@ -1292,18 +1292,19 @@ name "sec:Opponent-Modeling"
 \begin_layout Standard
 Normal minimax-search assumes the opponent will always make the optimal
  moves for him.
- He assumes the opponent is using the same evaluation function.
+ Minimax-search assumes the opponent is using the same evaluation function.
  With human opponents this is never the case but because the AI presumes
  the evaluation function is optimal, the human can only make worse decisions
  than the ones the AI had envisioned for him.
-\end_layout
-
-\begin_layout Standard
-With opponent modeling the AI tries to get a greater advantage from the
- fact that the opponent makes sub-optimal moves (according to the minimax
- evaluation function).
- And the AI tries to get optimal outcomes knowing the opponent will make
- sub-optimal moves.
+ With opponent modeling the OM-search AI tries to get a greater advantage
+ from the fact that the opponent makes sub-optimal moves (according to the
+ minimax algorithm).
+ The AI with opponent modeling tries to get optimal outcomes knowing that
+ the opponent will make sub-optimal moves.
+ This approach has the risk that if the opponent model is wrong and the
+ AI wrongly predicts the opponents move, there is a high probability he
+ will make a worse move than if he used the minimax-algorithm.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1318,23 +1319,41 @@ name "sub:OpponentModeling-Design"
 \end_layout
 
 \begin_layout Standard
-We make a difference between opponents that we already know and have a model
- of and opponents never seen before without any known model.
+There is a difference beten opponents that are already know and there is
+ a model of and opponents never seen before without any known model.
+ If the opponent is already known its model can be loaded into a OM-search
+ AI that will incorporate the model in his search.
+ If the opponent is not known, the AI tries to adjust our evaluation function
+ to emulate how the opponent makes his moves and create a model of the opponent.
+ This way the AI tries to make a model of the opponent which is compatible
+ with the AI's own model and can be incorporated in the OM-search.
+ This will not be a perfect model of the opponents decision algorithm but
+ it can be assumed that the opponents decision algorithm is a minimax search
+ with the same (or parts of) our evaluation function.
+ The opponents evaluation function (model) is only a small variation of
+ the OM-search AI's evaluation function so there is no big risk that he
+ will make a much worse move (when the OM-search AI predicts the wrong move)
+ than if normal minimax-search would have been used.
+ 
 \end_layout
 
 \begin_layout Standard
-If we already know an opponent we can load his model into a new opponent-minimax
- AI that will incorperate the model in the search.
- The minimax can now make moves that might be suboptimal in normal minimax-searc
+The OM-search AI can make moves that might be suboptimal in normal minimax-searc
 h but will give the new AI an advantage because the opponent will do a suboptima
-l move which has a better "value" for the opponent-minimax AI.
+l move which, in the end, has a higher evaluation for the OM-search AI.
+ 
 \end_layout
 
 \begin_layout Standard
-If we don't know the opponent we try to adjust our current AI to make the
- choices the opponent makes logical.
- This way we try to make a model of the opponent which is compatible with
- out current model.
+OM-search works with a seperate evaluation function (model) for the opponent
+ and for himself.
+ It is very similar to minimax-search but the algorithm stores both the
+ evaluation-outcomes at every node.
+ Now at all minus-nodes the AI will take the path with the lowest outcome
+ for the opponents evaluation and at the max-nodes he will pick the path
+ with the highest outcome for his own evaluation function (the same as the
+ outcome you would have had with the minimax algorithm).[ref: Opponent Models
+ and Knowledge Symmetry in Game-Tree Search]
 \end_layout
 
 \begin_layout Subsection
@@ -1349,16 +1368,15 @@ name "sub:OpponentModeling-Implementation"
 \end_layout
 
 \begin_layout Standard
-In our implementation a opponent model consists of the weights of the evaluation
+In our implementation a opponent-model consists of the weights of the evaluation
  function, similar to the individuals of our genetic algorithm.
- Because of this the only way an opponent can differ from our own AI is
- different outcomes for all the moves.
-\end_layout
-
-\begin_layout Standard
-The search-method we use with these opponent models is Opponent-model search[ref
-].
- 
+ There are models that are pre-set and differ slightly from our own evaluation
+ function in that they are more aggressive or more defensive, more or less
+ risk.
+ Sometimes the AI does not know anything about the opponent.
+ In that case the opponents model starts out as a replica of the AI's weights
+ but they get changed bit by bit for every decision the opponent makes different
+ly that the OM-search AI thought he would do.
 \end_layout
 
 \begin_layout Standard
