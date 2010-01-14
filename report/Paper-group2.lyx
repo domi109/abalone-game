@@ -279,6 +279,13 @@ In the given approximation above
  the minimum amount of marbles needed to be retained to not lose the game).
  The number 61 represents the number of positions on the board which can
  be occupied by marbles.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1,Lemmens1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -302,6 +309,13 @@ Furthermore, when considering about state-space complexity for Abalone,
 \begin_layout Standard
 In comparison with other games, Abalone has a relatively low state-space
  complexity.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -316,7 +330,7 @@ name "sub:Game-Tree-Complexity"
 \end_layout
 
 \begin_layout Standard
-The game-tree complexity of a game is, 
+The game-tree complexity of a game is 
 \end_layout
 
 \begin_layout Standard
