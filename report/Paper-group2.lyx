@@ -330,35 +330,63 @@ name "sub:Game-Tree-Complexity"
 \end_layout
 
 \begin_layout Standard
-The game-tree complexity of a game is 
-\end_layout
+The game-tree complexity of a game is a measure to represent the complexity
+ of the game tree 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
 
-\begin_layout Standard
-From research it was discovered that the branching factor of Abalone to
- be around 60 – 65.
- The average game length for humans is around 87 ply humans and around 130
- ply for computers.
+\end_inset
+
+.
+ It represents all the possible 'plays' possible in a Abalone game.
  
 \end_layout
 
 \begin_layout Standard
-Lower bound: 
-\begin_inset Formula $60^{87}=5.0\times10^{154}$
+Previous research into the game-tree complexity of Abalone has shown that
+ the branching factor of Abalone to be around 60 – 65.
+ Furthermore the average game length for humans is around 87 ply humans
+ and around 130 ply for computers
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1,Lemmens1"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+It is difficult to approximate the game-tree complexity of Abalone.
+ The most straight forward approximation is the lower bound calculation.
+ This is achieved by taking the branching factor, 
+\begin_inset Formula $b$
+\end_inset
+
+ , as the base, while setting the average-number of plies in a game, 
+\begin_inset Formula $p$
+\end_inset
+
+ , as the exponent.
+\end_layout
+
+\begin_layout Standard
+Approximation of an lower bound for the game-tree complexity:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+b^{p}=60^{87}=5.0\times10^{154}\]
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-Upper bound: 
-\begin_inset Formula $65^{130}=4.77\times10^{235}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Overall a high game-tree complexity.
+In comparison with other board games, Abalone has a high game-tree complexity.
 \end_layout
 
 \begin_layout Standard
@@ -1184,14 +1212,14 @@ s
 \begin_inset Formula $f_{4}(s)$
 \end_inset
 
-: 
+: The difference between the sum of the 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $f_{4}(s)$
 \end_inset
 
-: 
+: The difference between the sum of the 
 \end_layout
 
 \begin_layout Standard
