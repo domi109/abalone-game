@@ -1143,6 +1143,23 @@ name "sec:Opponent-Modeling"
 
 \end_layout
 
+\begin_layout Standard
+Normal minimax-search assumes the opponent will always make the optimal
+ moves for him.
+ He assumes the opponent is using the same evaluation function.
+ With human opponents this is never the case but because the AI presumes
+ the evaluation function is optimal, the human can only make worse decisions
+ than the ones the AI had envisioned for him.
+\end_layout
+
+\begin_layout Standard
+With opponent modeling the AI tries to get a greater advantage from the
+ fact that the opponent makes sub-optimal moves (according to the minimax
+ evaluation function).
+ And the AI tries to get optimal outcomes knowing the opponent will make
+ sub-optimal moves.
+\end_layout
+
 \begin_layout Subsection
 Design
 \begin_inset CommandInset label
@@ -1154,6 +1171,26 @@ name "sub:OpponentModeling-Design"
 
 \end_layout
 
+\begin_layout Standard
+We make a difference between opponents that we already know and have a model
+ of and opponents never seen before without any known model.
+\end_layout
+
+\begin_layout Standard
+If we already know an opponent we can load his model into a new opponent-minimax
+ AI that will incorperate the model in the search.
+ The minimax can now make moves that might be suboptimal in normal minimax-searc
+h but will give the new AI an advantage because the opponent will do a suboptima
+l move which has a better "value" for the opponent-minimax AI.
+\end_layout
+
+\begin_layout Standard
+If we don't know the opponent we try to adjust our current AI to make the
+ choices the opponent makes logical.
+ This way we try to make a model of the opponent which is compatible with
+ out current model.
+\end_layout
+
 \begin_layout Subsection
 Implementation
 \begin_inset CommandInset label
@@ -1163,6 +1200,19 @@ name "sub:OpponentModeling-Implementation"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In our implementation a opponent model consists of the weights of the evaluation
+ function, similar to the individuals of our genetic algorithm.
+ Because of this the only way an opponent can differ from our own AI is
+ different outcomes for all the moves.
+\end_layout
+
+\begin_layout Standard
+The search-method we use with these opponent models is Opponent-model search[ref
+].
+ 
 \end_layout
 
 \begin_layout Standard
