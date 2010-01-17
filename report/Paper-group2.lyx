@@ -156,7 +156,7 @@ key "MonteCarlo1,MonteCarlo2"
 The Game of Abalone
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:The-Game-of"
+name "sub:The-Game-of-Abalone"
 
 \end_inset
 
@@ -164,19 +164,87 @@ name "sub:The-Game-of"
 \end_layout
 
 \begin_layout Standard
-Abalone is a two-person zero-sum board game, with perfect information.
- The goal of the game is to remove 6 opponent marbles from the hexagonal
- board (figure 1).
- There are 2 types of moves, a broadside move (figure 2) and an inline move
- (figure 3).The maximum nr of marbles that can pushed is 3.
- An inline move can also be a sumito move which means that a marble of the
- opponent is pushed.
- Marbles can be pushed as long as the number of marbles pushed is less than
- the number of marbles pushing.
- (i.e.
- 3 marbles push 2 marbles, 2 marbles push 1 marble).
- Also, it is not allowed to push your own marbles off the board.
+In this section, the game of interest will be introduced and it's rules
+ will be explained briefly.
+ Abalone - ranked with the 
+\begin_inset Quotes eld
+\end_inset
+
+Game of the Decade
+\begin_inset Quotes erd
+\end_inset
+
+ at the International Game Festival in 1998
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Abalearn1"
+
+\end_inset
+
+ - is a classical, strategic two-player board game.
+ As many other classical board games, Abalone is a zero-sum game with perfect
+ information.
+ It is played on an hexagonal board (figure 1) on which there are two sets
+ of fourteen marbles - one set for each player.
  
+\end_layout
+
+\begin_layout Standard
+There are 2 types of moves a player can perform: An inline move during which
+ a line of marbles is moved in the direction that the line faces (figure
+ 2) and a broadside move during which a line of marbles is moved to any
+ other direction than the one the line faces (figure 3).
+ Such a line may at most consist of three own marbles.
+ With an inline move it is possible to 
+\begin_inset Quotes eld
+\end_inset
+
+push
+\begin_inset Quotes erd
+\end_inset
+
+ opponent marbles - such an action is then called a sumito move.
+ However, this is only possible if the number of pushed marbles is less
+ than the number of pushing marbles.
+ That boils down to a total number of three possible types of sumito moves:
+\end_layout
+
+\begin_layout Enumerate
+Two own marbles vs.
+ one opponent marble.
+\end_layout
+
+\begin_layout Enumerate
+Three own marbles vs.
+ one opponent marble.
+\end_layout
+
+\begin_layout Enumerate
+Three own marbles vs.
+ two opponent marbles.
+\end_layout
+
+\begin_layout Standard
+It is not allowed to perform suicidal moves - i.e.
+ to push own marbles of the board.
+ Moreover it is not possible to perform a sumito move is an own stone is
+ in the way
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Todo: rephrase
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The following section will provide a sketch of research that has already
+ been done on the subject of abalone.
+ Furthermore, our own reasearch questions will be stated.
 \end_layout
 
 \begin_layout Subsection
@@ -190,9 +258,49 @@ name "sub:Research-Questions"
 
 \end_layout
 
+\begin_layout Itemize
+Campos et al.
+ achieved to create a self learning abalone program
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Abalearn1,Abalearn2"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Chorus compared a standard deterministic approach including alpha beta search
+ and minimax to a monte carlo approach 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Lemmens implemented a minimax based agent and compared various optimization
+ methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 The following are possible research questions:
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
 
 \begin_layout Enumerate
 Is it possible for an AI agent to play Abalone on a professional level?
@@ -207,8 +315,28 @@ Which machine learning techniques are best used to optimize the performance
  of the AI agent?
 \end_layout
 
+\begin_layout Plain Layout
+This is the old version, new proposal (something we might be able to answer):
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Enumerate
-Which type of opponent modeling will improve the performance?
+Can board symmetries be taken into account to further enhance the performance
+ of a minimax agent?
+\end_layout
+
+\begin_layout Enumerate
+Is a Genetic Algrithm a feasible means to optimize an abalone evaluation
+ function?
+\end_layout
+
+\begin_layout Enumerate
+Which combination of todays commonly used atomary heuristics for the game
+ of abalone is optimal?
 \end_layout
 
 \begin_layout Standard
@@ -241,7 +369,7 @@ name "sub:State-Space-Complexity"
 \end_layout
 
 \begin_layout Standard
-The state-space complexity of a game is the number of positions possible
+The state-space complexity of a game is the number of situations possible
  throughout a game.
  In general it is difficult to approximate the average state-space complexity
  of Abalone.
@@ -298,12 +426,11 @@ key "Chorus1,Lemmens1"
 \end_layout
 
 \begin_layout Standard
-Furthermore, when considering about state-space complexity for Abalone,
- one must take into account the symmetry which is present in the game.
- Abalone is played on a hexagonal board, as a result there are 6 possible
- mirror images and 6 possible rotations possible.
- This means that the upper bound approximation can be further divided by
- 12, leading to the following approximation:
+Furthermore, when considering about Abalone's state-space complexity, symmetries
+ must be taken into account: Abalone is played on a hexagonal board, as
+ a result there are six mirrored and six rotated versions of the same state.
+ This, however, means that the upper bound approximation can be divided
+ by twelve, leading to the following, final approximation:
 \end_layout
 
 \begin_layout Standard
@@ -316,8 +443,8 @@ Furthermore, when considering about state-space complexity for Abalone,
 \end_layout
 
 \begin_layout Standard
-In comparison with other games, Abalone has a relatively low state-space
- complexity.
+In comparison with comparable boardgames, Abalone has a relatively low state-spa
+ce complexity.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Chorus1"
@@ -339,17 +466,9 @@ name "sub:Game-Tree-Complexity"
 \end_layout
 
 \begin_layout Standard
-The game-tree complexity of a game is a measure to represent the complexity
- of the game tree 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Lemmens1"
-
-\end_inset
-
-.
- It represents all the possible 'plays' possible in a Abalone game.
- 
+The tree complexity of a game represents the number of possible move sequences
+ and therefore constitutes an important measure for the applicability of
+ tree search techniques.
 \end_layout
 
 \begin_layout Standard
@@ -395,7 +514,8 @@ b^{p}=60^{87}=5.0\times10^{154}\]
 \end_layout
 
 \begin_layout Standard
-In comparison with other board games, Abalone has a high game-tree complexity.
+In comparison with other boardgames, Abalone therefore has a high game-tree
+ complexity.
 \end_layout
 
 \begin_layout Standard
@@ -1136,6 +1256,14 @@ reference "fig:Symmetries"
  to derive all symmetries.
 \end_layout
 
+\begin_layout Standard
+This section demonstrated how treesearch techniques based on the minimax
+ algorithm can be applied to Abalone and introduced some techniques for
+ optimization.
+ The following section will elaborate on what to do at the depth limit of
+ a minimax search by providing some evaluation techniques.
+\end_layout
+
 \begin_layout Subsection
 Evaluation Functions
 \begin_inset CommandInset label
@@ -1151,7 +1279,7 @@ name "sub:Evaluation-Functions"
 Introduction to Evaluation Functions
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Linear-Evaluation-Functions"
+name "sub:Intro-Evaluation-Functions"
 
 \end_inset
 
@@ -1168,29 +1296,29 @@ reference "sec:General-Tree-Searching"
 
  the practicalities of searching a game tree with a high game-tree complexity
  are brought to light.
- In practice, a search can only go to a certain depth, before it has to
- analyze the situation and make a decision.
- The question which arises is, how does one judge the quality of a possible
- move given that they do not know the end state? A solution to this is through
- the use of evaluation functions (also known as scoring functions).
+ It was pointed out, that, in practice, a search can only go to a certain
+ depth, before it has to analyze the situation and make a decision.
+ The question which arises is, how to judge the quality of a possible move
+ given that they do not know the end state? A solution to this is the use
+ an evaluation function which estimates the value of a position in a search.
  
 \end_layout
 
 \begin_layout Standard
-An evaluation function is a function which estimates the value of a position
- in a search.
- 
+When constructing an evaluation function for an agent playing Abalone, it
+ makes sense to consider general strategies commonly used.
+ Below is a list of strategies that are widely accepted as appropriate rules
+ of thumb:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Source?
 \end_layout
 
-\begin_layout Standard
-<<<<<<< .mine
-When constructing a evaluation function for a AI for Abalone, one must take
- into account general strategies used in Abalone.
-=======
-When constructing a evaluation function for an agent playing Abalone, one
- must take into account general strategies used in Abalone.
->>>>>>> .r297
- Below is a list of generally good strategies for Abalone:
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Itemize
@@ -1199,18 +1327,16 @@ Keep your own marbles at the center of the board, while keeping opponent
 \end_layout
 
 \begin_layout Itemize
-Keep marbles together (good both offensively and defensively).
+Keep your own marbles together.
 \end_layout
 
 \begin_layout Itemize
-To strengthen marbles if in contact with enemy.
+Strengthen groups of marbles that are in contact with opponent marbles.
  
 \end_layout
 
 \begin_layout Itemize
-Attacking opponent by dividing them.
- ie.
- cutting inbetween their lines.
+Split up your opponent's marble lines.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1225,10 +1351,31 @@ name "sub:Lemmen's-Evaluator"
 \end_layout
 
 \begin_layout Standard
-Linear Evaluator is a linear, weighted evaluator from a paper by Lemmens.
+This section introduces a weighted linear evaluator based on the general
+ strategies layed out in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Intro-Evaluation-Functions"
+
+\end_inset
+
+ and Lemmens' results
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Lemmens1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Todo: Introduce the equation somehow
+\end_layout
 
 \end_inset
 
@@ -1237,18 +1384,18 @@ key "Lemmens1"
 
 \begin_layout Standard
 \begin_inset Formula \[
-eval(s)=\sum_{i=1}^{5}w_{i}\times f_{i}(s)-w_{6}\times f_{6}(s)\]
+eval(s)=\sum_{i=1}^{6}w_{i}\times f_{i}(s)\]
 
 \end_inset
 
-
+where
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $f_{1}(s)$
 \end_inset
 
-: The difference between the sum of the Manhattan distances for every marble
+ is difference between the sum of the Manhattan distances for every marble
  for each player, for a given board state 
 \emph on
 s
@@ -1265,7 +1412,7 @@ center strategy
 \begin_inset Formula $f_{2}(s)$
 \end_inset
 
-: The difference between the sum of the number of neighboring teammates
+ is the difference between the sum of the number of neighboring teammates
  for every marble for each player, for a given board state 
 \emph on
 s
@@ -1282,7 +1429,7 @@ cohesion strategy
 \begin_inset Formula $f_{3}(s)$
 \end_inset
 
-: The difference between the sum of having an opponent marble at one adjacent
+ is the difference between the sum of having an opponent marble at one adjacent
  side of a player's marble and having an opponent marble at the opposing
  adjacent side, for a given board state 
 \emph on
@@ -1301,7 +1448,7 @@ break strong group strategy
 \begin_inset Formula $f_{4}(s)$
 \end_inset
 
-: The difference between the sum of having an opponent marble at one adjacent
+ is the difference between the sum of having an opponent marble at one adjacent
  side of a player's marble and having an teammate marble at the opposing
  adjacent side, for a given board state 
 \emph on
@@ -1320,8 +1467,8 @@ strengthen group strategy
 \begin_inset Formula $f_{5}(s)$
 \end_inset
 
-: The number of lost marbles of the opponent player, for a given board state
- 
+ is the number of lost marbles of the opponent player, for a given board
+ state 
 \emph on
 s
 \emph default
@@ -1337,8 +1484,8 @@ taken marble strategy
 \begin_inset Formula $f_{6}(s)$
 \end_inset
 
-: The number of lost marbles of the current player, for a given board state
- 
+ is the number of lost marbles of the current player, for a given board
+ state 
 \emph on
 s
 \emph default
@@ -1382,20 +1529,37 @@ name "sec:Genetic-Algorithm"
 \begin_layout Standard
 The previous section examined evaluators that can form the basis of decisionmaki
 ng for an Abalone player.
- But the performance of the AI also depends on the weighting of the individual
- evaluation functions.
+ However, the performance of the agent highly depends on the weighting of
+ the individual evaluation functions.
  This section discusses the use of a genetic algorithm (the use of machine
- learning techniques) to optimize these weights.
+ learning techniques
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+How is that meant?
+\end_layout
+
+\end_inset
+
+) to optimize these weights.
 \end_layout
 
 \begin_layout Standard
-Genetic algorithms are evolutionary algorithms that model natural selection
- (and can be used) to solve optimization problems.
- Analogue to biological evolution whose main idea is that in a competitive
- environment, fitter organisms have an increased chance to pass their genetic
- information to succeeding generations, individuals of a population of a
- genetic algorithm are assigned a fitness value that decides whether it
- will pass to the succeeding generation.
+A genetic algorithm is a stochastic hill-climbing technique that models
+ natural selection to solve optimization problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AIAMA"
+
+\end_inset
+
+.
+ Analogue to the biological theory of evolution whose main idea is that
+ in a competitive environment, fitter organisms have an increased chance
+ to pass their genetic information to succeeding generations, individuals
+ of a population of a genetic algorithm are assigned a fitness value that
+ decides whether it will be passed to the succeeding generation.
 \end_layout
 
 \begin_layout Standard
@@ -1799,8 +1963,7 @@ reference "sub:Setup-Tree-Search-Performance"
 
 \end_inset
 
- will be given and interpreted.
- 
+ will be given, interpreted and compared to the results from previous research.
 \end_layout
 
 \begin_layout Standard
@@ -1884,6 +2047,41 @@ Training of the Evaluation Function
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Result-Training-of-the-Evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename graph_ga_01.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of a training run.
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
