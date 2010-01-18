@@ -1,7 +1,11 @@
 package abalone.gui;
 
+import java.nio.ByteBuffer;
+
 import abalone.gamestate.GameState;
+import abalone.gamestate.ZobristHasher;
 import abalone.model.Node;
+import abalone.model.Player;
 
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QPen;
@@ -19,23 +23,25 @@ public class GameNodeEllipse extends AbaloneEllipse
 		this.node = node;
 		
 //		// --- Init tooltip --- //
-//		String tt = "";
-//		for(Player p : state.getPlayers())
-//		{
-//			ByteBuffer hash = ZobristHasher.get(node, p);
-//			for(int i = 0; i<8;i++)
-//			{
-//				tt += " |"+hash.get(i)+"|";
-//			}
-//			tt+="\n";
-//		}
-//		ByteBuffer hash = ZobristHasher.get(node, null);
-//		for(int i = 0; i<8;i++)
-//		{
-//			tt += " |"+hash.get(i)+"|";
-//		}
-//		tt+="\n";
-//		this.setToolTip(tt);
+		String tt = "";
+		for(Player p : state.getPlayers())
+		{
+			ByteBuffer hash = ByteBuffer.allocate(8);
+			hash.putLong(ZobristHasher.get(node, p));
+			for(int i = 0; i<8;i++)
+			{
+				tt += " |"+hash.get(i)+"|";
+			}
+			tt+="\n";
+		}
+		ByteBuffer hash = ByteBuffer.allocate(8);
+		hash.putLong(ZobristHasher.get(node, null));
+		for(int i = 0; i<8;i++)
+		{
+			tt += " |"+hash.get(i)+"|";
+		}
+		tt+="\n";
+		this.setToolTip(tt);
 //		// --- //
 	}
 

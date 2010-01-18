@@ -196,7 +196,7 @@ public class GameState implements SearchState, SymmetryHashable
 	@Override
 	public long[] getSymmetryHashes()
 	{
-		return ZobristHasher.getSymmetries(getHash());
+		return ZobristHasher.getSomeSymmetries(getHash());
 	}
 
 	@Override

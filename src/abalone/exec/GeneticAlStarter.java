@@ -1,5 +1,6 @@
 package abalone.exec;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,16 +12,28 @@ import nl.maastrichtuniversity.dke.libreason.genetics.GeneticSearch;
 import nl.maastrichtuniversity.dke.libreason.genetics.reproduction.KeepBestPairwiseReproduction;
 import nl.maastrichtuniversity.dke.libreason.genetics.selection.ElitistSelection;
 import abalone.ai.evaluation.LinearEvaluator;
+import abalone.ai.machinelearning.TournamentModes.CrossTournament;
+import abalone.ai.machinelearning.TournamentModes.KOTournament;
 import abalone.ai.machinelearning.TournamentModes.RandomMatchTournament;
 
 public class GeneticAlStarter
 {
 	public static void main(String[] args)
 	{
-		GeneticSearch search = new GeneticSearch(loadPop(), new ElitistSelection(), new KeepBestPairwiseReproduction(2, 2), new RandomMatchTournament(3));
-		search.setSelectionSize(7);
+		GeneticPopulation pop = null;
+		File file = new File("population.ser");
+		if(file.exists())
+		{
+			pop = loadPop();
+		}
+		else
+		{
+			pop = generatePop(20);
+		}
+		GeneticSearch search = new GeneticSearch(pop, new ElitistSelection(), new KeepBestPairwiseReproduction(4, 2), new CrossTournament());
+		search.setSelectionSize(5);
 
-		int numberOfGenerations = 50;
+		int numberOfGenerations = 100;
 
 		try
 		{
