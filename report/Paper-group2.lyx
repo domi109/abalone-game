@@ -1387,24 +1387,21 @@ eval(s)=\sum_{i=1}^{6}w_{i}\times f_{i}(s)\]
 where
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{1}(s)$
 \end_inset
 
- is difference between the sum of the Manhattan distances for every marble
- for each player, for a given board state 
+ is the difference between the sum of the Manhattan distances for every
+ marble for each player, for a given board state 
 \emph on
-s
+s (center strategy
 \emph default
-.
- This is called the 
-\emph on
-center strategy
-\emph default
-.
+),
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{2}(s)$
 \end_inset
 
@@ -1413,15 +1410,15 @@ center strategy
 \emph on
 s
 \emph default
-.
- This is called the 
+ (
 \emph on
 cohesion strategy
 \emph default
-.
+),
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{3}(s)$
 \end_inset
 
@@ -1431,16 +1428,15 @@ cohesion strategy
 \emph on
 s
 \emph default
-.
- This is called the 
-\emph on
-break strong group strategy
-\emph default
-.
  
+\emph on
+(break strong group strategy
+\emph default
+), 
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{4}(s)$
 \end_inset
 
@@ -1448,18 +1444,11 @@ break strong group strategy
  side of a player's marble and having an teammate marble at the opposing
  adjacent side, for a given board state 
 \emph on
-s
-\emph default
-.
- This is called the 
-\emph on
-strengthen group strategy
-\emph default
-.
- 
+s (strengthen group strategy),
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{5}(s)$
 \end_inset
 
@@ -1468,15 +1457,13 @@ strengthen group strategy
 \emph on
 s
 \emph default
-.
- This is called the 
+ 
 \emph on
-taken marble strategy
-\emph default
-.
+(taken marble strategy),
 \end_layout
 
-\begin_layout Standard
+\begin_layout List
+\labelwidthstring 00.00.0000
 \begin_inset Formula $f_{6}(s)$
 \end_inset
 
@@ -1485,12 +1472,11 @@ taken marble strategy
 \emph on
 s
 \emph default
-.
- This is called the 
+ (
 \emph on
 lost marble strategy
 \emph default
-.
+).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1895,7 +1881,579 @@ reference "sub:Result-Tree-Search-Performance"
 Training of the Evaluation Function
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Setup-Training-of-the"
+name "sub:Setup-Training-of-the-Evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:GA-Design"
+
+\end_inset
+
+ the parameters of the genetic algorithm were presented.
+ This section introduces the experimental setups used to determine the settings
+ best suited to let the algorithm converge to a dominant strategy.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="6">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Testrun
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reproduction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Selection
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tournament
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Match
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Search
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(2,4)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+best 5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(10)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max.
+ 200 ply
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(2,2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+best 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(3)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max.
+ 200 ply
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(5,2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+best 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(5)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max.
+ 200 ply
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(2,4)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+best 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{2}(2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200 / 260ply
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+260 can occur through overtime, refer to section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Fitness-function"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(2,4)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+best 5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max 200 ply
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Test run settings for the genetic algorithm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -1990,7 +2548,16 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename symmetric_hashing-vs-normal_hashing.png
+	filename graph_treesearch_complexity_comparison.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename graph_treesearch_time_comparison.png
+	lyxscale 50
 	width 50col%
 
 \end_inset
@@ -2002,10 +2569,15 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The result of symmetric hashing compared by time and investigated nodes.
+In this figure various optimization strategies are compared at the initial
+ state of Abalone.
+ Shown is: the number of nodes that were investigated and the runtime of
+ the search.
+ Note, that the strategies without alpha-beta pruning could not be applied
+ for a search on level five because of hardware restrictions.
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:The-result-of-hashing"
+name "fig:Comparison-Startposition"
 
 \end_inset
 
@@ -2032,8 +2604,8 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename graph_treesearch_complexity_comparison.png
-	width 60col%
+	filename symmetric_hashing-vs-normal_hashing.png
+	width 50col%
 
 \end_inset
 
@@ -2044,8 +2616,15 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Comparison of different optimization strategies by the number of nodes that
- were investigated.
+The improvement of symmetric hashing over normal hashing at the initial
+ position compared by time and investigated nodes.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-result-of-hashing"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2065,8 +2644,17 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename graph_treesearch_time_comparison.png
-	width 60col%
+	filename graph_treesearch_complexity_comparison_ingame.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename graph_treesearch_time_comparison_ingame.png
+	lyxscale 50
+	width 50col%
 
 \end_inset
 
@@ -2077,7 +2665,19 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Comparison of different optimization strategies by the time it took to search.
+In this figure various optimization strategies are compared at a chosen
+ ingame state of Abalone.
+ Shown is: the number of nodes that were investigated and the runtime of
+ the search.
+ Note, that the strategies without alpha-beta pruning could not be applied
+ to searches of 4 or 5 ply because of hardware restrictions.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Comparison-Ingame"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2105,7 +2705,7 @@ name "sub:Result-Training-of-the-Evaluation"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
