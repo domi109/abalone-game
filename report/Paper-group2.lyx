@@ -43,7 +43,7 @@
 \begin_body
 
 \begin_layout Title
-Abalone
+An Evolutionary Approach to Abalone
 \end_layout
 
 \begin_layout Author
@@ -164,7 +164,7 @@ name "sub:The-Game-of-Abalone"
 \end_layout
 
 \begin_layout Standard
-In this section, the game of interest will be introduced and it's rules
+In this section, the research subject will be introduced and it's rules
  will be explained briefly.
  Abalone - ranked with the 
 \begin_inset Quotes eld
@@ -243,7 +243,7 @@ Todo: rephrase
 
 \begin_layout Standard
 The following section will provide a sketch of research that has already
- been done on the subject of abalone.
+ been done on the subject of Abalone.
  Furthermore, our own reasearch questions will be stated.
 \end_layout
 
@@ -258,9 +258,26 @@ name "sub:Research-Questions"
 
 \end_layout
 
-\begin_layout Itemize
-Campos et al.
- achieved to create a self learning abalone program
+\begin_layout Standard
+The game of Abalone has been subject to several scientific investigations.
+ Lemmens implemented a minimax based agent playing abalone efficiently and
+ compared various optimization methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
+
+\end_inset
+
+, Chorus compared this tree search approach to a Monte Carlo technique
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+.
+ Campos et al.
+ achieved to create a self learning, advanced Abalone playing agent
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Abalearn1,Abalearn2"
@@ -270,35 +287,28 @@ key "Abalearn1,Abalearn2"
 .
 \end_layout
 
-\begin_layout Itemize
-Chorus compared a standard deterministic approach including alpha beta search
- and minimax to a monte carlo approach 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Chorus1"
+\begin_layout Standard
+In contrast to Campos who provided a machine learning algorithm for this
+ task, Lemmens and Chorus left open the rationale behind their evaluation
+ functions.
+ 
+\begin_inset Note Note
+status open
 
-\end_inset
-
-.
+\begin_layout Plain Layout
+TODO stuff missing here
 \end_layout
 
-\begin_layout Itemize
-Lemmens implemented a minimax based agent and compared various optimization
- methods 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Lemmens1"
-
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Standard
-The following are possible research questions:
+This leads to the following research questions:
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -337,13 +347,6 @@ Is a Genetic Algrithm a feasible means to optimize an abalone evaluation
 \begin_layout Enumerate
 Which combination of todays commonly used atomary heuristics for the game
  of abalone is optimal?
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -516,13 +519,6 @@ b^{p}=60^{87}=5.0\times10^{154}\]
 \begin_layout Standard
 In comparison with other boardgames, Abalone therefore has a high game-tree
  complexity.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -1078,7 +1074,7 @@ As long as we know that those constraints are valid for our hash function,
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -1142,14 +1138,14 @@ which means that
  Looking at what this means for the bitwise permutation we get the following
  condition:
 \begin_inset Formula \begin{eqnarray*}
-\left(b_{1},b_{7},b_{6},b_{5},b_{4},b_{3},b_{2},b_{8}\right) & = & \left(b_{1},b_{3},b_{4},b_{5},b_{6},b_{7},b_{2},b_{8}\right)\end{eqnarray*}
+\left(b_{1},b_{7},b_{6},b_{5},b_{4},b_{3},b_{2},b_{8}\right) & = & \left(b_{1},b_{5},b_{6},b_{7},b_{2},b_{3},b_{4},b_{8}\right)\end{eqnarray*}
 
 \end_inset
 
 which gives us
 \begin_inset Formula \begin{eqnarray*}
-b_{3} & = & b_{7}\\
-b_{6} & = & b_{4}\end{eqnarray*}
+b_{7} & = & b_{5}\\
+b_{4} & = & b_{2}\end{eqnarray*}
 
 \end_inset
 
@@ -1508,13 +1504,6 @@ name "sub:Non-Linear-Evaluator"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Genetic Algorithm
 \begin_inset CommandInset label
@@ -1547,7 +1536,7 @@ How is that meant?
 
 \begin_layout Standard
 A genetic algorithm is a stochastic hill-climbing technique that models
- natural selection to solve optimization problems 
+ natural selection to solve optimization problems
 \begin_inset CommandInset citation
 LatexCommand cite
 key "AIAMA"
@@ -1566,7 +1555,7 @@ key "AIAMA"
 Accordingly, the genetic individuals in this problem represent Abalone agents
  that are distinct by their genome, i.e.
  the weights used for their evaluation function.
- The fitness of the individuals is determined in matches with teir peers
+ The fitness of the individuals is determined in matches with their peers
  in a competition/tournament.
  In the transition of one population of individuals to its successor, some
  of the individuals are selected to reproduce themselves and mutate to generate
@@ -1611,7 +1600,7 @@ name "sub:Scaling-of-weights"
 \end_layout
 
 \begin_layout Standard
-As mentionned, the weights compose the genome of a genetic individual.
+As mentioned, the weights compose the genome of a genetic individual.
  Since the evaluation functions are scaled, the weights express the relative
  importance of individual evaluation functions.
  During the reproduction process, a new individual is created by combining
@@ -1700,10 +1689,11 @@ name "sub:GA-Implementation"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
+\begin_inset Note Note
+status open
 
-
+\begin_layout Plain Layout
+Can we completely leave that out?
 \end_layout
 
 \begin_layout Section
@@ -1717,7 +1707,7 @@ name "sec:Opponent-Modeling"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Normal minimax-search assumes the opponent will always make the optimal
  moves for him.
  Minimax-search assumes the opponent is using the same evaluation function.
@@ -1746,7 +1736,7 @@ name "sub:OpponentModeling-Design"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 There is a difference between opponents that are already know and there
  is a model of and opponents never seen before without any known model.
  If the opponent is already known its model can be loaded into a OM-search
@@ -1765,14 +1755,14 @@ There is a difference between opponents that are already know and there
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The OM-search AI can make moves that might be suboptimal in normal minimax-searc
 h but will give the new AI an advantage because the opponent will do a suboptima
 l move which, in the end, has a higher evaluation for the OM-search AI.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 OM-search works with a separate evaluation function (model) for the opponent
  and for himself.
  It is very similar to minimax-search but the algorithm stores both the
@@ -1795,7 +1785,7 @@ name "sub:OpponentModeling-Implementation"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In our implementation a opponent-model consists of the weights of the evaluation
  function, similar to the individuals of our genetic algorithm.
  There are models that are pre-set and differ slightly from our own evaluation
@@ -1807,8 +1797,10 @@ In our implementation a opponent-model consists of the weights of the evaluation
  makes differently that the OM-search AI thought he would do.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
+\begin_layout Plain Layout
+
+\end_layout
+
 \end_inset
 
 
@@ -1992,26 +1984,14 @@ Provide more statistics here.
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
-	filename graph_treesearch_01.png
-	width 90col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename graph_treesearch_02.png
-	width 90col%
+	filename symmetric_hashing-vs-normal_hashing.png
+	width 50col%
 
 \end_inset
 
@@ -2030,6 +2010,74 @@ name "fig:The-result-of-hashing"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename graph_treesearch_complexity_comparison.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Comparison of different optimization strategies by the number of nodes that
+ were investigated.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename graph_treesearch_time_comparison.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Comparison of different optimization strategies by the time it took to search.
 \end_layout
 
 \end_inset
