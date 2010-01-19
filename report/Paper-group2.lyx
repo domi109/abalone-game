@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -75,77 +75,6 @@ Introduction
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Introduction"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Background Information
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Background-Information"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Testing the references.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Abalearn1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Abalearn2"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Abla1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Lemmens1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Chorus1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Oswin1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Benson1"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "MonteCarlo1,MonteCarlo2"
 
 \end_inset
 
@@ -1314,7 +1243,7 @@ Source?
 
 \end_inset
 
-:
+
 \end_layout
 
 \begin_layout Itemize
@@ -1384,7 +1313,7 @@ eval(s)=\sum_{i=1}^{6}w_{i}\times f_{i}(s)\]
 
 \end_inset
 
-where
+where:
 \end_layout
 
 \begin_layout List
