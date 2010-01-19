@@ -1605,7 +1605,7 @@ However, as explained later, it is desirable for the reproduction that weights
 
 \begin_layout Standard
 \begin_inset Formula \[
-\sum_{w}|w|=1\]
+w_{i}\rightarrow\frac{w_{i}}{\sum|w|}\]
 
 \end_inset
 
