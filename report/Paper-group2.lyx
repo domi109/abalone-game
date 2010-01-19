@@ -1863,8 +1863,9 @@ status open
 \noindent
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="6">
+<lyxtabular version="3" rows="9" columns="7">
 <features>
+<column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -1917,11 +1918,20 @@ Match
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Search
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Misc.
 \end_layout
 
 \end_inset
@@ -1980,13 +1990,22 @@ max.
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 \begin_inset Formula $S_{1}$
 \end_inset
 
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2046,13 +2065,22 @@ max.
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 \begin_inset Formula $S_{1}$
 \end_inset
 
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2112,13 +2140,22 @@ max.
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 \begin_inset Formula $S_{1}$
 \end_inset
 
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2131,6 +2168,15 @@ max.
 
 \begin_layout Plain Layout
 4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -2230,7 +2276,7 @@ best 10
 \begin_layout Plain Layout
 200 / 260ply
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 260 can occur through overtime, refer to section 
@@ -2250,13 +2296,22 @@ reference "sub:Fitness-function"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 \begin_inset Formula $S_{1}$
 \end_inset
 
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2315,7 +2370,7 @@ max 200 ply
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2327,9 +2382,18 @@ max 200 ply
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2338,10 +2402,78 @@ max 200 ply
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(4,3)$
+\end_inset
+
 
 \end_layout
 
@@ -2351,6 +2483,18 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+best 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(5)$
+\end_inset
+
 
 \end_layout
 
@@ -2360,7 +2504,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+max 300 ply
 \end_layout
 
 \end_inset
@@ -2369,6 +2513,9 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $S_{1}$
+\end_inset
+
 
 \end_layout
 
@@ -2378,6 +2525,26 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+seeded
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+I.e.
+ we introduced a few 
+\begin_inset Quotes eld
+\end_inset
+
+handmade
+\begin_inset Quotes erd
+\end_inset
+
+ individuals in the first generation, in the hoop that our intuition would
+ speed up the learning process.
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -2458,39 +2625,6 @@ name "sub:Result-Tree-Search-Performance"
 \end_layout
 
 \begin_layout Standard
-In this section the results of experimental setup described in section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:Setup-Tree-Search-Performance"
-
-\end_inset
-
- will be given, interpreted and compared to the results from previous research.
-\end_layout
-
-\begin_layout Standard
-Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:The-result-of-hashing"
-
-\end_inset
-
- shows the result of the various hashing strategies...
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Provide more statistics here.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -2556,46 +2690,6 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename symmetric_hashing-vs-normal_hashing.png
-	width 50col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-The improvement of symmetric hashing over normal hashing at the initial
- position compared by time and investigated nodes.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:The-result-of-hashing"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
 	filename graph_treesearch_complexity_comparison_ingame.png
 	lyxscale 50
 	width 50col%
@@ -2635,6 +2729,168 @@ name "fig:Comparison-Ingame"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section the results of experimental setup described in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Setup-Tree-Search-Performance"
+
+\end_inset
+
+ will be given, interpreted and compared to the results from previous research.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparison-Startposition"
+
+\end_inset
+
+ shows a general comparison of the performance of search strategies on different
+ search depths at the starting position.
+ With a normal minimax search it is not possible to search more than 4 ply
+ deep in reasonable time.
+ Searching for 5 ply would have lasted for approximately 110 hours on the
+ test machine.
+ The best improvement is given by alpha beta pruning which allows for searching
+ at least five ply in moderate time by pruning a lot of unnessecary nodes.
+ This is most likely due to the effectiveness of the move ordering described
+ in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Move-Ordering"
+
+\end_inset
+
+ as Chorus' research suggests
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chorus1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+However, the result of alpha-beta pruning is a lot worse than the results
+ achieved by Chorus using the same move ordering.
+ Assuming that the difference does not lie in the implementation of the
+ pruning itself, there are only few feasible explanations:
+\end_layout
+
+\begin_layout Itemize
+The nodecount was measured differently (e.g.
+ fringte nodes or inner nodes)
+\end_layout
+
+\begin_layout Itemize
+The evaluation function used by Chorus was better suited to work with alpha-beta
+ pruning.
+\end_layout
+
+\begin_layout Standard
+The same results hold for a similar experiment that was started from a chosen
+ ingame position
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparison-Ingame"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename symmetric_hashing-vs-normal_hashing_startpos_lines.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename symmetric_hashing-vs-normal_hashing_ingame_lines.png
+	lyxscale 50
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The improvement of symmetric hashing over normal hashing compared by time
+ and investigated nodes.
+ The graph on the left hand side shows the results at the starting position.
+ Depicted on the right hand hand side is the result for a chosen ingame
+ situation.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-result-of-hashing"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Of special interest is the result of the symmetric hashing as a novel approach
+ on abalone.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-result-of-hashing"
+
+\end_inset
+
+ provides some intuition about what the result looks like.
+ Though not enough data is given to allow for definite conclusions, it already
+ is appearent, that for searches around four ply the overhead of the symmetric
+ hashing outweights its benefits while for deeper searches, symmetric hashing
+ becomes increasingly benefitial.
+\end_layout
+
+\begin_layout Standard
+In order to confirm this result, a larger sample of 220 games was taken
+ and the improvement of symmetric over normal hashing was calculated for
+ 4-ply deep searches as well as 5-ply deep searches.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Graph
 \end_layout
 
 \end_inset
