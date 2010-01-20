@@ -121,8 +121,14 @@ key "Abalearn1"
 
  - is a classical, strategic two-player board game.
  As many other of his kind, Abalone is a zero-sum game with perfect information.
- It is played on an hexagonal board (figure 1) on which there are two sets
- of fourteen marbles - one set for each player.
+ It is played on an hexagonal board (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Abalone-board"
+
+\end_inset
+
+) on which there are two sets of fourteen marbles - one set for each player.
  
 \end_layout
 
@@ -159,6 +165,135 @@ Three own marbles vs.
 \begin_layout Enumerate
 Three own marbles vs.
  two opponent marbles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename abalone.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Abalone board
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Abalone-board"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename abaloneInlinewithArrows.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Inline move
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Inline-move"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename abaloneBroadsideWithArrows.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Broadside move
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Broadside-move"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
