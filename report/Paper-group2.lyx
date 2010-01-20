@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -67,7 +67,17 @@ Department of Knowledge Engineering, Maastricht University
 \end_layout
 
 \begin_layout Abstract
-Abstract will go here.
+This paper is concerned with the game of Abalone.
+ In the first step, a minimax approach will be described and possible enhancemen
+ts will be investigated - particularly a hashing technique will be introduced
+ that takes into account board symmetries.
+ This technique can under some circumstances lead to more prunings in the
+ search tree.
+ In the second part a genetic algorithm is presented which is used to train
+ the agent's evaluation function.
+ The outcome of the genetic algorithm allows for interesting conclusions:
+ For expamle three heuristics widely believed to be good rules of thumb,
+ seem to be rather unimportant for the agents performance.
 \end_layout
 
 \begin_layout Section
@@ -94,8 +104,7 @@ name "sub:The-Game-of-Abalone"
 
 \begin_layout Standard
 In this section, the research subject will be introduced and it's rules
- will be explained briefly.
- Abalone - ranked with the 
+ will be explained briefly: Abalone - ranked as the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -111,8 +120,7 @@ key "Abalearn1"
 \end_inset
 
  - is a classical, strategic two-player board game.
- As many other classical board games, Abalone is a zero-sum game with perfect
- information.
+ As many other of his kind, Abalone is a zero-sum game with perfect information.
  It is played on an hexagonal board (figure 1) on which there are two sets
  of fourteen marbles - one set for each player.
  
@@ -155,19 +163,13 @@ Three own marbles vs.
 
 \begin_layout Standard
 It is not allowed to perform suicidal moves - i.e.
- to push own marbles of the board.
- Moreover it is not possible to perform a sumito move is an own stone is
- in the way
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Todo: rephrase
-\end_layout
-
-\end_inset
-
-.
+ to push own marbles off the board.
+ Moreover it is not possible to perform a sumito move, if the direction
+ pushed into is blocked by an own marble.
+ If the opposing marbles that are pushed lie at the edge of the board, they
+ can be pushed off the board by a sumito move.
+ The game ends when one player manages to push six opponent marbles from
+ the board.
 \end_layout
 
 \begin_layout Standard
@@ -218,49 +220,39 @@ key "Abalearn1,Abalearn2"
 
 \begin_layout Standard
 In contrast to Campos who provided a machine learning algorithm for this
- task, Lemmens and Chorus left open the rationale behind their evaluation
+ task, Lemmens and Chorus mostly left open the rationale behind their evaluation
  functions.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-TODO stuff missing here
-\end_layout
+ Literature shows that there are approaches on learning an evaluation function
+ with a genetic algorithm: In the case of the Egyptian boardgame Senet Ferrer
+ et al.
+ used such a technique
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FerrerBoardEvaluation"
 
 \end_inset
 
+, in the game of Draughts, a genetic algorithm was applied to train the
+ weights of a linear evaluation function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chisholm1997"
 
+\end_inset
+
+.
+ The question arises, whether a similar approach might be applicable to
+ Abalone as well.
+\end_layout
+
+\begin_layout Standard
+A further point that is left open in previous research, is whether Abalones
+ twelve board-symmetries can be used to improve the agent's efficiency.
+ 
 \end_layout
 
 \begin_layout Standard
 This leads to the following research questions:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Enumerate
-Is it possible for an AI agent to play Abalone on a professional level?
-\end_layout
-
-\begin_layout Enumerate
-Which heuristics are suited best for this problem?
-\end_layout
-
-\begin_layout Enumerate
-Which machine learning techniques are best used to optimize the performance
- of the AI agent?
-\end_layout
-
-\begin_layout Plain Layout
-This is the old version, new proposal (something we might be able to answer):
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Enumerate
@@ -276,6 +268,33 @@ Is a Genetic Algrithm a feasible means to optimize an abalone evaluation
 \begin_layout Enumerate
 Which combination of todays commonly used atomary heuristics for the game
  of abalone is optimal?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+those were the old ones...
+ don't know whether we should keep them...?
+\end_layout
+
+\begin_layout Enumerate
+Is it possible for an AI agent to play Abalone on a professional level?
+\end_layout
+
+\begin_layout Enumerate
+Which heuristics are suited best for this problem?
+\end_layout
+
+\begin_layout Enumerate
+Which machine learning techniques are best used to optimize the performance
+ of the AI agent?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -525,6 +544,17 @@ key "AIAMA"
 \end_layout
 
 \begin_layout Standard
+In testruns a problem with this search approach was discovered: If two agents
+ play against each other it is inherently deterministic.
+ That means that once the game gets into a cycle so that a certain pattern
+ of moves is repeated, it is infinite.
+ To solve this, an optional random component was introduced into the minimax
+ search such that the agent sometimes picks the second best choice.
+ The probability of doing that decreases with an increasing difference in
+ the evaluations of the first and the second best choice.
+\end_layout
+
+\begin_layout Standard
 The following sections will introduce more advanced optimization techniques
  that can be used to enhance the minimax tree search.
 \end_layout
@@ -593,37 +623,21 @@ Single marble moves.
 \end_layout
 
 \begin_layout Standard
-This move ordering has led to a good performance of the alpha beta pruning.
+This move ordering has led to a good performance of the alpha beta pruning
+ as shown in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Result-Tree-Search-Performance"
+
+\end_inset
+
+.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 give results/statistics here
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Killer-Moves
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Killer-Moves"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Is there anything to say about killer moves?
 \end_layout
 
 \end_inset
@@ -1534,7 +1548,7 @@ However, as explained later, it is desirable for the reproduction that weights
 
 \begin_layout Standard
 \begin_inset Formula \[
-w_{i}\rightarrow\frac{w_{i}}{\sum|w|}\]
+w_{i}\leftarrow\frac{w_{i}}{\sum|w|}\]
 
 \end_inset
 
@@ -1575,6 +1589,33 @@ Fitness function
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Fitness-function"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ferrer et al used KO-Tournament 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FerrerBoardEvaluation"
+
+\end_inset
+
+, Chrisholm used CrossTournament
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chisholm1997"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1816,10 +1857,7 @@ reference "sec:General-Tree-Searching"
 
  including alpha-beta pruning, move ordering, Zobrist hashing and symmetry
  aware hashing.
-\end_layout
-
-\begin_layout Standard
-The results are given in section 
+ The results are given in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:Result-Tree-Search-Performance"
@@ -1838,19 +1876,6 @@ name "sub:Setup-Training-of-the-Evaluation"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-In section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:GA-Design"
-
-\end_inset
-
- the parameters of the genetic algorithm were presented.
- This section introduces the experimental setups used to determine the settings
- best suited to let the algorithm converge to a dominant strategy.
 \end_layout
 
 \begin_layout Standard
@@ -2563,6 +2588,13 @@ handmade
 
 \begin_layout Plain Layout
 Test run settings for the genetic algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Test-run-settings"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2570,13 +2602,128 @@ Test run settings for the genetic algorithm.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:GA-Design"
+
+\end_inset
+
+ the parameters of the genetic algorithm were presented.
+ This section introduces the experimental setups used to determine the settings
+ best suited to let the algorithm converge to a dominant strategy.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Test-run-settings"
+
+\end_inset
+
+ lists all the testruns performed with their corresponding settings.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\text{Pairwise}\left(n,m\right)$
+\end_inset
+
+ refers to the reproduction method layed out in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:GA-Design"
+
+\end_inset
+
+ and is to be read as 
+\begin_inset Quotes eld
+\end_inset
+
+a pairwise reproduction that copies the 
+\begin_inset Formula $n$
+\end_inset
+
+ best individuals unaltered to the next generation and then reproduces every
+ individual with 
+\begin_inset Formula $m$
+\end_inset
+
+ randomly chosen partners.
+\end_layout
+
+\begin_layout Standard
+The tournament mode 
+\begin_inset Formula $T_{1}(n)$
+\end_inset
+
+ refers to a random tournament with 
+\begin_inset Formula $n$
+\end_inset
+
+ opponents per individual.
+ 
+\begin_inset Formula $T_{2}(n)$
+\end_inset
+
+ is a KO-Tournament which is repeated 
+\begin_inset Formula $n$
+\end_inset
+
+ times and 
+\begin_inset Formula $T_{3}$
+\end_inset
+
+ describes a cross-tournament.
+ Also the search method of the agent was altered: 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ refers to a depth limited search of two ply with alpha-beta pruning.
+ 
+\begin_inset Formula $S_{2}$
+\end_inset
+
+ adds an additional random element as described in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:General-Tree-Searching"
+
+\end_inset
+
+ to 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $S_{3}$
+\end_inset
+
+ refers to an alpha-beta search with three ply lookahead.
+\end_layout
+
+\begin_layout Standard
+There are two parameters that were not altered in any of these serious testruns:
+\end_layout
+
+\begin_layout Itemize
+The mutation was kept constantly high with a mutation rate of 0.2 and a mutation
+ factor of 2.
+ It is possible that a lower mutation would have led to more converging
+ results.
+ However the aim was to let the individual found to be fittest to be able
+ to compete against a broad variety of opponents.
+\end_layout
+
+\begin_layout Itemize
+The selection method was chosen to be an elitist selection.
+ The number of altered individuals, however, was subject to varying test-setting
+s.
 \end_layout
 
 \begin_layout Subsection
