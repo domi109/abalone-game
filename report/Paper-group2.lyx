@@ -1729,6 +1729,17 @@ nation tournaments with random starting positions for the individuals are
  carried out.
 \end_layout
 
+\begin_layout Subsection
+Implementation
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:GA-Implementation"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -1950,7 +1961,7 @@ status open
 \noindent
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="7">
+<lyxtabular version="3" rows="7" columns="7">
 <features>
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -2029,7 +2040,8 @@ Misc.
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+Exp.
+ 1
 \end_layout
 
 \end_inset
@@ -2093,7 +2105,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2104,7 +2116,8 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+Exp.
+ 2
 \end_layout
 
 \end_inset
@@ -2168,7 +2181,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2179,7 +2192,8 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+Exp.
+ 3
 \end_layout
 
 \end_inset
@@ -2243,7 +2257,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2254,163 +2268,8 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\text{Pairwise}(2,4)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-best 10
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $T_{2}(2)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-200 / 260ply
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-260 can occur through overtime, refer to section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:Fitness-function"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $S_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6
+Exp.
+ 6
 \end_layout
 
 \end_inset
@@ -2440,7 +2299,7 @@ best 5
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $T_{3}$
+\begin_inset Formula $T_{2}$
 \end_inset
 
 
@@ -2473,7 +2332,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2484,7 +2343,8 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-7
+Exp.
+ 7
 \end_layout
 
 \end_inset
@@ -2493,24 +2353,9 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $\text{Pairwise}(2,2)$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2520,6 +2365,18 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+best 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(3)$
+\end_inset
+
 
 \end_layout
 
@@ -2529,6 +2386,19 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+max.
+ 200 ply
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{3}$
+\end_inset
+
 
 \end_layout
 
@@ -2538,7 +2408,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2549,7 +2419,8 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-8
+Exp.
+ 8
 \end_layout
 
 \end_inset
@@ -2727,17 +2598,8 @@ The tournament mode
 \begin_inset Formula $n$
 \end_inset
 
- opponents per individual.
- 
-\begin_inset Formula $T_{2}(n)$
-\end_inset
-
- is a KO-Tournament which is repeated 
-\begin_inset Formula $n$
-\end_inset
-
- times and 
-\begin_inset Formula $T_{3}$
+ opponents per individual and 
+\begin_inset Formula $T_{2}$
 \end_inset
 
  describes a cross-tournament.
@@ -3092,19 +2954,13 @@ reference "fig:The-result-of-hashing"
 \end_layout
 
 \begin_layout Standard
-In order to confirm this result, a larger sample of 220 games was taken
+In order to confirm this result, a larger sample of 200 games was taken
  and the improvement of symmetric over normal hashing was calculated for
  4-ply deep searches as well as 5-ply deep searches.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Graph
-\end_layout
-
-\end_inset
-
-
+ With 4-ply searches the improvement was 0.12% with a standard deviation
+ of 1.16%.
+ For the 5-ply search, however, it tourned out that 200 games was still
+ not enough to deal with the high standard deviation of 200%.
 \end_layout
 
 \begin_layout Subsection
@@ -3112,6 +2968,89 @@ Training of the Evaluation Function
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Result-Training-of-the-Evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section will provide the results of the training setups from section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Test-run-settings"
+
+\end_inset
+
+ and possible interpretations.
+\end_layout
+
+\begin_layout Standard
+The diagrams given here are read as follows: On the x-axis, the number of
+ generations is shown, for each generation the corresponding weights of
+ the fittest individual, i.e.
+ the winner of the tournament, are stacked above each other.
+ If the area is red, the weight is negative, if the area is green the weight
+ is positive.
+ A large red area therefore means, that a certain evaluation function was
+ found undesirable in many generations.
+ We expect a negative weight for the 
+\begin_inset Quotes eld
+\end_inset
+
+lost marbles
+\begin_inset Quotes erd
+\end_inset
+
+ heuristic and a positive weight for the 
+\begin_inset Quotes eld
+\end_inset
+
+pushed marbles
+\begin_inset Quotes erd
+\end_inset
+
+ heuristic.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename experiment02.png
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of experiment 2.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment02"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -3128,8 +3067,9 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename graph_ga_01.png
-	width 100col%
+	filename experiment03.png
+	lyxscale 50
+	width 90col%
 
 \end_inset
 
@@ -3140,8 +3080,10 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The result of a training run.
-\end_layout
+The result of experiment 3.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment03"
 
 \end_inset
 
@@ -3151,6 +3093,213 @@ The result of a training run.
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename experiment06.png
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of experiment 6.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment06"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename experiment07.png
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of experiment 7.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment07"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Experiment two (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:experiment02"
+
+\end_inset
+
+) led to a very defensive gameplay.
+ Except from several peaks, tournament winners had a strong 
+\begin_inset Quotes eld
+\end_inset
+
+lost marbles
+\begin_inset Quotes erd
+\end_inset
+
+ strategy with a weight of around 0.7.
+ Sticking to the center also tourned out to contribute to the agent's performanc
+e - the strategy fluctuated around 0.1.
+\end_layout
+
+\begin_layout Standard
+The results of experiment three (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:experiment03"
+
+\end_inset
+
+) are a bit hard to interpret - it seems that in the tournament played,
+ having a positive weight for 
+\begin_inset Quotes eld
+\end_inset
+
+lost marble
+\begin_inset Quotes erd
+\end_inset
+
+ (thus saying: loosing marbles is something desirable) is not that unsuccessfull.
+ Whatching an agent with such a positive weighting play does (not surprisingly)
+ not really support this finding.
+ Therefore the only possible interpretations are that either something went
+ wrong during the testrun, or for some particular populations it is actually
+ not that bad to play suicidal (e.g.
+ if the whole population has very small values for 
+\begin_inset Quotes eld
+\end_inset
+
+pushed marbles
+\begin_inset Quotes erd
+\end_inset
+
+), or that the randomized tournament used led to those effects by matching
+ - by coincidence - weak individuals only with even weaker opponents.
+\end_layout
+
+\begin_layout Standard
+In contrast to experiment two, experiment six led to more offensive players.
+ The main difference between experiment two and six is the random element
+ which is used to prevent cyclic games.
+ It is appearant that - appart from occational peaks - the weights converge
+ towards a 
+\end_layout
+
+\begin_layout Standard
+All test results have in common, that the weights for the 
+\begin_inset Quotes eld
+\end_inset
+
+strengthen group strategy
+\begin_inset Quotes erd
+\end_inset
+
+, the 
+\begin_inset Quotes eld
+\end_inset
+
+break strong group strategy
+\begin_inset Quotes erd
+\end_inset
+
+ and the 
+\begin_inset Quotes eld
+\end_inset
+
+cohesion strategy
+\begin_inset Quotes erd
+\end_inset
+
+ are converging to zero.
+ This is an interesting result as it states that the agent is indifferent
+ about the most costly calculations of the evaluation function (refer to
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Evaluation-Functions"
+
+\end_inset
+
+).
+ This suggests, that the quicker evaluator given in section
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+???
+\end_layout
+
+\end_inset
+
+ should perform better than the more sophisticated version as it might be
+ able to search deeper in the tree with an equivalently appropriate evaluation
+ function.
 \end_layout
 
 \begin_layout Subsection
