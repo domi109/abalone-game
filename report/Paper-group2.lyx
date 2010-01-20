@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -121,16 +121,36 @@ key "Abalearn1"
 
  - is a classical, strategic two-player board game.
  As many other of his kind, Abalone is a zero-sum game with perfect information.
- It is played on an hexagonal board (figure 1) on which there are two sets
- of fourteen marbles - one set for each player.
+ It is played on an hexagonal board (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Abalone-board"
+
+\end_inset
+
+) on which there are two sets of fourteen marbles - one set for each player.
  
 \end_layout
 
 \begin_layout Standard
 There are 2 types of moves a player can perform: An inline move during which
  a line of marbles is moved in the direction that the line faces (figure
- 2) and a broadside move during which a line of marbles is moved to any
- other direction than the one the line faces (figure 3).
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Inline-move"
+
+\end_inset
+
+) and a broadside move during which a line of marbles is moved to any other
+ direction than the one the line faces (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Broadside-move"
+
+\end_inset
+
+).
  Such a line may at most consist of three own marbles.
  With an inline move it is possible to 
 \begin_inset Quotes eld
@@ -159,6 +179,141 @@ Three own marbles vs.
 \begin_layout Enumerate
 Three own marbles vs.
  two opponent marbles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename abalone.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Abalone board
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Abalone-board"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename abaloneInlinewithArrows.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Inline move
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Inline-move"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename abaloneBroadsideWithArrows.png
+	lyxscale 80
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Broadside move
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Broadside-move"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -261,7 +416,7 @@ Can board symmetries be taken into account to further enhance the performance
 \end_layout
 
 \begin_layout Enumerate
-Is a Genetic Algrithm a feasible means to optimize an abalone evaluation
+Is a Genetic Algorithm a feasible means to optimize an abalone evaluation
  function?
 \end_layout
 
@@ -272,7 +427,7 @@ Which combination of todays commonly used atomary heuristics for the game
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 those were the old ones...
@@ -1669,7 +1824,7 @@ name "sub:GA-Implementation"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Can we completely leave that out?
@@ -3339,6 +3494,51 @@ name "sec:Conclusions"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
+weight 2 (
+\emph on
+cohesion strategy
+\emph default
+ ), weight 3 (
+\emph on
+break strong group strategy
+\emph default
+) and weight 4 (
+\emph on
+strengthen group strategy
+\emph default
+) don't appear to be important.
+\end_layout
+
+\begin_layout Itemize
+weight 1 (
+\emph on
+center strategy
+\emph default
+), weight 5 (
+\emph on
+taken strategy
+\emph default
+) and weigth 6 (
+\emph on
+lost strategy
+\emph default
+) do appear to be important.
+\end_layout
+
+\begin_layout Itemize
+quick evaluator (with only the 3 important weights) seems to perform better
+ since it can search 1 ply deeper on everage.
+\end_layout
+
+\begin_layout Itemize
+the tree complexity of abalone makes the Genetic Algorithm perform slow.
+\end_layout
+
+\begin_layout Itemize
 
 \end_layout
 
