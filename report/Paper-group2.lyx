@@ -2031,7 +2031,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2106,7 +2106,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2181,7 +2181,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2201,7 +2201,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Broken
 \end_layout
 
 \end_inset
@@ -2210,7 +2210,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2219,7 +2219,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2228,7 +2228,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2237,7 +2237,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2246,7 +2246,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2337,7 +2337,7 @@ reference "sub:Fitness-function"
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2411,7 +2411,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -2431,6 +2431,9 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\text{Pairwise}(2,2)$
+\end_inset
+
 
 \end_layout
 
@@ -2440,6 +2443,18 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
+best 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{1}(3)$
+\end_inset
+
 
 \end_layout
 
@@ -2449,7 +2464,8 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+max.
+ 200 ply
 \end_layout
 
 \end_inset
@@ -2458,15 +2474,9 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $S_{3}$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2476,7 +2486,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-
 \end_layout
 
 \end_inset
@@ -3057,6 +3067,18 @@ name "sub:Result-Training-of-the-Evaluation"
 \end_layout
 
 \begin_layout Standard
+In this section will provide the results of the training setups from section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Test-run-settings"
+
+\end_inset
+
+ and possible interpretations.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -3066,7 +3088,8 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename graph_ga_01.png
+	filename experiment02.png
+	lyxscale 50
 	width 100col%
 
 \end_inset
@@ -3078,8 +3101,10 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The result of a training run.
-\end_layout
+The result of experiment 2.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment02"
 
 \end_inset
 
@@ -3089,6 +3114,210 @@ The result of a training run.
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename experiment03.png
+	lyxscale 50
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of experiment 3.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment03"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename experiment07.png
+	lyxscale 50
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The result of experiment 7.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:experiment07"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Experiment two (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:experiment02"
+
+\end_inset
+
+) led to a very defensive gameplay.
+ Except from several peaks, tournament winners had a strong 
+\begin_inset Quotes eld
+\end_inset
+
+lost marbles
+\begin_inset Quotes erd
+\end_inset
+
+ strategy with a weight of around 0.7.
+ Sticking to the center also tourned out to contribute to the agent's performanc
+e - the strategy fluctuated around 0.1.
+\end_layout
+
+\begin_layout Standard
+The results of experiment three (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:experiment03"
+
+\end_inset
+
+) are a bit hard to interpret - it seems that in the tournament played,
+ having a positive weight for 
+\begin_inset Quotes eld
+\end_inset
+
+lost marble
+\begin_inset Quotes erd
+\end_inset
+
+ (thus saying: loosing marbles is something desirable) is not that unsuccessfull.
+ Whatching an agent with such a positive weighting play does (not surprisingly)
+ not really support this finding.
+ Therefore the only possible interpretations are that either something went
+ wrong during the testrun, or for some particular populations it is actually
+ not that bad to play suicidal (e.g.
+ if the whole population has very small values for 
+\begin_inset Quotes eld
+\end_inset
+
+pushed marbles
+\begin_inset Quotes erd
+\end_inset
+
+), or that the randomized tournament used led to those effects by matching
+ - by coincidence - weak individuals only with even weaker opponents.
+\end_layout
+
+\begin_layout Standard
+In contrast to experiment two, experiment seven led to more offensive players.
+ 
+\end_layout
+
+\begin_layout Standard
+All test results have in common, that the weights for the 
+\begin_inset Quotes eld
+\end_inset
+
+strengthen group strategy
+\begin_inset Quotes erd
+\end_inset
+
+, the 
+\begin_inset Quotes eld
+\end_inset
+
+break strong group strategy
+\begin_inset Quotes erd
+\end_inset
+
+ and the 
+\begin_inset Quotes eld
+\end_inset
+
+cohesion strategy
+\begin_inset Quotes erd
+\end_inset
+
+ are converging to zero.
+ This is an interesting result as it states that the agent is indifferent
+ about the most costly calculations of the evaluation function (refer to
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Evaluation-Functions"
+
+\end_inset
+
+).
+ This suggests, that the quicker evaluator given in section
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+???
+\end_layout
+
+\end_inset
+
+ should perform better than the more sophisticated version as it might be
+ able to search deeper in the tree with an equivalently appropriate evaluation
+ function.
 \end_layout
 
 \begin_layout Subsection
