@@ -1248,12 +1248,9 @@ When constructing an evaluation function for an agent playing Abalone, it
  makes sense to consider general strategies commonly used.
  Below is a list of strategies that are widely accepted as appropriate rules
  of thumb:
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Source?
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemmens1"
 
 \end_inset
 
