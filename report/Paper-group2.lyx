@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -121,36 +121,16 @@ key "Abalearn1"
 
  - is a classical, strategic two-player board game.
  As many other of his kind, Abalone is a zero-sum game with perfect information.
- It is played on an hexagonal board (figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Abalone-board"
-
-\end_inset
-
-) on which there are two sets of fourteen marbles - one set for each player.
+ It is played on an hexagonal board (figure 1) on which there are two sets
+ of fourteen marbles - one set for each player.
  
 \end_layout
 
 \begin_layout Standard
 There are 2 types of moves a player can perform: An inline move during which
  a line of marbles is moved in the direction that the line faces (figure
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Inline-move"
-
-\end_inset
-
-) and a broadside move during which a line of marbles is moved to any other
- direction than the one the line faces (figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Broadside-move"
-
-\end_inset
-
-).
+ 2) and a broadside move during which a line of marbles is moved to any
+ other direction than the one the line faces (figure 3).
  Such a line may at most consist of three own marbles.
  With an inline move it is possible to 
 \begin_inset Quotes eld
@@ -179,141 +159,6 @@ Three own marbles vs.
 \begin_layout Enumerate
 Three own marbles vs.
  two opponent marbles.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0in
-width "50col%"
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename abalone.png
-	lyxscale 80
-	scale 80
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Abalone board
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Abalone-board"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename abaloneInlinewithArrows.png
-	lyxscale 80
-	scale 80
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Inline move
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Inline-move"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename abaloneBroadsideWithArrows.png
-	lyxscale 80
-	scale 80
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Broadside move
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Broadside-move"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -416,7 +261,7 @@ Can board symmetries be taken into account to further enhance the performance
 \end_layout
 
 \begin_layout Enumerate
-Is a Genetic Algorithm a feasible means to optimize an abalone evaluation
+Is a Genetic Algrithm a feasible means to optimize an abalone evaluation
  function?
 \end_layout
 
@@ -427,7 +272,7 @@ Which combination of todays commonly used atomary heuristics for the game
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 those were the old ones...
@@ -1610,7 +1455,14 @@ ng for an Abalone player.
 
 \begin_layout Standard
 Genetic algorithms are evolutionary algorithms that model natural selection
- ((and can be used) to solve optimization problems).
+ and can be used to solve optimization problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AIAMA"
+
+\end_inset
+
+.
  Biological evolution states that fitter organisms have an increased chance
  to survive and reproduce.
  Analogue, the fitness of genetic individuals of a genetic algorithm decides
@@ -1624,8 +1476,7 @@ A genetic algorithm suits this optimisation problem for various reasons.
  agent possible, given the described evaluation function.
  It seems evident to let different agents compete with each other to determine
  the strongest individual.
- Additionally, the training process should (defined in research questions?)
- preferably be unsupervised.
+ Additionally, the training process should preferably be unsupervised.
  An initial population with randomized individuals that compete with each
  other can statisfy these conditions reasonably well.
  Ideally, the average strength of the population should increase with each
@@ -1648,7 +1499,7 @@ Each genetic individual represents an Abalone agent and is defined by its
  genome, that is, the weights of their evaluation function.
  Their fitness is determined in matches with their peers over the course
  of a tournament, whereas the number of matches and the opponents depend
- on the type of the tournament (as described later in this section).
+ on the type of the tournament, as described later in this section.
  The selection method used in the experiments of this research is exclusively
  elitist.
  This means that only the fittest individuals are chosen for reproduction
@@ -1661,7 +1512,7 @@ Each genetic individual represents an Abalone agent and is defined by its
  local extrema.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Scaling of the weights/ reproduction
 \begin_inset CommandInset label
 LatexCommand label
@@ -1728,103 +1579,159 @@ Ideally, two individuals that have each some optimal, or close to optimal,
  dominant ones.
 \end_layout
 
-\begin_layout Subsubsection
-Mutation
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Mutation"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
+\begin_layout Subsection
 Fitness function
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Fitness-function"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+The fitness function evaluates the performance of an agent in a match.
+ A good performance is rewarded with an increase of the fitness value of
+ an individual and a bad performance with a decrease respectively.
+ Thus, the fitness value at the end of a tournament gives a reasonable feedback
+ of the overall performance of an individual in that tournament.
+ 
+\end_layout
 
-\begin_layout Plain Layout
-Ferrer et al used KO-Tournament 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "FerrerBoardEvaluation"
+\begin_layout Standard
+The fitness evaluation is simple if a match terminates sucessfully.
+ The winner has evidently beaten its opponent and is rewarded whilst the
+ loser gets punished.
+ But as has been explained in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:General-Tree-Searching"
 
 \end_inset
 
-, Chrisholm used CrossTournament
+, not all Abalone matches terminate.
+ In this case, the agents are evaluated based on which player seems to be
+ in advantage at the last state of the game.
+ Possible benchmarks to do this are the numbers of marbles a player has
+ lost or won respectively.
+ However, such an evaluation is biased as the chosen benchmarks might not
+ give an accurate representation.
+ Additionally, if the proportion of forcefully terminated matches is large,
+ agents might be trained not to win matches, but to get the best possible
+ evaluation for a aborted game.
+ Since the genetic algorithm starts with randomized individuals, it is expected
+ that the majority of matches in the first few generations end forcefully.
+\end_layout
+
+\begin_layout Subsection
+Tournaments
+\end_layout
+
+\begin_layout Standard
+The learning process with a genetic algorithm takes a lot of time because
+ an individual has to play a reasonable number of matches to get a representativ
+e fitness value.
+ Therefore, a tournament should be designes in such a way that this number
+ is as low as possible to speed up the learning.
+ In this research, three different types of tournaments are considered.
+\end_layout
+
+\begin_layout Subsubsection
+Random tournament
+\end_layout
+
+\begin_layout Standard
+In a random tournament, each individual has a number of matches with random
+ opponents from the population.
+ Therefore, if the population is of size 
+\begin_inset Formula $n$
+\end_inset
+
+ and each individual has
+\begin_inset Formula $k$
+\end_inset
+
+ random matches, then there are in total
+\begin_inset Formula $n*k$
+\end_inset
+
+ matches.
+\end_layout
+
+\begin_layout Subsubsection
+Cross tournament
+\end_layout
+
+\begin_layout Standard
+In a cross tournament, every individual has a match against all other individual
+s 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Chisholm1997"
 
 \end_inset
 
+.
+ This can be modeled in a graph where the vertices represent the individuals
+ and an edge incident to two vertices indicates that these two individuals
+ have a match.
+ Since every individual plays agains every other individual, it is a complete
+ graph.
+ But then, if the population is of size 
+\begin_inset Formula $n$
+\end_inset
 
+, the total number of matches in the tournament is 
+\begin_inset Formula $\frac{n*(n-1)}{2}$
+\end_inset
+
+.
 \end_layout
+
+\begin_layout Standard
+The result of a cross tournament is representative but also very time consuming,
+ Weak individuals are not eliminated from the tournament but play as many
+ matches as more promising individuals.
+\end_layout
+
+\begin_layout Subsubsection
+Knockout tournament
+\end_layout
+
+\begin_layout Standard
+In a knockout or single-elimination tournament, the loser of a game is eliminate
+d from the tournament and the winner proceeds to the next round.
+ Eventually, there is only the overall winner of the tournament left 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FerrerBoardEvaluation"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-should give feedback on the performance of an agent during a match
-\end_layout
-
-\begin_layout Itemize
-problem: Abalone games can be infinite
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-how to evaluate performance after ply limit is reached?
-\end_layout
-
-\begin_layout Itemize
-can this be done unbiased (e.g.
- fitness plus for pushed marbles --> offensive player)
-\end_layout
-
-\begin_layout Itemize
-how to avoid loops
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Quotes eld
+.
+ Since every match has a loser that is eliminated from the tournament and
+ only one contestant, the winner, never loses a match, a single-elimination
+ tournament with a population of size 
+\begin_inset Formula $n$
 \end_inset
 
-conservative
-\begin_inset Quotes erd
+ has 
+\begin_inset Formula $n-1$
 \end_inset
 
- character of abalone --> very few pushes with randomly initialized individuals
+ matches.
 \end_layout
 
-\end_deeper
-\begin_layout Subsection
-Implementation
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:GA-Implementation"
-
-\end_inset
-
-
+\begin_layout Standard
+The advantage of a single-elimination tournament is that weak individuals
+ should be eliminated over the course of the tournament.
+ As stronger players advance, their opponents should be relatively strong
+ as well, so less time is spent on matches with weak individuals.
+ But it might happen that strong players meet early in the tournament, are
+ eliminated and then not selected for reproduction, even though their genome
+ is very good.
+ To reduce the probability of thissituation to occur, multiple such single-elimi
+nation tournaments with random starting positions for the individuals are
+ carried out.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Can we completely leave that out?
@@ -2186,7 +2093,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2261,7 +2168,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2336,7 +2243,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2356,7 +2263,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-Broken
+
 \end_layout
 
 \end_inset
@@ -2365,7 +2272,7 @@ Broken
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2374,7 +2281,7 @@ Broken
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2383,7 +2290,7 @@ Broken
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2392,7 +2299,7 @@ Broken
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2401,7 +2308,7 @@ Broken
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2492,7 +2399,7 @@ reference "sub:Fitness-function"
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2566,7 +2473,7 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -2586,9 +2493,6 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\text{Pairwise}(2,2)$
-\end_inset
-
 
 \end_layout
 
@@ -2598,18 +2502,6 @@ max 200 ply
 \begin_inset Text
 
 \begin_layout Plain Layout
-best 10
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $T_{1}(3)$
-\end_inset
-
 
 \end_layout
 
@@ -2619,8 +2511,7 @@ best 10
 \begin_inset Text
 
 \begin_layout Plain Layout
-max.
- 200 ply
+
 \end_layout
 
 \end_inset
@@ -2629,9 +2520,15 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $S_{3}$
-\end_inset
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -2641,7 +2538,7 @@ max.
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+
 \end_layout
 
 \end_inset
@@ -3222,18 +3119,6 @@ name "sub:Result-Training-of-the-Evaluation"
 \end_layout
 
 \begin_layout Standard
-In this section will provide the results of the training setups from section
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Test-run-settings"
-
-\end_inset
-
- and possible interpretations.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -3243,8 +3128,7 @@ status collapsed
 \noindent
 \align center
 \begin_inset Graphics
-	filename experiment02.png
-	lyxscale 50
+	filename graph_ga_01.png
 	width 100col%
 
 \end_inset
@@ -3256,14 +3140,7 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The result of experiment 2.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:experiment02"
-
-\end_inset
-
-
+The result of a training run.
 \end_layout
 
 \end_inset
@@ -3274,205 +3151,6 @@ name "fig:experiment02"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename experiment03.png
-	lyxscale 50
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-The result of experiment 3.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:experiment03"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename experiment07.png
-	lyxscale 50
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-The result of experiment 7.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:experiment07"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Experiment two (figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:experiment02"
-
-\end_inset
-
-) led to a very defensive gameplay.
- Except from several peaks, tournament winners had a strong 
-\begin_inset Quotes eld
-\end_inset
-
-lost marbles
-\begin_inset Quotes erd
-\end_inset
-
- strategy with a weight of around 0.7.
- Sticking to the center also tourned out to contribute to the agent's performanc
-e - the strategy fluctuated around 0.1.
-\end_layout
-
-\begin_layout Standard
-The results of experiment three (figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:experiment03"
-
-\end_inset
-
-) are a bit hard to interpret - it seems that in the tournament played,
- having a positive weight for 
-\begin_inset Quotes eld
-\end_inset
-
-lost marble
-\begin_inset Quotes erd
-\end_inset
-
- (thus saying: loosing marbles is something desirable) is not that unsuccessfull.
- Whatching an agent with such a positive weighting play does (not surprisingly)
- not really support this finding.
- Therefore the only possible interpretations are that either something went
- wrong during the testrun, or for some particular populations it is actually
- not that bad to play suicidal (e.g.
- if the whole population has very small values for 
-\begin_inset Quotes eld
-\end_inset
-
-pushed marbles
-\begin_inset Quotes erd
-\end_inset
-
-), or that the randomized tournament used led to those effects by matching
- - by coincidence - weak individuals only with even weaker opponents.
-\end_layout
-
-\begin_layout Standard
-In contrast to experiment two, experiment seven led to more offensive players.
- 
-\end_layout
-
-\begin_layout Standard
-All test results have in common, that the weights for the 
-\begin_inset Quotes eld
-\end_inset
-
-strengthen group strategy
-\begin_inset Quotes erd
-\end_inset
-
-, the 
-\begin_inset Quotes eld
-\end_inset
-
-break strong group strategy
-\begin_inset Quotes erd
-\end_inset
-
- and the 
-\begin_inset Quotes eld
-\end_inset
-
-cohesion strategy
-\begin_inset Quotes erd
-\end_inset
-
- are converging to zero.
- This is an interesting result as it states that the agent is indifferent
- about the most costly calculations of the evaluation function (refer to
- section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:Evaluation-Functions"
-
-\end_inset
-
-).
- This suggests, that the quicker evaluator given in section
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-???
-\end_layout
-
-\end_inset
-
- should perform better than the more sophisticated version as it might be
- able to search deeper in the tree with an equivalently appropriate evaluation
- function.
 \end_layout
 
 \begin_layout Subsection
@@ -3494,51 +3172,6 @@ name "sec:Conclusions"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-weight 2 (
-\emph on
-cohesion strategy
-\emph default
- ), weight 3 (
-\emph on
-break strong group strategy
-\emph default
-) and weight 4 (
-\emph on
-strengthen group strategy
-\emph default
-) don't appear to be important.
-\end_layout
-
-\begin_layout Itemize
-weight 1 (
-\emph on
-center strategy
-\emph default
-), weight 5 (
-\emph on
-taken strategy
-\emph default
-) and weigth 6 (
-\emph on
-lost strategy
-\emph default
-) do appear to be important.
-\end_layout
-
-\begin_layout Itemize
-quick evaluator (with only the 3 important weights) seems to perform better
- since it can search 1 ply deeper on everage.
-\end_layout
-
-\begin_layout Itemize
-the tree complexity of abalone makes the Genetic Algorithm perform slow.
-\end_layout
-
-\begin_layout Itemize
 
 \end_layout
 
